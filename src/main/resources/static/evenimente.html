@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Evenimente</title>
+</head>
+<body>
+
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+    <a class="button2" href="#" style="text-align: center; ">Evenimente</a>
+
+    <a class="button2" href="logare.html" style="text-align: center; ">Intra in cont</a>
+    <a class="button1" href="creare_cont.html"; style="text-align: center;font-weight:bold   ">Cont nou</a>
+
+    <!--  <img th: src="@{/images/logo.jpg}" alt="My Image">-->
+
+  </div>
+</div>
+</div>
+<br><br><br>
+<div class="column small-12 large-12" style=" opacity: 80%;  border-radius: 25px ; ">
+
+
+
+  <br><br><br>
+  <div class="small-12 large-2 cell"
+       style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-color: #33b4c2;border-width:2px;border-style:solid;border-radius: 50px;">
+
+    <br>
+    <h2 th:text="${message}">Nume eveniment</h2>
+    <h1 th:inline="text" >
+
+      <small th:text="${text}">Date oraganizatorice</small>
+    </h1>
+
+
+    <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> vezi  mai multe detalii </a>
+
+    <br><br>
+
+    <br><br>
+
+  </div>
+
+  <br><br><br>
+  <div class="small-12 large-2 cell"
+       style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-color: #33b4c2;border-width:2px;border-style:solid;border-radius: 50px;">
+
+    <br>
+    <h2 th:text="${message}">Numele eveniment</h2>
+    <h1 th:inline="text" >
+
+      <small th:text="${text}">Date oraganizatorice</small>
+    </h1>
+
+
+    <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> vezi mai multe detalii </a>
+
+    <br><br>
+
+    <br><br>
+
+  </div>
+
+
+</div>
+<br><br><br>
+
+
+
+</body>
+</html>

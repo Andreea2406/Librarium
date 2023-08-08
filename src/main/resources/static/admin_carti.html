@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+    <a class="button2" href="admin_cititori.html" style="text-align: center; ">Cititori</a>
+
+    <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
+    <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
+    <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
+    <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
+    <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
+    <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
+
+    <a class="button2" href="index.html" style="text-align: center; ">Deconectare</a>
+
+  </div>
+</div>
+</div>
+<br><br><br>
+
+<div class="column small-12 large-12">
+
+
+  <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
+  <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
+
+</div>
+<br><br><br>
+<a href="admin_adauga_carte.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga carte </a>
+<br><br><br>
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Titlu</th>
+    <th>Autor</th>
+    <th>An aparitie</th>
+    <th>Numar pagini</th>
+    <th>Descriere</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="person : ${people}">
+    <td th:text="${person.id}">1</td>
+    <td th:text="${person.name}">John Doe</td>
+    <td th:text="${person.age}">30</td>
+    <td th:text="${person.location}">City</td>
+    <td th:text="${person.email}">john@example.com</td>
+    <td th:text="${person.phone}">123-456-7890</td>
+    <td th:text="${person.sterge}"><a href="#" class="button"> editeaza </a>
+
+    <td th:text="${person.sterge}"><a href="#" class="button"> sterge </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
+
+

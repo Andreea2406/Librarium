@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Librarium</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+    <a class="button2" href="cititor_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
+
+    <a class="button2" href="cititor_evenimente.html" style="text-align: center; ">Evenimente</a>
+    <a class="button2" href="cititor_rezervari_sali.html" style="text-align: center; ">Rezerva o sala</a>
+    <a class="button2" href="cititor_setari_profil.html" style="text-align: center; ">Setari profil</a>
+
+    <a class="button2" href="cititor_mesaje.html" style="text-align: center; ">Mesaje</a>
+    <a class="button1" href="index.html"; style="text-align: center;font-weight:bold   ">Deconectare</a>
+
+    <!--  <img th: src="@{/images/logo.jpg}" alt="My Image">-->
+
+  </div>
+</div>
+</div>
+<br><br><br>
+
+<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+  <label for="nume">Nume:</label>
+  <input type="text" id="nume" th:field="*{nume}" />
+
+  <br /> <br />
+  <label for="data_ora_inceput">Data si ora inceput:</label>
+  <input type="text" id="data_ora_inceput" th:field="*{data_ora_inceput}" />
+
+  <br /> <br />
+  <label for="data_ora_final">Data si ora final:</label>
+  <input type="text" id="data_ora_final" th:field="*{data_ora_final}" />
+
+
+  <br /> <br />
+  <label for="id_sala">Sala:</label>
+  <input type="text" id="id_sala" th:field="*{id_sala}" />
+
+  <br /> <br />
+  <label for="descriere">Descriere:</label>
+  <input type="text" id="descriere" th:field="*{descriere}" />
+
+  <br /> <br />
+
+
+  <button type="submit">Adauga</button>
+</form>
+<br /> <br />
+<a href="cititor_evenimente.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
+
+</body>
+</html>

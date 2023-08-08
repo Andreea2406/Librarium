@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eveniment</title>
+</head>
+<body>
+
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+    <a class="button2" href="#" style="text-align: center; ">Evenimente</a>
+
+    <a class="button2" href="logare.html" style="text-align: center; ">Intra in cont</a>
+    <a class="button1" href="creare_cont.html"; style="text-align: center;font-weight:bold   ">Cont nou</a>
+
+    <!--  <img th: src="@{/images/logo.jpg}" alt="My Image">-->
+
+  </div>
+</div>
+</div>
+<br /> <br />  <br /> <br />  <br /> <br />
+<div class="small-12 large-2 cell"
+     style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-color: #33b4c2;border-width:2px;border-style:solid;border-radius: 50px;">
+
+  <br>
+  <h2 th:text="${message}">Numele eveniment</h2>
+  <h1 th:inline="text" >
+
+    <small th:text="${text}">Data</small>
+  </h1>
+
+  <h2 th:text="${message}">ora</h2>
+  <h1 th:inline="text" >
+
+    <small th:text="${text}">Detalii</small>
+  </h1>
+  <br /> <br />  <br /> <br />  <br /> <br />
+  <a href="logare.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> inscrie-te </a>
+
+  <br><br>
+
+  <br><br>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+  </div>
+</div>
+
+<div class="grid-x grid-padding-x">
+  <div class="columns small-6 large-12">
+
+
+
+    <div class="container1" style=" background-color: rgb(226,194,198);padding-top: 2em;opacity: 82%;padding-right: 10px;  border-radius: 25px ;text-align:center;width:500px ;height:400px;padding-left: 20px; border-radius: 25px ;  ">
+
+
+
+        <form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+
+          <div class="row">
+
+            <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+              Username: <input type="text" name="username" >
+            </div>
+            <br /> <br />
+            <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+              Parola: <input type="password" name="user_password">
+            </div>
+          </div>
+          <br /> <br />
+
+
+          <div class="large-8 medium-8 small-8 columns">
+            <button type="submit" class="success button" name="submit">Logare</button>
+          </div>
+
+        </form>
+
+        <p style="float:right"><a href="creare_cont.html">Creare cont</a></p>
+        <br>
+
+      </div>
+
+        </form>
+      </div>
+
+
+      <!--        <p style="float:right"><a href="creare_cont_companie.html">Creare cont</a></p>-->
+      <br>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+</body>
+</html>

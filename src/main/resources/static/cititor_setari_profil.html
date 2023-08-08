@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Librarium</title>
+  <link rel="stylesheet" href="css/foundation.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+    <a class="button2" href="cititor_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
+
+    <a class="button2" href="cititor_evenimente.html" style="text-align: center; ">Evenimente</a>
+    <a class="button2" href="cititor_rezervari_sali.html" style="text-align: center; ">Rezerva o sala</a>
+    <a class="button2" href="cititor_setari_profil.html" style="text-align: center; ">Setari profil</a>
+
+    <a class="button2" href="cititor_mesaje.html" style="text-align: center; ">Mesaje</a>
+    <a class="button1" href="index.html"; style="text-align: center;font-weight:bold   ">Deconectare</a>
+
+    <!--  <img th: src="@{/images/logo.jpg}" alt="My Image">-->
+
+  </div>
+</div>
+<br><br><br>
+
+<div class="grid-x grid-padding-x"style="background-image:url('images/searchbar.jpg' ) ;background-size: cover;background-attachment: fixed">
+  <div class="columns small-12 large-8" style="background-image:url('images/searchbar.jpg' ) ;background-size: cover;background-attachment: fixed; ">
+
+    <div class="large-6 cell" style="border-color: #33b4c2;border-width:4px;border-style:solid;border-radius: 50px;">
+      <br>
+      <div class="column large 3-cell"style="text-align: left" >
+        <h1 style="font-weight: bold   ;float: left;color:black;  text-align: left;font-size: 30px;">&nbsp; &nbsp; Informații personale</h1>
+        <br><br><br>
+        <p style="text-align: left">&nbsp;&nbsp;Nume</p>
+        <p style="text-align: left">&nbsp;&nbsp;Prenume</p>
+        <p style="text-align: left">&nbsp;&nbsp;Varsta</p>
+        <p style="text-align: left">&nbsp;&nbsp;Telefon</p>
+
+        <p style="text-align: left">&nbsp;&nbsp;Email</p>
+        <p style="text-align: left">&nbsp;&nbsp;Strada</p>
+        <p style="text-align: left">&nbsp;&nbsp;Oras</p>
+        <p style="text-align: left">&nbsp;&nbsp;Judet</p>
+        <p style="text-align: left">&nbsp;&nbsp;Apartament</p>
+        <p style="text-align: left">&nbsp;&nbsp;Bloc</p>
+        <p style="text-align: left">&nbsp;&nbsp;Scara</p>
+        <p style="text-align: left">&nbsp;&nbsp;ocupatie</p>
+
+        <p style="text-align: left">&nbsp;&nbsp;parola</p>
+
+
+
+
+        <p1><a data-open="exampleModal7"class="button3"  style="float: right; background-color: #f3ccd5;margin-right: 100px; opacity: 100%;font-size: 25px;border-radius: 20px;color:#33b4c2;padding-left: 5px;padding-right: 15px;padding-bottom: 5px;padding-top: 5px"> Modifica</a></p1>
+
+        <div class="reveal" id="exampleModal7" data-reveal>
+          <a href="#" class="buttonborder" style="justify-content: left;background: #f7e4e1;;border-width:2px;border-style:solid; float:left;border-style: solid ; opacity: 100%;font-size: 25px;border-radius: 20px;border: lightpink;  color:#33b4c2;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;padding-top: 5px"> Salveaza </a><br><br><br>
+          <textarea id="w3review" name="w3review" rows="4" cols="50">
+nume	prenume	varsta	telefon	email	strada	oras		judet	apartament	bloc	scara	ocupatie	parola
+
+              </textarea>
+
+
+
+        </div>
+
+      </div><br><br><br>
+      <br><br><br><br>
+
+
+
+    </div>
+    <br><br><br><br>
+  </div>
+  <br>
+
+  <br>
+  <div class="large-6 cell" style="border-color: #33b4c2;border-width:4px;border-style:solid;border-radius: 50px;">
+    <br>
+    <div class="column large 3-cell"style="text-align: left" >
+      <h1 style="font-weight: bold   ;float: left;color:black;  text-align: left;font-size: 30px;">&nbsp; &nbsp; Acțiuni cont</h1>
+      <br><br><br>
+      <h style="text-align: left;font-weight: bold    ">&nbsp;&nbsp;Stergerea contului</h>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;Ștergerea contului este o acțiune ireversibilă. Îți vei pierde toate informațiile din cont.</p>
+      <br>
+      <a href="#" class="button3"  style="margin-left: 150px; ;background-color: #f3ccd5; opacity: 100%;font-size: 25px;border-radius: 20px;color:#33b4c2;padding-left:5px;padding-right:5px;padding-bottom: 5px;padding-top: 5px"> Stergere cont</a>
+      <br><br><br>
+
+
+
+
+    </div>
+
+  </div><br><br><br>
+
+
+</div>
+<br><br>
+
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

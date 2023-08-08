@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+    <a class="button2" href="admin_cititori.html" style="text-align: center; ">Cititori</a>
+
+    <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
+    <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
+    <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
+    <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
+    <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
+    <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
+
+    <a class="button2" href="index.html" style="text-align: center; ">Deconectare</a>
+
+
+
+  </div>
+</div>
+</div>
+<br><br><br>
+
+<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+  <label for="titlu">Titlu:</label>
+  <input type="text" id="titlu" th:field="*{titlu}" />
+
+  <br /> <br />
+  <label for="categorie">Categorie:</label>
+  <input type="text" id="categorie" th:field="*{categorie}" />
+
+  <br /> <br />
+  <label for="limba">Limba:</label>
+  <input type="text" id="limba" th:field="*{limba}" />
+
+  <br /> <br />
+  <label for="editura">Editura:</label>
+  <input type="text" id="editura" th:field="*{editura}" />
+
+  <br /> <br />
+  <label for="tip_coperta">Tip coperta:</label>
+  <input type="text" id="tip_coperta" th:field="*{tip_coperta}" />
+
+  <br /> <br />
+  <label for="nr_pagini">Numar pagini:</label>
+  <input type="text" id="nr_pagini" th:field="*{nr_pagini}" />
+
+  <br /> <br />
+  <label for="oras">Oras:</label>
+  <input type="text" id="oras" th:field="*{oras}" />
+
+  <br /> <br />
+  <label for="colectie">Colectie:</label>
+  <input type="text" id="colectie" th:field="*{colectie}" />
+
+  <br /> <br />
+  <label for="isbn">ISBN:</label>
+  <input type="text" id="isbn" th:field="*{isbn}" />
+
+  <br /> <br />
+  <label for="latime">Latime:</label>
+  <input type="text" id="latime" th:field="*{latime}" />
+
+  <br /> <br />
+  <label for="inaltime">Inaltime:</label>
+  <input type="text" id="inaltime" th:field="*{inaltime}" />
+
+  <br /> <br />
+
+  <label for="descriere">Descriere:</label>
+  <input type="text" id="descriere" th:field="*{descriere}" />
+
+  <br /> <br />
+  <label for="data_publicarii">Data publicarii:</label>
+  <input type="text" id="data_publicarii" th:field="*{data_publicarii}" />
+
+  <br /> <br />
+  <label for="disponibilitate">Disponibilitate:</label>
+  <input type="email" id="disponibilitate" th:field="*{dipsonibilitate}" />
+
+  <br /> <br />
+
+  <button type="submit">Adauga</button>
+</form>
+<br /> <br />
+
+<a href="admin_carti.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
+
+</body>
+</html>

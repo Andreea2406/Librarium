@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+    <div class="columns small-12 large-12">
+        <img src="images/logo.jpg" alt="My Image">
+
+        <a class="button2" href="admin_cititori.html" style="text-align: center; ">Cititori</a>
+
+        <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
+        <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
+        <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
+        <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
+        <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
+        <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
+
+        <a class="button2" href="index.html" style="text-align: center; ">Deconectare</a>
+
+
+
+    </div>
+</div>
+</div>
+<br><br><br>
+
+<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+    <label for="nume">Nume:</label>
+    <input type="text" id="nume" th:field="*{nume}" />
+
+    <br /> <br />
+
+
+    <br /> <br />
+    <label for="locuri_disponibile">Locuri disponibile:</label>
+    <input type="text" id="locuri_disponibile" th:field="*{locuri_disponibile}" />
+
+
+    <br /> <br />
+
+
+    <button type="submit">Adauga</button>
+</form>
+<br /> <br />
+
+<a href="admin_sali_biblioteca.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
+
+</body>
+</html>
