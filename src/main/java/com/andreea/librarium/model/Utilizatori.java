@@ -20,9 +20,9 @@ public class Utilizatori {
     private Integer varsta;
 
     @Column(name = "telefon", nullable = false)
-    private Integer telefon;
+    private String telefon;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false,unique = true)
     private String email;
 
     @Column(name = "strada", nullable = false)
@@ -40,8 +40,8 @@ public class Utilizatori {
     @Column(name = "apartament", nullable = false, length = 50)
     private String apartament;
 
-    @Column(name = "bloc", nullable = false)
-    private String bloc;
+    @Column(name = "numar", nullable = false)
+    private String numar;
 
     @Column(name = "scara", nullable = false)
     private String scara;
@@ -84,11 +84,11 @@ public class Utilizatori {
         this.varsta = varsta;
     }
 
-    public Integer getTelefon() {
+    public String getTelefon() {
         return telefon;
     }
 
-    public void setTelefon(Integer telefon) {
+    public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
 
@@ -140,12 +140,12 @@ public class Utilizatori {
         this.apartament = apartament;
     }
 
-    public String getBloc() {
-        return bloc;
+    public String getNumar() {
+        return numar;
     }
 
-    public void setBloc(String bloc) {
-        this.bloc = bloc;
+    public void setNumar(String numar) {
+        this.numar = numar;
     }
 
     public String getScara() {

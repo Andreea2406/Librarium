@@ -10,4 +10,5 @@ public class LibrariumApplication {
 		SpringApplication.run(LibrariumApplication.class, args);
 	}
 
+
 }
