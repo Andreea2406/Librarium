@@ -2,6 +2,9 @@ package com.andreea.librarium.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "utilizatori")
 public class Utilizatori {
@@ -51,6 +54,9 @@ public class Utilizatori {
 
     @Column(name = "parola", nullable = false)
     private String parola;
+    public String getPassword() {
+        return parola;
+    }
 
     public Integer getId() {
         return id;
