@@ -1,7 +1,7 @@
 package com.andreea.librarium.model;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -12,17 +12,21 @@ public class RezervariCarti {
     @Column(name = "id_rezervare", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_carte", nullable = false)
     private Carti idCarte;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_utilizator", nullable = false)
     private Utilizatori idUtilizator;
 
+    @NotNull
     @Column(name = "data_rezervare", nullable = false)
     private LocalDate dataRezervare;
 
+    @NotNull
     @Column(name = "stare_rezervare", nullable = false)
     private Boolean stareRezervare = false;
 

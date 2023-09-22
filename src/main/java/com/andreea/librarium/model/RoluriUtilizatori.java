@@ -2,29 +2,24 @@ package com.andreea.librarium.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Entity
-@Table(name = "inregistrare_eveniment")
-public class InregistrareEveniment {
+@Table(name = "roluri_utilizatori")
+public class RoluriUtilizatori {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_inregistrare", nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_eveniment", nullable = false)
-    private Evenimente idEveniment;
+    @JoinColumn(name = "id_rol", nullable = false)
+    private Rol idRol;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_utilizator", nullable = false)
     private Utilizatori idUtilizator;
-
-    @NotNull
-    @Column(name = "data_inregistrarii", nullable = false)
-    private LocalDate dataInregistrarii;
 
     public Integer getId() {
         return id;
@@ -34,12 +29,12 @@ public class InregistrareEveniment {
         this.id = id;
     }
 
-    public Evenimente getIdEveniment() {
-        return idEveniment;
+    public Rol getIdRol() {
+        return idRol;
     }
 
-    public void setIdEveniment(Evenimente idEveniment) {
-        this.idEveniment = idEveniment;
+    public void setIdRol(Rol idRol) {
+        this.idRol = idRol;
     }
 
     public Utilizatori getIdUtilizator() {
@@ -50,12 +45,5 @@ public class InregistrareEveniment {
         this.idUtilizator = idUtilizator;
     }
 
-    public LocalDate getDataInregistrarii() {
-        return dataInregistrarii;
-    }
-
-    public void setDataInregistrarii(LocalDate dataInregistrarii) {
-        this.dataInregistrarii = dataInregistrarii;
-    }
 
 }

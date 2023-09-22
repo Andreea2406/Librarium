@@ -1,45 +1,45 @@
-package com.andreea.librarium.security;
-
-//import com.example.registrationlogindemo.entity.Role;
-
+//package com.andreea.librarium.security;
+//
+//import com.andreea.librarium.model.Rol;
+//import com.andreea.librarium.model.RoluriUtilizatori;
+//import com.andreea.librarium.model.Utilizatori;
+//import com.andreea.librarium.repositories.UtilizatoriRepository;
 //import org.springframework.security.core.GrantedAuthority;
 //import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.stereotype.Service;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 //
 //import java.util.Collection;
+//import java.util.stream.Collectors;
 //
-//import java.util.Collections;
+//@Service
+//public class CustomUserDetailsService implements UserDetailsService {
 //
-//public abstract class CustomUserDetailsService implements UserDetails {
-//    private String username;
-//    private String password;
-//    private Collection<? extends GrantedAuthority> authorities;
+//    private UtilizatoriRepository userRepository;
 //
-//    public void CustomUserDetails(String username, String password, String role) {
-//        this.username = username;
-//        this.password = password;
-//        // Create a collection of authorities (roles and permissions)
-//        this.authorities = Collections.singleton(new SimpleGrantedAuthority(role));
-//    }
-//
-//    // Implement UserDetails methods...
-//
-//    @Override
-//    public String getUsername() {
-//        return username;
+//    public CustomUserDetailsService(UtilizatoriRepository userRepository) {
+//        this.userRepository = userRepository;
 //    }
 //
 //    @Override
-//    public String getPassword() {
-//        return password;
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        Utilizatori utilizatori = userRepository.findByEmail(email);
+//
+//        if (utilizatori != null) {
+//            return new org.springframework.security.core.userdetails.User(utilizatori.getEmail(),
+//                    utilizatori.getParola(),
+//                    mapRolesToAuthorities(utilizatori.getRoluri()));
+//        }else{
+//            throw new UsernameNotFoundException("Invalid username or password.");
+//        }
 //    }
 //
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return authorities;
+//    private Collection< ? extends GrantedAuthority> mapRolesToAuthorities(Collection <RoluriUtilizatori> roles) {
+//        Collection < ? extends GrantedAuthority> mapRoles = roles.stream()
+//                .map(role -> new SimpleGrantedAuthority(role.getNumeRol()))
+//                .collect(Collectors.toList());
+//        return mapRoles;
 //    }
-//
-//    // Implement other UserDetails methods...
-//
-//    // ...
 //}

@@ -3,76 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
 </head>
 <body>
 <div class="grid-x grid-padding-x">
-  <div class="columns small-12 large-12">
-    <img src="images/logo.jpg" alt="My Image">
+    <div class="columns small-12 large-12">
+        <img src="images/logo.jpg" alt="My Image">
 
-  </div>
+    </div>
 </div>
-<h1>Creeare cont</h1>
+<div class="container ">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <!--          succes message-->
+            <div th:if="${param.success}">
+                <div class="alert  alert-info">Contul a fost creat cu succes ^.^
+                    <br> Te poti loga in contul tau
+                </div>
+            </div>
+            <h1>Creeare cont</h1>
 
-<form th:action="@{/register}" th:object="${user}" method="post">
-  <label for="nume">Nume:</label>
-  <input type="text" id="nume" th:field="*{nume}" />
+            <form method="post" th:action="@{/register}" th:object="${registerRequest}" >
+                <label for="nume">Nume:</label>
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
-  <label for="prenume">Prenume:</label>
-  <input type="text" id="prenume" th:field="*{prenume}" />
+                    <input name="nume" type="text" id="nume" placeholder="nume" required  />
+                </div>
 
-  <br /> <br />
-  <label for="varsta">Varsta:</label>
-  <input type="text" id="varsta" th:field="*{varsta}" />
 
-  <br /> <br />
-  <label for="telefon">Telefon:</label>
-  <input type="text" id="telefon" th:field="*{telefon}" />
+                <br/> <br/>
+                <label for="prenume">Prenume:</label>
 
-  <br /> <br />
-  <label for="email">Email:</label>
-  <input type="email" id="email" th:field="*{email}" />
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
-  <label for="strada">Strada:</label>
-  <input type="text" id="strada" th:field="*{strada}" />
+                    <input type="text" id="prenume" name="prenume" placeholder="prenume" required/>
+                </div>
+                <br/> <br/>
+                <label for="varsta">Varsta:</label>
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
-  <label for="oras">Oras:</label>
-  <input type="text" id="oras" th:field="*{oras}" />
+                    <input type="text" id="varsta" name="varsta" placeholder="varsta" required/>
+                </div>
+                <br/> <br/>
+                <label for="telefon">Telefon:</label>
 
-  <br /> <br />
-  <label for="cod_postal">Cod Postal:</label>
-  <input type="text" id="cod_postal" th:field="*{codPostal}" />
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
-  <label for="judet">Judet:</label>
-  <input type="text" id="judet" th:field="*{judet}" />
+                    <input type="text" id="telefon" name="telefon" placeholder="telefon" required/>
+                </div>
+                <br/> <br/>
+                <label for="email">Email:</label>
 
-  <br /> <br />
-  <label for="apartament">Apartament:</label>
-  <input type="text" id="apartament" th:field="*{apartament}" />
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
-  <label for="numar">Bloc:</label>
-  <input type="text" id="numar" th:field="*{numar}" />
+                    <input type="email" id="email" name="email" placeholder="email" required autofocus="autofocus"/>
+                </div>
+                <br/> <br/>
+                <label for="strada">Strada:</label>
 
-  <br /> <br />
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <label for="scara">Scara:</label>
-  <input type="text" id="scara" th:field="*{scara}" />
+                    <input type="text" id="strada" name="strada" placeholder="strada" />
+                </div>
+                <br/> <br/>
+                <label for="oras">Oras:</label>
 
-  <br /> <br />
-  <label for="ocupatie">Ocupatie:</label>
-  <input type="text" id="ocupatie" th:field="*{ocupatie}" />
 
-  <br /> <br />
-  <label for="parola">Parola:</label>
-  <input type="password" id="parola" th:field="*{parola}" />
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
 
-  <br /> <br />
+                    <input type="text" id="oras" name="oras" placeholder="oras" required/>
+                </div>
+                <br/> <br/>
+                <label for=" codPostal">Cod Postal:</label>
 
-  <button type="submit">Trimite</button>
-</form>
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id=" codPostal"th:field="*{codPostal}"  name="cod_postal" placeholder=" codPostal" required/>
+                </div>
+                <br/> <br/>
+                <label for="judet">Judet:</label>
+
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id="judet" name="judet" placeholder="judet" required/>
+                </div>
+                <br/> <br/>
+                <label for="apartament">Apartament:</label>
+
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id="apartament" name="apartament" placeholder="apartament" required/>
+                </div>
+                <br/> <br/>
+                <label for="numar">Numar:</label>
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id="numar" name="numar" placeholder="numar" required/>
+                </div>
+                <br/> <br/>
+
+                <label for="scara">Scara:</label>
+
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id="scara" name="scara" placeholder="scara" required/>
+                </div>
+                <br/> <br/>
+                <label for="ocupatie">Ocupatie:</label>
+
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="text" id="ocupatie" name="ocupatie" placeholder="ocupatie" required/>
+                </div>
+                <br/> <br/>
+                <label for="parola">Parola:</label>
+
+
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+
+                    <input type="password" id="parola" name="parola" placeholder="parola" required/>
+                </div>
+                <br/> <br/>
+                <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
+                    <input type="submit"name="sign-in" value="Login">
+
+<!--                <button type="submit" class="btn btn-success" value="Register">Trimite</button>-->
+                </div>
+                <div class="form-group">
+                <span>Ai deja cont?<a href="/" th:href="@{/logare}">Intra in cont</a></span>
+            </div>
+            </form>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
 </body>
 </html>
