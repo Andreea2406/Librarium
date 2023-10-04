@@ -1,7 +1,7 @@
 package com.andreea.librarium.model;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 @Entity
@@ -12,17 +12,21 @@ public class Imprumuturi {
     @Column(name = "id_imrpumut", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_utilizator", nullable = false)
     private Utilizatori idUtilizator;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_carte", nullable = false)
     private Carti idCarte;
 
+    @NotNull
     @Column(name = "data_ora_imprumut", nullable = false)
     private Instant dataOraImprumut;
 
+    @NotNull
     @Column(name = "data_ora_return", nullable = false)
     private Instant dataOraReturn;
 
