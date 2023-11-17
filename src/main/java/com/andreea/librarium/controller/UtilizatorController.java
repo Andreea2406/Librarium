@@ -1,6 +1,5 @@
 package com.andreea.librarium.controller;
 
-
 import com.andreea.librarium.model.Rol;
 import com.andreea.librarium.model.RoluriUtilizatori;
 import com.andreea.librarium.model.Utilizatori;
@@ -8,13 +7,14 @@ import com.andreea.librarium.repositories.RolRepository;
 import com.andreea.librarium.repositories.RoluriUtilizatoriRepository;
 import com.andreea.librarium.repositories.UtilizatoriRepository;
 import com.andreea.librarium.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -113,11 +113,164 @@ public class UtilizatorController {
         }
 
     }
-//    @GetMapping("/logare")
-//    public String returnLogare() {
-//        return "logare";
+    @GetMapping("/admin_adauga_cititor")
+    public String returnAdminAdaugaCititor(Model model) {
+        model.addAttribute("user", new Utilizatori());
+        return "admin_adauga_cititor"; // Returnați pagina cu formularul de adăugare a utilizatorului
+    }
+    @RequestMapping(value="admin_cititori/{id}", method = RequestMethod.GET)
+    public String findById(@PathVariable Long id) {
+        System.out.println("ID"+id);
+        return "ID found"+id;
+    }
+
+
+//    @RequestMapping("/admin_editeaza_cititor/{id}")
+//    public String afiseazaFormularEditare(@PathVariable Long id, Model model) {
+////      Utilizatori utilizator = usersService.getUtilizatorById(Math.toIntExact(id));
+//        Optional<Utilizatori> utilizator = utilizatoriRepository.findById(id);
+//        System.out.println("aici");
+//        model.addAttribute("utilizator", utilizator);
+//        return "admin_editeaza_cititor";
+//    }
+//
+
+
+
+
+//    @PostMapping("/update/{id}")
+//    @PostMapping("/edit/{id}")
+////    public String actualizeazaUtilizator(@PathVariable("id") Integer id, @Valid Utilizatori utilizator , Model model) {
+//
+//    public String actualizeazaUtilizator(@PathVariable Integer id, @ModelAttribute Utilizatori utilizator) {
+//
+//        Utilizatori existingUtilizator = usersService.getUtilizatorById(utilizator.getId());
+//
+//        if (existingUtilizator != null) {
+//            System.out.println("aici");
+//            existingUtilizator.setNume(utilizator.getNume());
+//            existingUtilizator.setPrenume(utilizator.getPrenume());
+//            existingUtilizator.setVarsta(utilizator.getVarsta());
+//            existingUtilizator.setTelefon(utilizator.getTelefon());
+//            existingUtilizator.setEmail(utilizator.getEmail());
+//            existingUtilizator.setStrada(utilizator.getStrada());
+//            existingUtilizator.setOras(utilizator.getOras());
+//            existingUtilizator.setCodPostal(utilizator.getCodPostal());
+//            existingUtilizator.setJudet(utilizator.getJudet());
+//            existingUtilizator.setApartament(utilizator.getApartament());
+//            existingUtilizator.setNumar(utilizator.getNumar());
+//            existingUtilizator.setScara(utilizator.getScara());
+//            existingUtilizator.setOcupatie(utilizator.getOcupatie());
+//            existingUtilizator.setParola(utilizator.getParola());
+//            // ... și actualizați celelalte câmpuri
+//            utilizatoriRepository.save(existingUtilizator);
+//            System.out.println("aici");
+//            Utilizatori updatedUtilizator = usersService.saveUser(existingUtilizator);
+//
+//            if (updatedUtilizator != null) {
+//                return "admin_cititori";
+//            }
+//        }
+//        System.out.println("aici");
+//        return "error_page";
+//    }
+//
+////    @GetMapping("/admin_cititori/edit/{id}")
+////    public String editCustomer(@PathVariable Integer id, Model model){
+////        Utilizatori utilizator=usersService.getUtilizatorById(id);
+//////        Customer thisCustomer=customerRepository.getById(id);
+////        model.addAttribute("utilizator",utilizator);
+////        return "admin_editeaza_cititor";
+////    }
+//@GetMapping("/admin_editeaza_cititor/{id}")
+//public String afiseazaFormularEditare(@PathVariable Integer id, Model model) {
+//    // Obțineți utilizatorul cu ID-ul specificat din serviciu sau din baza de date
+//    Utilizatori utilizator = usersService.getUtilizatorById(id);
+//
+//    // Verificați dacă utilizatorul există
+//    if (utilizator != null) {
+//        // Adăugați utilizatorul în model pentru a-l afișa în formular
+//        model.addAttribute("utilizator", utilizator);
+//
+//        // Returnați numele paginii Thymeleaf unde veți afișa formularul de editare
+//        return "admin_editeaza_cititor";
+//    } else {
+//        // Dacă utilizatorul nu există, puteți să tratați acest caz aici sau să redirecționați către o pagină de eroare
+//        return "error_page"; // Înlocuiți "pagina_de_eroare" cu pagina de eroare reală
+//    }
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @GetMapping("/editare_cititor")
+//    public String returnEditareCititor(Model model) {
+//        model.addAttribute("user", new Utilizatori());
+//        return "editare_cititor";
 //    }
 
+
+
+
+//    @PostMapping("/adaugare")
+//    public String addUser(@ModelAttribute Utilizatori utilizatori) {
+//        Utilizatori newUser = usersService.saveUser(utilizatori); // Apelați serviciul pentru a adăuga utilizatorul
+//        System.out.println("Utilizatorul a fost adăugat cu succes: " + newUser.getId());
+//
+//        if (newUser != null) {
+//            // Utilizatorul a fost adăugat cu succes
+//            return "admin_cititori"; // Redirecționați la pagina de administrare a cititorilor
+//        } else {
+//            System.out.println("Adăugarea utilizatorului a eșuat.");
+//            // Tratați cazul în care adăugarea a eșuat
+//            return "error_page"; // Puteți redirecționa către o pagină de eroare sau face altceva
+//        }
+//    }
+//    @GetMapping("/adaiugare")
+//    public String getAdaugare(Model model) {
+//        model.addAttribute("user",new Utilizatori());
+//        return "admin_cititori";
+//
+//    }
+
+//    @GetMapping("/admin_cititori")
+//    public String afiseazaUtilizatori(Model model) {
+//        List<Utilizatori> utilizatori = usersService.getAllUsers();
+//        model.addAttribute("utilizatori", utilizatori);
+//        return "admin_cititori";
+//    }
+//    @GetMapping("/admin_cititori")
+//    public String returnAdminCititori() {
+//        return "admin_cititori";
+//    }
+//
+
+
+
+
+
+
+
+
+//    @GetMapping("/admin_adauga_cititor")
+//    public String returnAdminAdaugaCititor() {
+//        return "admin_adauga_cititor";
+//    }
+//    @GetMapping("/admin_cititori/new"){
+//        public String showNewForm(Model model){
+//            return j;
+//        }
+//    }
 }
 
 

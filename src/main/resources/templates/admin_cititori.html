@@ -30,40 +30,76 @@
 
 
   <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
+  <div class="grid-x grid-padding-x">
+<a  th:href="@{/admin_cititor/new}"></a>
   <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
-
+  </div>
 </div>
 <br><br><br>
-<a href="admin_adauga_cititor.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga cititor </a>
+<!--<a href="admin_adauga_cititor.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga cititor </a>-->
+<a th:href="@{/admin_adauga_cititor}" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga cititor </a>
+
 <br><br><br>
-<table border="1">
-  <thead>
+<h1>Lista Utilizatori</h1>
+
+<table>
   <tr>
     <th>ID</th>
-    <th>Name</th>
-    <th>Age</th>
-    <th>Location</th>
+    <th>Nume</th>
+    <th>Prenume</th>
+    <th>Varsta</th>
+    <th>Telefon</th>
     <th>Email</th>
-    <th>Phone</th>
-    <th></th>
-    <th></th>
+    <th>Strada</th>
+    <th>Oras</th>
+    <th>Cod Postal</th>
+    <th>Judet</th>
+    <th>Apartament</th>
+    <th>Numar</th>
+    <th>Scara</th>
+    <th>Ocupatie</th>
+    <th>Parola</th>
+    <!-- Alte antete pentru coloane -->
+    <th>Acțiuni</th>
   </tr>
-  </thead>
-  <tbody>
-  <tr th:each="person : ${people}">
-    <td th:text="${person.id}">1</td>
-    <td th:text="${person.name}">John Doe</td>
-    <td th:text="${person.age}">30</td>
-    <td th:text="${person.location}">City</td>
-    <td th:text="${person.email}">john@example.com</td>
-    <td th:text="${person.phone}">123-456-7890</td>
-    <td th:text="${person.sterge}"><a href="#" class="button"> editeaza </a>
 
-    <td th:text="${person.sterge}"><a href="#" class="button"> sterge </a>
+  <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
+  <tr th:each="utilizator : ${utilizatori}">
+    <td th:text="${utilizator.id}">ID</td>
+    <td th:text="${utilizator.nume}">Nume</td>
+    <td th:text="${utilizator.prenume}">Prenume</td>
+    <td th:text="${utilizator.varsta}">Varsta</td>
+    <td th:text="${utilizator.telefon}">Telefon</td>
+    <td th:text="${utilizator.email}">Email</td>
+    <td th:text="${utilizator.strada}">Strada</td>
+    <td th:text="${utilizator.oras}">Oras</td>
+    <td th:text="${utilizator.codPostal}">Cod Postal</td>
+    <td th:text="${utilizator.judet}">Judet</td>
+    <td th:text="${utilizator.apartament}">Apartament</td>
+    <td th:text="${utilizator.numar}">Numar</td>
+    <td th:text="${utilizator.scara}">Scara</td>
+    <td th:text="${utilizator.ocupatie}">Ocupatie</td>
+    <td th:text="${utilizator.parola}">Parola</td>
+
+
+
+    <!-- Alte celule pentru datele utilizatorului -->
+    <td>
+      <!-- Buton de editare care duce la o pagină de editare a utilizatorului -->
+      <a th:href="@{/admin_editeaza_cititor/{id}/(id=${utilizator.id})}">Editare</a>
+<!--    <a th:href="@{'/admin_editeaza_cititor/' + ${utilizator.id}}">Editare</a>-->
+<!--      <a th:href="@{'/admin_editeaza_cititor/' + utilizator.id}">Editare</a>-->
+
+      <!--      <a th:href="@{/editare_cititor}">Editare</a>-->
+
+      <!--      <a th:href="@{/edit/{id}(id=${utilizator.id})}">Editare</a>-->
+
+      <!-- Buton de ștergere care duce la acțiunea de ștergere a utilizatorului -->
+      <a th:href="@{'/delete/' }+ ${utilizator.id}">Ștergere</a>
     </td>
   </tr>
-  </tbody>
 </table>
+
 </body>
 </html>
 

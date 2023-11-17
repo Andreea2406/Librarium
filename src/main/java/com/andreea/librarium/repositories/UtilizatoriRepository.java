@@ -14,7 +14,10 @@ public interface UtilizatoriRepository extends JpaRepository<Utilizatori,Long> {
       Optional<Utilizatori>findByEmail(String email);
 
       Optional<Utilizatori> findByEmailAndParola(String email, String parola);
-     // Optional<Rol> findByName(String name);
+      Utilizatori findById(Integer id);
+
+//      Utilizatori findByName(String nume);
+      // Optional<Rol> findByName(String name);
 
 
 
