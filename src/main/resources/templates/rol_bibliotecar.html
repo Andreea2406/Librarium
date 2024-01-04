@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <title>Title</title>
+</head>
+<body>
+
+<h1>Doresti sa schmbi rolul acestui cititor in bibliotecar? </h1>
+
+<form th:action="@{/makeBibliotecar/{id}(id=${utilizator.id})}" th:object="${utilizatori}" method="post">
+<!--<form  th:action="@{/atribuire}" th:object="${user}" method="post">-->
+
+
+  <button th:href="@{/admin_cititori}" type="submit">Da</button>
+</form>
+<a href="admin_cititori.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
+
+
+</body>
+
+</html>

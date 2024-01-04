@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <title>Title</title>
+</head>
+<body>
+<!--th:action="@{'/edit/' + ${utilizator.id}}"-->
+<h1>Editare Carte</h1>
+
+<!--<form th:action="@{/admin_carti/{id}(id=${carte.id}) }" th:object="${carte}" method="post">-->
+<form th:if="${carti != null}" th:action="@{/admin_carti/{id}(id=${carti.id})}" th:object="${carti}" method="post">
+
+
+  <input type="hidden" name="id" th:value="${carti.id}" />
+
+  <input type="text" th:field="*{titlu}" placeholder="Titlu">
+  <input type="text" th:field="*{categorie}" placeholder="Categorie">
+  <input type="text" th:field="*{limba}" placeholder="Limba">
+  <input type="text" th:field="*{editura}" placeholder="Editura">
+  <input type="text" th:field="*{tipCoperta}" placeholder="Tip Coperta">
+  <input type="text" th:field="*{nrPagini}" placeholder="Nr pagini">
+  <input type="text" th:field="*{autor}" placeholder="Autor">
+  <input type="text" th:field="*{colectie}" placeholder="Colectie">
+  <input type="text" th:field="*{isbn}" placeholder="ISBN">
+  <input type="text" th:field="*{latime}" placeholder="Latime">
+  <input type="text" th:field="*{inaltime}" placeholder="Inaltime">
+  <input type="text" th:field="*{descriere}" placeholder="Descriere">
+  <input type="text" th:field="*{dataPublicarii}" placeholder="Data publicarii">
+  <input type="text" th:field="*{disponibilitate}" placeholder="Disponibilitate">
+  <!-- Adăugați câmpuri pentru celelalte atribute ale utilizatorului -->
+  <button th:href="@{/admin_carti}" type="submit">Salvează</button>
+</form>
+
+
+</body>
+
+</html>
