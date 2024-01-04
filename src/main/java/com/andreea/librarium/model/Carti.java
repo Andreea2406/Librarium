@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -69,14 +70,15 @@ public class Carti {
     @Column(name = "inaltime", nullable = false)
     private String inaltime;
 
-    @Size(max = 255)
+    @Size(max = 65535) // Maximum size for LONGTEXT in MySQL
     @NotNull
-    @Column(name = "descriere", nullable = false)
+    @Column(name = "descriere", nullable = false, columnDefinition = "LONGTEXT")
     private String descriere;
+
 
     @NotNull
     @Column(name = "data_publicarii", nullable = false)
-    private LocalDate dataPublicarii;
+    private Integer dataPublicarii;
 
     @NotNull
     @Column(name = "disponibilitate", nullable = false)
@@ -192,11 +194,11 @@ public class Carti {
         this.descriere = descriere;
     }
 
-    public LocalDate getDataPublicarii() {
+    public Integer getDataPublicarii() {
         return dataPublicarii;
     }
 
-    public void setDataPublicarii(LocalDate dataPublicarii) {
+    public void setDataPublicarii(Integer dataPublicarii) {
         this.dataPublicarii = dataPublicarii;
     }
 

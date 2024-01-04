@@ -33,35 +33,63 @@
 
 </div>
 <br><br><br>
-<a href="admin_adauga_carte.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga carte </a>
+<a th:href="@{/admin_adauga_carte}" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga carte </a>
 <br><br><br>
-<table border="1">
-  <thead>
+<table>
   <tr>
     <th>ID</th>
     <th>Titlu</th>
-    <th>Autor</th>
-    <th>An aparitie</th>
+    <th>Categorie</th>
+    <th>Limba</th>
+    <th>Editura</th>
+    <th>Tip coperta</th>
     <th>Numar pagini</th>
-    <th>Descriere</th>
-    <th></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="person : ${people}">
-    <td th:text="${person.id}">1</td>
-    <td th:text="${person.name}">John Doe</td>
-    <td th:text="${person.age}">30</td>
-    <td th:text="${person.location}">City</td>
-    <td th:text="${person.email}">john@example.com</td>
-    <td th:text="${person.phone}">123-456-7890</td>
-    <td th:text="${person.sterge}"><a href="#" class="button"> editeaza </a>
+    <th>Autor</th>
+    <th>Colectie</th>
+    <th>ISBN</th>
+    <th>Latime</th>
+    <th>Inaltime</th>
 
-    <td th:text="${person.sterge}"><a href="#" class="button"> sterge </a>
-    </td>
+    <th>Descriere</th>
+    <th>An aparitie</th>
+
+    <th>Disponibilitate</th>
+    <th>Actiuni</th>
+
   </tr>
-  </tbody>
+
+  <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
+  <tr th:each="carte : ${carti}">
+    <td th:text="${carte.id}">ID</td>
+    <td th:text="${carte.titlu}">Titilu</td>
+    <td th:text="${carte.categorie}">Categorie</td>
+    <td th:text="${carte.limba}">Limba</td>
+    <td th:text="${carte.editura}">Editura</td>
+    <td th:text="${carte.tipCoperta}">Tip coperta</td>
+    <td th:text="${carte.nrPagini}">Numar Pagini</td>
+    <td th:text="${carte.autor}">Autor</td>
+    <td th:text="${carte.colectie}">Colectie</td>
+    <td th:text="${carte.isbn}">ISBN</td>
+    <td th:text="${carte.latime}">Latime</td>
+    <td th:text="${carte.inaltime}">Inaltime</td>
+    <td th:text="${carte.descriere}">Descriere</td>
+    <td th:text="${carte.dataPublicarii}">An aparitie</td>
+
+    <td th:text="${carte.disponibilitate}">Disponibilitate</td>
+    <td>
+
+<!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/edit/{id}(id=${carti.id})}" class="btn btn-primary">Editare</a>-->
+      <a th:if="${carti != null}" th:href="@{/admin_carti/edit/{id}(id=${carte.id})}" class="btn btn-primary">Editare</a>
+<!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/{id}(id=${carti.id})}" class="btn btn-danger">Stergere</a>-->
+      <a th:each="carte : ${carti}" th:href="@{/admin_carti/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>
+
+    </td>
+
+
+
+
+
+  </tr>
 </table>
 </body>
 </html>

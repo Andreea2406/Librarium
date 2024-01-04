@@ -44,6 +44,8 @@ public class RoluriUtilizatori {
     public void setIdUtilizator(Utilizatori idUtilizator) {
         this.idUtilizator = idUtilizator;
     }
-
+    public void setRol(Rol idRol) {
+        this.idRol = idRol;
+    }
 
 }

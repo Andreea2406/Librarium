@@ -27,7 +27,7 @@
 </div>
 <br><br><br>
 
-<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+<form  th:action="@{/adaugareCarte}" th:object="${carte}" method="post">
   <label for="titlu">Titlu:</label>
   <input type="text" id="titlu" th:field="*{titlu}" />
 
@@ -44,16 +44,16 @@
   <input type="text" id="editura" th:field="*{editura}" />
 
   <br /> <br />
-  <label for="tip_coperta">Tip coperta:</label>
-  <input type="text" id="tip_coperta" th:field="*{tip_coperta}" />
+  <label for="tipCoperta">Tip coperta:</label>
+  <input type="text" id="tipCoperta" th:field="*{tipCoperta}" />
 
   <br /> <br />
-  <label for="nr_pagini">Numar pagini:</label>
-  <input type="text" id="nr_pagini" th:field="*{nr_pagini}" />
+  <label for="nrPagini">Numar pagini:</label>
+  <input type="text" id="nrPagini" th:field="*{nrPagini}" />
 
   <br /> <br />
-  <label for="oras">Oras:</label>
-  <input type="text" id="oras" th:field="*{oras}" />
+  <label for="autor">Autor:</label>
+  <input type="text" id="autor" th:field="*{autor}" />
 
   <br /> <br />
   <label for="colectie">Colectie:</label>
@@ -77,12 +77,12 @@
   <input type="text" id="descriere" th:field="*{descriere}" />
 
   <br /> <br />
-  <label for="data_publicarii">Data publicarii:</label>
-  <input type="text" id="data_publicarii" th:field="*{data_publicarii}" />
+  <label for="dataPublicarii">Data publicarii:</label>
+  <input type="text" id="dataPublicarii" th:field="*{dataPublicarii}" />
 
   <br /> <br />
   <label for="disponibilitate">Disponibilitate:</label>
-  <input type="email" id="disponibilitate" th:field="*{dipsonibilitate}" />
+  <input type="text" id="disponibilitate" th:field="*{disponibilitate}" />
 
   <br /> <br />
 

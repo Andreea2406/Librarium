@@ -47,7 +47,7 @@
     <th>ID</th>
     <th>Nume</th>
     <th>Prenume</th>
-    <th>Varsta</th>
+    <th>CNP</th>
     <th>Telefon</th>
     <th>Email</th>
     <th>Strada</th>
@@ -68,7 +68,7 @@
     <td th:text="${utilizator.id}">ID</td>
     <td th:text="${utilizator.nume}">Nume</td>
     <td th:text="${utilizator.prenume}">Prenume</td>
-    <td th:text="${utilizator.varsta}">Varsta</td>
+    <td th:text="${utilizator.CNP}">CNP</td>
     <td th:text="${utilizator.telefon}">Telefon</td>
     <td th:text="${utilizator.email}">Email</td>
     <td th:text="${utilizator.strada}">Strada</td>
@@ -80,22 +80,45 @@
     <td th:text="${utilizator.scara}">Scara</td>
     <td th:text="${utilizator.ocupatie}">Ocupatie</td>
     <td th:text="${utilizator.parola}">Parola</td>
+<!--    <td>-->
+<!--      <div th:each="rolUtilizator : ${utilizator.roluriUtilizatoris}">-->
+<!--        <span th:text="${rolUtilizator.idRol.numeRol}"></span>-->
+<!--      </div>-->
+<!--    </td>-->
+
+    <td>
+      <div th:each="rol : ${utilizator.role}">
+        <span th:text="${rol.numeRol}"></span>
+      </div>
+    </td>
 
 
 
     <!-- Alte celule pentru datele utilizatorului -->
     <td>
       <!-- Buton de editare care duce la o pagină de editare a utilizatorului -->
-      <a th:href="@{/admin_editeaza_cititor/{id}/(id=${utilizator.id})}">Editare</a>
+<!--      <a th:href="@{/admin_editeaza_cititor/{id}/(id=${utilizator.id})}">Editare</a>-->
 <!--    <a th:href="@{'/admin_editeaza_cititor/' + ${utilizator.id}}">Editare</a>-->
-<!--      <a th:href="@{'/admin_editeaza_cititor/' + utilizator.id}">Editare</a>-->
 
-      <!--      <a th:href="@{/editare_cititor}">Editare</a>-->
+      <a th:if="${utilizatori != null}"  th:href="@{/admin_cititori/edit/{id}(id=${utilizator.id})}" class="btn btn-primary">Editare</a>
+
+
+
+      <!--      <a th:href="@{'/admin_editeaza_cititor/' + utilizator.id}">Editare</a>-->
+
+
 
       <!--      <a th:href="@{/edit/{id}(id=${utilizator.id})}">Editare</a>-->
 
       <!-- Buton de ștergere care duce la acțiunea de ștergere a utilizatorului -->
-      <a th:href="@{'/delete/' }+ ${utilizator.id}">Ștergere</a>
+      <a th:if="${utilizatori != null}"  th:href="@{/admin_cititori/{id}(id=${utilizator.id})}" class="btn btn-danger">Stergere</a>
+
+      <a th:if="${utilizatori != null}" th:href="@{/makeBibliotecar/{id}(id=${utilizator.id})}" class="btn btn-primary">Bibliotecar</a>
+
+<!--      <form th:action="@{/makeBibliotecar/{id}(id=${utilizator.id})}" method="post">-->
+<!--        <button type="submit">Make Bibliotecar</button>-->
+<!--      </form>-->
+<!--      <a th:href="@{'/delete/' }+ ${utilizator.id}">Ștergere</a>-->
     </td>
   </tr>
 </table>

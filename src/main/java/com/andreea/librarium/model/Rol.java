@@ -46,5 +46,27 @@ public class Rol {
         this.roluriUtilizatoris = roluriUtilizatoris;
     }
 
+    public Rol(Integer id, String numeRol) {
+        this.id = id;
+        this.numeRol = numeRol;
+    }
+//    @Override
+//    public String toString() {
+//        return "Rol{id=" + id + ", numeRol='" + numeRol + "'}";
+//    }
+
+    public Rol() { }
+    public Rol(String name) {
+        this.numeRol = numeRol;
+    }
+    public Rol(Integer id) {
+        this.id = id;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.numeRol;
+    }
 
 }

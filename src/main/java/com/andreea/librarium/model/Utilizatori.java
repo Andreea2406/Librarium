@@ -3,20 +3,23 @@ package com.andreea.librarium.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "utilizatori")
 public class Utilizatori {
+    private String selectedRole;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_utilizator",unique = true, nullable = false)
+    @Column(name = "id_utilizator", unique = true, nullable = false)
     private Integer id;
 
     @Size(max = 255)
-   // @NotNull
+    // @NotNull
     @Column(name = "nume", nullable = false)
     private String nume;
 
@@ -26,11 +29,12 @@ public class Utilizatori {
     private String prenume;
 
     //@NotNull
-    @Column(name = "varsta", nullable = false)
-    private Integer varsta;
+    @Size(max = 255)
+    @Column(name = "CNP", nullable = false)
+    private String CNP;
 
     @Size(max = 255)
-   // @NotNull
+    // @NotNull
     @Column(name = "telefon", nullable = false)
     private String telefon;
 
@@ -92,8 +96,21 @@ public class Utilizatori {
     @OneToMany(mappedBy = "idUtilizator")
     private Set<Imprumuturi> imprumuturis = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "idUtilizator")
+    //    @OneToMany(mappedBy = "idUtilizator")
+//    private Set<RoluriUtilizatori> roluriUtilizatoris = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "idUtilizator", fetch = FetchType.EAGER)
     private Set<RoluriUtilizatori> roluriUtilizatoris = new LinkedHashSet<>();
+
+
+    //    public Set<Rol> getRoles() {
+//        return roluriUtilizatoris.stream().map(RoluriUtilizatori::getIdRol).collect(Collectors.toSet());
+//    }
+    public Set<Rol> getRole() {
+        return roluriUtilizatoris.stream()
+                .map(RoluriUtilizatori::getIdRol)
+                .collect(Collectors.toSet());
+    }
+
 
     @OneToMany(mappedBy = "idUtilizator")
     private Set<InregistrareEveniment> inregistrareEveniments = new LinkedHashSet<>();
@@ -101,11 +118,11 @@ public class Utilizatori {
     public Utilizatori() {
     }
 
-    public Utilizatori(Integer id, String nume, String prenume, Integer varsta, String telefon, String email, String strada, String oras, String codPostal, String judet, String apartament, String numar, String scara, String ocupatie, String parola) {
+    public Utilizatori(Integer id, String nume, String prenume, String CNP, String telefon, String email, String strada, String oras, String codPostal, String judet, String apartament, String numar, String scara, String ocupatie, String parola) {
         this.id = id;
         this.nume = nume;
         this.prenume = prenume;
-        this.varsta = varsta;
+        this.CNP = CNP;
         this.telefon = telefon;
         this.email = email;
         this.strada = strada;
@@ -148,12 +165,12 @@ public class Utilizatori {
         this.prenume = prenume;
     }
 
-    public Integer getVarsta() {
-        return varsta;
+    public String getCNP() {
+        return CNP;
     }
 
-    public void setVarsta(Integer varsta) {
-        this.varsta = varsta;
+    public void setCNP(String CNP) {
+        this.CNP = CNP;
     }
 
     public String getTelefon() {
@@ -292,13 +309,13 @@ public class Utilizatori {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Utilizatori that = (Utilizatori) o;
-        return Objects.equals(id, that.id) && Objects.equals(nume, that.nume) && Objects.equals(prenume, that.prenume) && Objects.equals(varsta, that.varsta) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email) && Objects.equals(strada, that.strada) && Objects.equals(oras, that.oras) && Objects.equals(codPostal, that.codPostal) && Objects.equals(judet, that.judet) && Objects.equals(apartament, that.apartament) && Objects.equals(numar, that.numar) && Objects.equals(scara, that.scara) && Objects.equals(ocupatie, that.ocupatie) && Objects.equals(parola, that.parola);
+        return Objects.equals(id, that.id) && Objects.equals(nume, that.nume) && Objects.equals(prenume, that.prenume) && Objects.equals(CNP, that.CNP) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email) && Objects.equals(strada, that.strada) && Objects.equals(oras, that.oras) && Objects.equals(codPostal, that.codPostal) && Objects.equals(judet, that.judet) && Objects.equals(apartament, that.apartament) && Objects.equals(numar, that.numar) && Objects.equals(scara, that.scara) && Objects.equals(ocupatie, that.ocupatie) && Objects.equals(parola, that.parola);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, nume, prenume, varsta, telefon, email, strada, oras, codPostal, judet, apartament, numar, scara, ocupatie, parola);
+        return Objects.hash(id, nume, prenume, CNP, telefon, email, strada, oras, codPostal, judet, apartament, numar, scara, ocupatie, parola);
     }
 
     @Override
@@ -307,7 +324,7 @@ public class Utilizatori {
                 "id=" + id +
                 ", nume='" + nume + '\'' +
                 ", prenume='" + prenume + '\'' +
-                ", varsta=" + varsta +
+                ", CNP=" + CNP +
                 ", telefon='" + telefon + '\'' +
                 ", email='" + email + '\'' +
                 ", strada='" + strada + '\'' +
@@ -320,5 +337,41 @@ public class Utilizatori {
                 ", ocupatie='" + ocupatie + '\'' +
 
                 '}';
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "roluri_utilizatori",
+            joinColumns = @JoinColumn(name = "id_utilizator"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol")
+    )
+
+    private Set<Rol> role = new HashSet<>();
+
+    public void addRole(Rol role) {
+        this.role.add(role);
+    }
+
+//        @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "roluri_utilizatori",
+            joinColumns = @JoinColumn(name = "id_utilizator"),
+            inverseJoinColumns = @JoinColumn(name = "id_rol")
+    )
+//    private Set<Rol> roles = new HashSet<>();
+    public String getSelectedRole() {
+        return selectedRole;
+    }
+
+    public void setSelectedRole(String selectedRole) {
+        this.selectedRole = selectedRole;
+    }
+
+    public void setRole(Set<Rol> role) {
+        this.role = role;
+    }
+    public void getRoles(Set<Rol> roles) {
+        this.role = roles;
     }
 }
