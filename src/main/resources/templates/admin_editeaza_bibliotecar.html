@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <title>Title</title>
+</head>
+<body>
+<!--th:action="@{'/edit/' + ${utilizator.id}}"-->
+<h1>Editare Bibliotecar</h1>
+<!--<form th:action="@{/edit/{id}(id=${utilizator.id})}"-->
+<!--      th:object="${utilizator}" method="post">-->
+
+<!--<form th:action="@{/edit}" th:object="${utilizator}" method="post">-->
+<form th:action="@{/admin_bibliotecari/{id}(id=${utilizatori.id}) }" th:object="${utilizatori}" method="post">
+
+
+<!--<form th:action="@{/edit/{id}(id=${utilizator.id}}" th:object="${utilizator}" method="post">-->
+<!--<form th:action="@{'/edit/' + ${utilizator.id}}"-->
+<!--      th:object="${utilizator}" method="post">-->
+
+<!--<form th:action="@{'/edit/' }" th:object="${utilizator}" method="post">-->
+<!--  <form id="editForm" th:object="${utilizator}" method="post">-->
+  <input type="hidden" name="id" th:value="${utilizatori.id}" />
+
+<!--  <input type="hidden" name="id" value="${utilizator.id}" />-->
+  <input type="text" th:field="*{nume}" placeholder="Nume">
+  <input type="text" th:field="*{prenume}" placeholder="Prenume">
+  <input type="text" th:field="*{CNP}" placeholder="CNP">
+  <input type="text" th:field="*{telefon}" placeholder="Telefon">
+  <input type="text" th:field="*{email}" placeholder="Email">
+  <input type="text" th:field="*{strada}" placeholder="Strada">
+  <input type="text" th:field="*{oras}" placeholder="Oras">
+  <input type="text" th:field="*{codPostal}" placeholder="Cod Postal">
+  <input type="text" th:field="*{judet}" placeholder="Judet">
+  <input type="text" th:field="*{apartament}" placeholder="Apartament">
+  <input type="text" th:field="*{numar}" placeholder="Numar">
+  <input type="text" th:field="*{scara}" placeholder="Scara">
+  <input type="text" th:field="*{ocupatie}" placeholder="Ocupatie">
+  <input type="text" th:field="*{parola}" placeholder="Parola">
+
+<!--  <label for="role">Rol:</label>-->
+<!--  <input type="text" id="role" name="rolName"-->
+<!--         th:if="${not #lists.isEmpty(utilizatori.roluriUtilizatoris)}"-->
+<!--         th:value="${utilizatori.roluriUtilizatoris[0].idRol.numeRol}" />-->
+<!--  <label for="role">Rol:</label>-->
+<!--  <input type="text" th:field="*{utilizatori.roluriUtilizatoris }" placeholder="utilizatori.roluriUtilizatoris">-->
+/////
+<!--  <div th:if="${not #lists.isEmpty(utilizatori.roluriUtilizatoris)}">-->
+<!--    <p>Current Role: <span th:text="${utilizatori.roluriUtilizatoris[0].idRol.numeRol}"></span></p>-->
+<!--    <label for="role">Change Role:</label>-->
+<!--    <select id="role" name="rolName" th:field="*{selectedRole}" >-->
+<!--      <option th:value="'${currentRole}'" th:text="${currentRole}"></option>-->
+<!--      <option th:value="'${otherRole}'" th:text="${otherRole}" ></option>-->
+
+<!--      &lt;!&ndash; Add other role options as needed &ndash;&gt;-->
+<!--    </select>-->
+<!--  </div>-->
+//
+  <div>
+ <label>Rol</label>
+    <div>
+      <th:block th:each="role:${listaRoluri}">
+        <input name="role" type="checkbox" th:field="*{role}"
+               th:value="${role.id}"
+               th:text="${role.numeRol}"
+
+        >
+      </th:block>
+    </div>
+
+  </div>
+
+
+  <button th:href="@{/admin_bibliotecari}" type="submit">Salvează</button>
+</form>
+
+
+</body>
+
+</html>

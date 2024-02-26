@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Librarium</title>
+  <link rel="stylesheet" href="mystyles.css">
+  <link rel="stylesheet" href="myjs.js">
+  <style>
+    body {
+
+  background: rgba(250, 160, 100, .2);
+background-color:#F7F0E8;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535b60;
+  background-color: #F7F0E8;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+.wrapper {
+  width: 900%; /* Set to your desired fixed width or percentage */
+  max-width: 1300px; /* Set a maximum width if needed */
+  margin: 0 auto;
+  background-image: url("http://bestanimations.com/Books/pretty-book-bench-nature-water-outdoors-animated-gif.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-origin: padding-box;
+  box-shadow: 7px 0px 10px rgba(0, 0, 0, .3), -7px 0px 10px rgba(0, 0, 0, .3);
+}
+
+#headerImage img {
+  width: 130px;
+  height: 110px;
+  border: 10px solid rgba(200, 80, 70, .3);
+  border-radius: 48%;
+  display: block;
+  opacity:100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.store {
+  background: rgba(40, 80, 100, .2);
+}
+
+h1 {
+  text-align: center;
+  font-family: Monospace;
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  background: #8a6f3a;
+  width: 340px;
+  margin: auto;
+}
+
+.button-container {
+    top: 0;
+    right: 9999;
+    margin: 10px;
+     display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.button {
+    /* Add your button styles here */
+<!--    padding: 10px 15px;-->
+<!--    margin-right: 10px;-->
+padding: 10px 15px;
+    margin-left: 10px; /* Add some space between buttons if needed */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $button-bg;
+  color: $button-text-color;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+
+
+}
+
+
+nav {
+  text-align: center;
+  margin: 25px;
+}
+
+nav a {
+  text-align: center;
+  padding: .7% 2%;
+  margin: 1.5% 1%;
+  text-decoration: none;
+  background-color: rgba(200, 80, 70, .7);
+  color: white;
+  display: inline block;
+}
+
+nav a:hover {
+  box-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #fff;
+}
+
+section {
+  padding: 1%;
+  background: rgba(200, 120, 40, .45);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+h2 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color: #581845;
+}
+h4 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h3 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h5 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#ffd9b3;
+}
+
+#wrapper1 {
+
+}
+#div1 {
+    display: inline-block;
+    width:20px;
+    height:120px;
+     position:left;
+    float:left;
+
+}
+#div2 {
+    display: inline-block;
+    position:right;
+    float:right;
+    width:600px;
+    height:60px;
+
+}
+<!--.container3 {-->
+<!--    display: flex;-->
+<!--    justify-content: center;-->
+<!--    align-items: center;-->
+<!--    min-height: 100vh;-->
+
+<!--}-->
+.container3 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-container {
+  flex: 1;
+  margin-right: 10px; /* Add some margin between books */
+}
+
+.image1 {
+  width: 100%;
+  max-height: 80%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+ul.box,
+ul.box2,
+ul.box3,
+ul.box4 {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.box li,
+ul.box2 li,
+ul.box3 li,
+ul.box4 li {
+    position: relative;
+    float: left;
+    width: 300px;
+    height: 500px;
+    padding: 0;
+    border: 1px solid #efefef;
+    margin: 0 30px 30px 0;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+}
+
+ul.box li:before,
+ul.box li:after,
+ul.box2 li:after,
+ul.box2 li:before,
+ul.box4 li:after {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 70%;
+    max-width: 300px;
+    max-height: 100px;
+    height: 55%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: skew(-15deg) rotate(-6deg);
+}
+
+ul.box li:after,
+ul.box4 li:after {
+    left: auto;
+    right: 10px;
+    transform: skew(15deg) rotate(6deg);
+}
+.image1 {
+    width: 100%; /* Make the image take the full width of its container */
+    height: auto; /* Auto height to maintain aspect ratio */
+    max-height: 80%; /* Set a maximum height for the image */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+    margin-bottom: 10px; /* Adjust the margin to create space below the image */
+}
+.smallBizResources{
+     background-image:none;
+  @media screen and (min-width: 480px){
+     background-image: url('http://www.backgroundsy.com/file/large/blurry-aqua-background.jpg');
+     background-size: cover;
+    background-repeat: none;
+    }
+  }
+
+.smallBizResources__header{
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom:1rem;
+  font-size: 1.5rem;
+  @media screen and (min-width: 480px){
+    font-size: 3rem;
+  }
+}
+
+.smallBizResources__subHeader{
+  display: none;
+  @media screen and (min-width: 480px){
+      text-align: center;
+      max-width: 50rem;
+      font-size: 20px;
+      margin: 0 auto;
+      display: block;
+  }
+}
+
+.smallBizResources__itemsWrapper{
+  display: flex;
+  flex-direction: column;
+  border:1px solid ;
+  @media screen and (min-width: 480px){
+    flex-direction: row;
+    max-width: 50rem;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+  }
+}
+
+.smallBizResources__item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border:1px solid blue;
+  width:100%;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border:none;
+  @media screen and (min-width: 480px){
+    flex-direction: column;
+    margin-right: 5%;
+    margin-left:5%;
+    background: none;
+  }
+}
+
+.smallBizResources__img{
+  background: none;
+
+  border-radius: none;
+  @media screen and (min-width: 480px){
+    background: brown;
+    border-radius: 50%;
+  }
+}
+.smallBizResources__type{
+  width: 100%;
+  text-align: center;
+  @media screen and (min-width: 480px){
+    font-size: 1rem;
+  }
+}
+/*--------------------------------------------------------------
+1.0 - BASE SITE STYLES
+--------------------------------------------------------------*/
+*,*:after,*:before {
+  box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+}
+
+.cf:before,
+.cf:after {
+    content:"";
+    display:table;
+}
+.cf:after {
+    clear:both;
+}
+
+
+
+/*--------------------------------------------------------------
+2.0 - SEARCH FORM
+--------------------------------------------------------------*/
+.searchform {
+  background:#f4f4f4;
+  background:rgba(244,244,244,.79);
+  border: 1px solid #d3d3d3;
+	left: 50%;
+  padding: 2px 5px;
+  position: absolute;
+	margin: -22px 0 0 -170px;
+	top: 50%;
+
+
+  width:339px;
+  box-shadow:0 4px 9px rgba(0,0,0,.37);
+  -moz-box-shadow:0 4px 9px rgba(0,0,0,.37);
+  -webkit-box-shadow:0 4px 9px rgba(0,0,0,.37);
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px
+}
+
+.searchform input, .searchform button {
+	float: left
+}
+.searchform input {
+	background:#fefefe;
+	border: none;
+	font:12px/12px 'HelveticaNeue', Helvetica, Arial, sans-serif;
+	margin-right: 5px;
+	padding: 10px;
+	width: 216px;
+<!--	box-shadow: 0 0 4px rgba(0,0,0,.4) inset, 1px 1px 1px rgba(255,255,255,.75);-->
+<!--	-moz-box-shadow: 0 0 4px rgba(0,0,0,.4) inset, 1px 1px 1px rgba(255,255,255,.75);-->
+<!--	-webkit-box-shadow: 0 0 4px rgba(0,0,0,.4) inset, 1px 1px 1px rgba(255,255,255,.75);-->
+  border-radius: 9px;
+  -moz-border-radius: 9px;
+  -webkit-border-radius: 9px
+}
+	.searchform input:focus {
+		outline: none;
+		box-shadow:0 0 4px #0d76be inset;
+		-moz-box-shadow:0 0 4px #0d76be inset;
+		-webkit-box-shadow:0 0 4px #0d76be inset;
+	}
+	.searchform input::-webkit-input-placeholder {
+  	font-style: italic;
+  	line-height: 15px
+	}
+
+	.searchform input:-moz-placeholder {
+	  font-style: italic;
+  	line-height: 15px
+	}
+
+.searchform button {
+	background: rgb(204, 122, 0);
+	background: -moz-linear-gradient(top, rgba(52,173,236,1) 0%,rgb(204, 122, 0) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(204, 122, 0)), color-stop(100%,rgba(204, 122, 0)));
+	background: -webkit-linear-gradient(top, rgba(204, 122, 0) 0%,rgba(204, 122, 0) 100%);
+	background: -o-linear-gradient(top, rgba(204, 122, 0) 0%,rgba(204, 122, 0) 100%);
+	background: -ms-linear-gradient(top, rgba(204, 122, 0) 0%,rgba(204, 122, 0) 100%);
+	background: linear-gradient(to bottom, rgba(204, 122, 0) 0%,rgba(204, 122, 0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#34adec', endColorstr='#2691dc',GradientType=0 );
+	border: none;
+	color:#fff;
+	cursor: pointer;
+	font: 13px/13px 'HelveticaNeue', Helvetica, Arial, sans-serif;
+	padding: 10px;
+	width:106px;
+<!--	box-shadow: 0 0 2px #2692dd inset;-->
+<!--	-moz-box-shadow: 0 0 2px #2692dd inset;-->
+<!--	-webkit-box-shadow: 0 0 2px #2692dd inset;-->
+  border-radius: 9px;
+  -moz-border-radius: 9px;
+  -webkit-border-radius: 9px;
+}
+	.searchform button:hover {
+		opacity:.9;
+	}
+
+
+
+
+	/////
+	* {
+  box-sizing: border-box;
+}
+body {
+  padding: 20px;
+  width: 70%;
+  margin: 0 auto;
+}
+.screen-reader-text {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.search-form {
+  width: 15%;
+  float: left;
+  padding-right: 20px;
+}
+.search-term {
+  width: 100%;
+  margin: 0 0 5px 0;
+}
+.search-terms {
+  display: table;
+  margin: 0 0 10px 0;
+}
+.search-filters {
+  overflow: hidden;
+  margin: 0 0 10px 0;
+  background: #eee;
+  padding: 10px;
+}
+.search-filters-title {
+  font-weight: normal;
+  font-size: 1em;
+  margin: 0 0 10px 0;
+}
+.filter-group {
+  margin: 0 0 10px 0;
+}
+.cloned-filters {
+  display: none;
+}
+.search-results {
+  width: 65%;
+
+  float: right;
+  padding-bottom: 2500px; /* just scrolling space */
+}
+.result {
+  float: left;
+  width: 24%;
+  height: 100px;
+  margin-right: 1.33%;
+  margin-bottom: 1.33%;
+  background: #eee;
+}
+.result:nth-child(4n) {
+  margin-right: 0;
+}
+.result img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 1000px) {
+  body {
+    width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  body,
+  .search-form,
+  .search-results {
+    width: 100%;
+  }
+  .search-form {
+    padding: 0;
+  }
+  .search-terms {
+    display: table;
+    width: 100%;
+    margin: 0;
+  }
+  .search-terms > div {
+    display: table-row;
+  }
+  .search-terms > div > span {
+    display: table-cell;
+  }
+  .search-term-wrap {
+    padding-right: 10px;
+  }
+  .search-button {
+    width: 100%;
+  }
+  .search-filters-title {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 0;
+  }
+  .search-filters.pinned {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  .filter-group {
+    display: none;
+  }
+  .filter-explanation {
+    display: none;
+  }
+
+  .filters-open .filter-group,
+  .filters-open .filter-explanation {
+    display: block;
+  }
+  .filters-open .search-filters-title {
+    margin: 0 0 10px 0;
+  }
+}
+.result {
+  float: left;
+  width: 24%;
+  height: 100px;
+  margin-right: 1.33%;
+  margin-bottom: 1.33%;
+  background: #eee;
+}
+.result:nth-child(4n) {
+  margin-right: 0;
+}
+.result img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+  </style>
+</head>
+
+<body>
+
+<div class="button-container">
+  <!--  //<button class="button" >Intra in cont</button>-->
+  <a class="button" href="index.html">Log out</a>
+
+</div>
+
+<div class="wrapper">
+
+  <div class="store">
+    <!--    <h1>Librarium</h1>-->
+    <div id="headerImage">
+      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
+      <img src="images/logo2.jpg" />
+
+    </div>
+
+
+    <header id="homeSection">
+      <nav>
+        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="cititor_evenimente.html">Evenimente</a>
+        <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
+        <a href="cititor_mesaje.html">Comunitate</a>
+        <a href="cititor_setari_profil.html">Setari profil</a>
+        <hr style="color: red; margin: 20px;">
+      </nav>
+    </header>
+
+
+  </div>
+  <br><br>
+
+  <div class="wrapper2">
+
+    <section id="searchSection" style="height:100px">
+      <form class="searchform cf">
+        <input type="text" placeholder="Cauta o carte">
+        <button type="submit">Search</button>
+      </form>
+
+    </section>
+    <br><br><br>
+
+
+
+
+    <br><br><br>
+  </div>
+  <div id="wrapper1">
+    <!--    <section id="gallerySection">-->
+    <!--        <div class="div1" > <article>-->
+    <!--            <h1>filtreee</h1>-->
+    <!--            <h4>daff</h4>-->
+    <!--            <h4>daff</h4>-->
+    <!--            <h4>daff</h4>-->
+    <!--            <h4>daff</h4>-->
+    <!--            <h4>daff</h4>-->
+
+    <!--        </article>-->
+    <!--        </div>-->
+    <!--    </section>-->
+
+    <form role="search" class="search-form" id="search-form" action="#" method="post">
+
+      <section class="search-terms">
+        <label for="search-term" class="search-term-label screen-reader-text">Search Terms</label>
+        <div>
+      <span class="search-term-wrap">
+        <input type="search" id="search-term" class="search-term">
+      </span>
+          <span class="search-term-button-wrap">
+        <input type="submit" value="Search" class="search-button">
+      </span>
+        </div>
+      </section>
+
+      <section class="search-filters" id="search-filters">
+
+        <h3 class="search-filters-title" id="search-filters-title">Search Filters</h3>
+
+        <div class="size-filters filter-group">
+
+          <div>
+            <input type="checkbox" id="filter-size-small">
+            <label for="filter-size-small">Small</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="filter-size-medium" checked>
+            <label for="filter-size-medium">Medium</label>
+          </div>
+
+          <div>
+            <input type="checkbox" id="filter-size-large">
+            <label for="filter-size-large">Large</label>
+          </div>
+
+        </div>
+
+        <div class="content-filters filter-group">
+
+          <div>
+            <input type="radio" id="filter-content-cats" name="filter-content">
+            <label for="filter-content-cats">Cats</label>
+          </div>
+
+          <div>
+            <input type="radio" id="filter-content-dogs" name="filter-content">
+            <label for="filter-content-dogs">Dogs</label>
+          </div>
+
+          <div>
+            <input type="radio" id="filter-content-Birds" name="filter-content">
+            <label for="filter-content-birds">Birds</label>
+          </div>
+        </div>
+
+        <small class="filter-explanation">Choosing filters automatically refines and refreshes search.</small>
+
+      </section>
+    </form>
+    <section id="genreSection">   <article>
+    <div class="div2" th:each="carte : ${carti}">
+
+
+      <div class="result">
+
+
+        <a th:href="@{'cititor_carte/' + ${carte.id}}">
+          <h4 th:text="${carte.titlu}">Titlul Cărții</h4>
+        </a>
+
+            </div>
+
+
+
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    </article></section>
+
+<!--    <div class="div2" th:each="carte : ${carti}">-->
+
+<!--    <section id="genreSection">-->
+<!--      <article>-->
+<!--        <div class="container3">-->
+<!--          <ul class="box3">-->
+<!--            <li>-->
+
+<!--              <div class="book-container">-->
+<!--                <img class="image1" src="images/bookcover.jpg" alt="Image 1">-->
+<!--                <a th:href="@{'cititor_carte/' + ${carte.id}}">-->
+<!--                  <h4 th:text="${carte.titlu}">Titlul Cărții</h4>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--      </article>-->
+<!--    </section>-->
+
+<!--    </div>-->
+    <section id="contactSection">
+      <!--    <h2>Contact Book Store</h2>-->
+      <article>
+
+      </article>
+    </section>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="assets/js/myjs.js"></script>
+<script>jQuery(document).ready(function ($) {
+
+  $('#checkbox').change(function(){
+    setInterval(function () {
+        moveRight();
+    }, 3000);
+  });
+
+	var slideCount = $('#slider ul li').length;
+	var slideWidth = $('#slider ul li').width();
+	var slideHeight = $('#slider ul li').height();
+	var sliderUlWidth = slideCount * slideWidth;
+
+	$('#slider').css({ width: slideWidth, height: slideHeight });
+
+	$('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+    $('#slider ul li:last-child').prependTo('#slider ul');
+
+    function moveLeft() {
+        $('#slider ul').animate({
+            left: + slideWidth
+        }, 200, function () {
+            $('#slider ul li:last-child').prependTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    function moveRight() {
+        $('#slider ul').animate({
+            left: - slideWidth
+        }, 200, function () {
+            $('#slider ul li:first-child').appendTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    $('a.control_prev').click(function () {
+        moveLeft();
+    });
+
+    $('a.control_next').click(function () {
+        moveRight();
+    });
+
+});
+</script>
+<script>
+
+var Search = {
+
+  searchForm: $("#search-form"),
+  searchTerms: $("#search-terms"),
+  searchFilters: $("#search-filters"),
+  searchFiltersTitle: $("#search-filters-title"),
+  offset: $("#search-filters-title").offset(),
+  win: $(window),
+
+  init: function() {
+    Search.bindUIEvents();
+  },
+
+  bindUIEvents: function() {
+
+    Search.searchFiltersTitle
+      .on(
+        "click",
+        Search.toggleSearchFilters
+      );
+
+    Search.win
+      .on(
+        "scroll",
+        Search.filterHeaderPosition
+       );
+
+    Search.searchForm
+      .on(
+         "submit",
+        Search.searchSubmit
+       );
+
+  },
+
+  toggleSearchFilters: function() {
+    Search.searchForm
+      .toggleClass("filters-open");
+  },
+
+  filterHeaderPosition: function() {
+
+     var scrollTop = Search.win.scrollTop();
+
+     if (scrollTop > Search.offset.top) {
+       Search.searchFilters.addClass("pinned");
+       Search.searchTerms.css("margin-bottom", Search.searchFilters.outerHeight());
+     } else {
+       Search.searchFilters.removeClass("pinned");
+       Search.searchTerms.css("margin-bottom", "10px");
+     };
+
+  },
+
+  searchSubmit: function() {
+    // process new search
+    return false;
+  }
+
+};
+
+Search.init();
+
+
+</script>
+</body>
+
+</html>

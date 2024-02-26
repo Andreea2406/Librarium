@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Librarium</title>
+  <link rel="stylesheet" href="mystyles.css">
+  <link rel="stylesheet" href="myjs.js">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <style>
+
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535b60;
+  background-color: #F7F0E8;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-image: url("http://bestanimations.com/Books/pretty-book-bench-nature-water-outdoors-animated-gif.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-origin: padding-box;
+  box-shadow: 7px 0px 10px rgba(0, 0, 0, .3), -7px 0px 10px rgba(0, 0, 0, .3);
+}
+
+#headerImage img {
+  width: 130px;
+  height: 110px;
+  border: 10px solid rgba(200, 80, 70, .3);
+  border-radius: 48%;
+  display: block;
+  opacity:100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.store {
+  background: rgba(40, 80, 100, .2);
+}
+.sepatator{
+border-radius:5px solid color:brown;
+}
+
+h1 {
+  text-align: center;
+  font-family: Monospace;
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  background: #8a6f3a;
+  width: 340px;
+  margin: auto;
+}
+
+.button-container {
+    top: 0;
+    right: 9999;
+    margin: 10px;
+     display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.button {
+    /* Add your button styles here */
+<!--    padding: 10px 15px;-->
+<!--    margin-right: 10px;-->
+padding: 10px 15px;
+    margin-left: 10px; /* Add some space between buttons if needed */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $button-bg;
+  color: $button-text-color;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+
+
+}
+nav {
+  text-align: center;
+  margin: 25px;
+}
+
+nav a {
+  text-align: center;
+  padding: .7% 2%;
+  margin: 1.5% 1%;
+  text-decoration: none;
+  background-color: rgba(200, 80, 70, .7);
+  color: white;
+  display: inline block;
+}
+
+nav a:hover {
+  box-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #fff;
+}
+
+section {
+  padding: 1%;
+  background: rgba(200, 120, 40, .45);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+h2 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color: #581845;
+}
+h3 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h5 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#ffd9b3;
+}
+#slider {
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto 0 auto;
+  border-radius: 4px;
+}
+.div1 {
+    display: inline-block;
+    width:300px;
+    height:100px;
+     position:left;
+    float:left;
+
+}
+.div2 {
+    display: inline-block;
+    position:center;
+    float:center;
+    width:800px;
+    height:100px;
+
+}
+#wrapper1 {
+
+}
+ul.box,
+ul.box2,
+ul.box3,
+ul.box4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes the full height of the viewport */
+    margin: 0;
+    padding: 0;
+}
+
+ul.box li,
+ul.box2 li,
+ul.box3 li,
+ul.box4 li {
+    position: relative;
+    width: 300px;
+    height: 350px;
+    margin: 0 30px 30px 0;
+    border: 1px solid #efefef;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+}
+
+ul.box li:before,
+ul.box li:after,
+ul.box2 li:after,
+ul.box2 li:before,
+ul.box4 li:after {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    width: 70%;
+    max-width: 300px;
+    max-height: 100px;
+    height: 55%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: skew(-15deg) rotate(-6deg);
+}
+
+ul.box li:after,
+ul.box4 li:after {
+    right: 10px;
+    transform: skew(15deg) rotate(6deg);
+}
+.container3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.btn-7 {
+color:rgb(0, 0, 0);
+background: linear-gradient(0deg, rgba(255,151,0,1) 0%, rgba(251,75,2,1) 100%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-7 span {
+
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-7:before,
+.btn-7:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: rgba(251,75,2,1);
+  box-shadow:
+   -7px -7px 20px 0px rgba(255,255,255,.9),
+   -4px -4px 5px 0px rgba(255,255,255,.9),
+   7px 7px 20px 0px rgba(0,0,0,.2),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+  transition: all 0.3s ease;
+}
+.btn-7:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-7:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-7:hover{
+  color: rgba(251,75,2,1);
+  background: transparent;
+}
+.btn-7:hover:before {
+  height: 100%;
+}
+.btn-7:hover:after {
+  width: 100%;
+}
+.btn-7 span:before,
+.btn-7 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: rgba(251,75,2,1);
+  box-shadow:
+   -7px -7px 20px 0px rgba(255,255,255,.9),
+   -4px -4px 5px 0px rgba(255,255,255,.9),
+   7px 7px 20px 0px rgba(0,0,0,.2),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+  transition: all 0.3s ease;
+}
+.btn-7 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-7 span:after {
+  height: 2px;
+  width: 0%;
+}
+.btn-7 span:hover:before {
+  height: 100%;
+}
+.btn-7 span:hover:after {
+  width: 100%;
+}
+
+
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.frame {
+  width: 90%;
+  margin: 40px auto;
+  text-align: center;
+}
+button {
+  margin: 20px;
+}
+.btn-12{
+
+  position: relative;
+  right: 20px;
+  bottom: 20px;
+  border:none;
+  box-shadow: none;
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  -webkit-perspective: 230px;
+  perspective: 230px;
+}
+.btn-12 span {
+  background:rgb(255, 173, 51);
+background: linear-gradient(0deg, rgb(255, 173, 51) 0%, rgb(255, 204, 102)) 100%);
+  display: block;
+  position: absolute;
+  width: 130px;
+  height: 40px;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  border-radius: 5px;
+  margin:0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.btn-12 span:nth-child(1) {
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12 span:nth-child(2) {
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12:hover span:nth-child(1) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.btn-12:hover span:nth-child(2) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+ color: transparent;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+
+  </style>
+</head>
+<body>
+
+<div class="button-container">
+  <!--  //<button class="button" >Intra in cont</button>-->
+  <a class="button" href="index.html">Log out</a>
+
+</div>
+
+<div class="wrapper">
+
+  <div class="store">
+    <!--    <h1>Librarium</h1>-->
+    <div id="headerImage">
+      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
+      <img src="images/logo2.jpg" />
+
+    </div>
+
+
+    <header id="homeSection">
+      <nav>
+        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="cititor_evenimente.html">Evenimente</a>
+        <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
+        <a href="cititor_mesaje.html">Comunitate</a>
+        <a href="cititor_setari_profil.html">Setari profil</a>
+        <!--        <a href="#gallerySection">Gallery</a>-->
+        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <hr style="color: red; margin: 20px;">
+      </nav>
+    </header>
+  </div>
+
+  <!--  <section id="aboutSection">-->
+  <!--    <h2>Nume eveniment</h2>-->
+
+  <!--  </section>-->
+
+  <br><br><br>
+  <section id="evSection">
+    <div class="column small-12 large-12" style=" opacity: 80%;  border-radius: 25px ; ">
+
+
+
+      <br><br><br>
+      <div class="small-12 large-2 cell"
+           style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-radius: 50px; height:900px;">
+
+        <br>
+        <div id="wrapper1">
+          <div class="div1" style="height: 300px;width:250px">
+            <img src="images/bookcover.jpg"/>
+
+
+          </div>
+          <br>
+          <div class="div2" style="border-color: #cc8800;border-width:2px;border-style:solid;border-radius: 50px;height: 600px;width:800px">
+            <div class="div2" th:each="carte : ${carti}" th:with="carteId=${carte.id}">
+              <a th:href="@{'cititor_carte/' + ${carte.id}}"> </a>
+              <h4 th:text="'Titlu: ' + ${carte.titlu}">Titlul Cărții</h4>
+
+              <h4 th:text="'Categorie: '+${carte.categorie}">Categorie</h4>
+                <h4 th:text="'Limba: '+${carte.limba}">Limba</h4>
+                <h4 th:text= "'Tip coperta: '+${carte.tipCoperta}" ></h4>
+                <h4 th:text= "'Numar pagini: '+${carte.nrPagini}"  ></h4>
+                <h4 th:text= "'Autor: '+${carte.autor}" ></h4>
+                <h4 th:text= "'Colectie: '+${carte.colectie}" ></h4>
+                <h4 th:text="'ISBN: '+${carte.isbn}"  ></h4>
+                <h4 th:text= "'Latime: '+${carte.latime}" ></h4>
+                <h4 th:text= "'Inaltime: '+${carte.inaltime}" ></h4>
+                <h4 th:text="'Data publicarii: '+${carte.dataPublicarii}"  ></h4>
+                <h4 th:text= "'Disponibilitate: '+${carte.disponibilitate}"  ></h4>
+
+
+
+
+
+
+
+            <!--            <h3 >Titlu Carte</h3>-->
+<!--            <h4>Titlu-->
+<!--              Autor-->
+<!--              Categorie-->
+<!--              Limba-->
+<!--              Data publicării:-->
+<!--              Editura:-->
+<!--              Tip copertă:-->
+<!--              Nr Pag:-->
+<!--              Colectie:-->
+<!--              Traducatori:-->
+<!--              ISBN:-->
+<!--              Dimensiuni:-->
+<!--            </h4>-->
+<!--            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>-->
+
+
+          </div>
+        </div><div class="frame">
+          <form th:action="@{/imprumuta}" method="post">
+            <input type="hidden" name="id" th:value="${id}" />
+<!--            <input type="hidden" name="idUtilizator" th:value="${userId}" /> &lt;!&ndash; Assuming you have a variable userId &ndash;&gt;-->
+
+
+            <button class="custom-btn btn-7" style="background-color:#ffcc66"><span> Imprumuta</span></button>
+          </form>
+
+          <form th:action="@{/rezerva}" method="post">
+            <input type="hidden" name="id" th:value="${id}" />
+
+          <button class="custom-btn btn-12"><span>Rezerva</span><span>Rezerva</span></button>
+          </form>
+
+
+        </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </section>
+  <br><br><br>
+  <section>
+    <div class="div2" style="background-color: rgba(255,255,255,0.73) ;border-color: #cc8800;border-width:2px;border-style:solid;border-radius: 50px;height: 250px;width:900px">
+      <h3 >Descriere Carte</h3>
+      <div class="div2" th:each="carte : ${carti}">
+
+      <h4 th:text="${carte.descriere}"  ></h4>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <section>
+
+    <h3>Alte publicatii</h3>
+    <div class="container3">
+      <ul class="box3">
+        <li>  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+          <a href="carte.html"> <h4>Titlu Carte</h4></a>
+        </li>
+        <ul class="box2">
+          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
+            <a href="carte.html"> <h4>Titlu Carte</h4></a>
+          </li>
+          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
+            <a href="carte.html"> <h4>Titlu Carte</h4></a>
+          </li>
+
+        </ul>
+
+
+
+
+      </ul>
+    </div>
+
+  </section>
+  <a class="button" href="catalog.html">Inapoi la catalog</a>
+
+</div>
+<br><br><br>
+
+</div>
+
+</body>
+</html>

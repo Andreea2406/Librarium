@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <title>Title</title>
+</head>
+<body>
+<!--th:action="@{'/edit/' + ${utilizator.id}}"-->
+<h1>Editare Sala</h1>
+
+<!--<form th:action="@{/admin_carti/{id}(id=${carte.id}) }" th:object="${carte}" method="post">-->
+<form th:if="${sali != null}" th:action="@{/admin_sali_biblioteca/{id}(id=${sali.id})}" th:object="${sali}" method="post">
+
+
+  <input type="hidden" name="id" th:value="${sali.id}" />
+
+  <input type="text" th:field="*{nume}" placeholder="Nume">
+  <input type="text" th:field="*{locuriDisponibile}" placeholder="Disponibile">
+
+
+  <!-- Adăugați câmpuri pentru celelalte atribute ale utilizatorului -->
+  <button th:href="@{/admin_sali_biblioteca}" type="submit">Salvează</button>
+</form>
+
+
+</body>
+
+</html>

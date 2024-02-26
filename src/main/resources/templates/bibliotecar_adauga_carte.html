@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+<div class="grid-x grid-padding-x">
+  <div class="columns small-12 large-12">
+    <img src="images/logo.jpg" alt="My Image">
+
+    <a th:href="@{/bibliotecar_pagina_principala}">Carti</a>
+    <a class="button2" th:href="admin_evenimente.html" style="text-align: center; ">Imprumuturi</a>
+    <a class="button1"  th:href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Evenimente</a>
+    <a class="button2"  th:href="admin_bibliotecari.html" style="text-align: center; ">Sali biblioteca</a>
+    <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Mesaje</a>
+    <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Setari</a>
+    <a class="button2" href="index.html" style="text-align: center; ">Deconectare</a>
+
+
+
+  </div>
+</div>
+</div>
+<br><br><br>
+
+<form  th:action="@{/adaugaCarte}" th:object="${carte}" method="post">
+  <label for="titlu">Titlu:</label>
+  <input type="text" id="titlu" th:field="*{titlu}" />
+
+  <br /> <br />
+  <label for="categorie">Categorie:</label>
+  <input type="text" id="categorie" th:field="*{categorie}" />
+
+  <br /> <br />
+  <label for="limba">Limba:</label>
+  <input type="text" id="limba" th:field="*{limba}" />
+
+  <br /> <br />
+  <label for="editura">Editura:</label>
+  <input type="text" id="editura" th:field="*{editura}" />
+
+  <br /> <br />
+  <label for="tipCoperta">Tip coperta:</label>
+  <input type="text" id="tipCoperta" th:field="*{tipCoperta}" />
+
+  <br /> <br />
+  <label for="nrPagini">Numar pagini:</label>
+  <input type="text" id="nrPagini" th:field="*{nrPagini}" />
+
+  <br /> <br />
+  <label for="autor">Autor:</label>
+  <input type="text" id="autor" th:field="*{autor}" />
+
+  <br /> <br />
+  <label for="colectie">Colectie:</label>
+  <input type="text" id="colectie" th:field="*{colectie}" />
+
+  <br /> <br />
+  <label for="isbn">ISBN:</label>
+  <input type="text" id="isbn" th:field="*{isbn}" />
+
+  <br /> <br />
+  <label for="latime">Latime:</label>
+  <input type="text" id="latime" th:field="*{latime}" />
+
+  <br /> <br />
+  <label for="inaltime">Inaltime:</label>
+  <input type="text" id="inaltime" th:field="*{inaltime}" />
+
+  <br /> <br />
+
+  <label for="descriere">Descriere:</label>
+  <input type="text" id="descriere" th:field="*{descriere}" />
+
+  <br /> <br />
+  <label for="dataPublicarii">Data publicarii:</label>
+  <input type="text" id="dataPublicarii" th:field="*{dataPublicarii}" />
+
+  <br /> <br />
+  <label for="disponibilitate">Disponibilitate:</label>
+  <input type="text" id="disponibilitate" th:field="*{disponibilitate}" />
+
+  <br /> <br />
+
+  <button type="submit">Adauga</button>
+</form>
+<br /> <br />
+
+<a href="bibliotecar_pagina_principala.html" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
+
+</body>
+</html>
