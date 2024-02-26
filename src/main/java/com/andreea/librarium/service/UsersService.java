@@ -17,6 +17,7 @@ import java.util.List;
 
 @Service
 public class UsersService {
+    @Autowired
     private final UtilizatoriRepository utilizatoriRepository;
     private RoluriUtilizatoriRepository roluriUtilizatoriRepository;
     private RolRepository rolRepository;
@@ -40,10 +41,15 @@ public class UsersService {
         return utilizatoriRepository.findAll();
     }
     public Utilizatori getStudentById(Integer id){
+
         Utilizatori optionalUtilizatori = utilizatoriRepository.findById(id);
 
         return utilizatoriRepository.findById(id);
     }
+    public Utilizatori getUserById(Integer id) {
+        return utilizatoriRepository.findById(id);
+    }
+
     public RoluriUtilizatori getRolByIDUSER(Integer id){
         RoluriUtilizatori optionalRol=roluriUtilizatoriRepository.findByIdUtilizator(id);
         return roluriUtilizatoriRepository.findByIdUtilizator(id);

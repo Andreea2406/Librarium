@@ -69,4 +69,7 @@ public class SaliBiblioteca {
         this.evenimentes = evenimentes;
     }
 
+    public SaliBiblioteca orElseThrow(Object o) {
+        return null;
+    }
 }

@@ -27,7 +27,9 @@
 </div>
 <br><br><br>
 
-<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+<!--<form action="#" th:action="@{/submit}" th:object="${user}" method="post">-->
+<form  th:action="@{/adaugare}" th:object="${bibliotecari}" method="post">
+
   <label for="nume">Nume:</label>
   <input type="text" id="nume" th:field="*{nume}" />
 
@@ -36,8 +38,8 @@
   <input type="text" id="prenume" th:field="*{prenume}" />
 
   <br /> <br />
-  <label for="varsta">Varsta:</label>
-  <input type="text" id="varsta" th:field="*{varsta}" />
+  <label for="CNP">CNP:</label>
+  <input type="text" id="CNP" th:field="*{CNP}" />
 
   <br /> <br />
   <label for="telefon">Telefon:</label>
@@ -45,7 +47,7 @@
 
   <br /> <br />
   <label for="email">Email:</label>
-  <input type="text" id="email" th:field="*{email}" />
+  <input type="email" id="email" th:field="*{email}" />
 
   <br /> <br />
   <label for="strada">Strada:</label>
@@ -56,8 +58,8 @@
   <input type="text" id="oras" th:field="*{oras}" />
 
   <br /> <br />
-  <label for="cod_postal">Cod Postal:</label>
-  <input type="text" id="cod_postal" th:field="*{cod_postal}" />
+  <label for="codPostal">Cod Postal:</label>
+  <input type="text" id="codPostal" th:field="*{codPostal}" />
 
   <br /> <br />
   <label for="judet">Judet:</label>
@@ -68,8 +70,8 @@
   <input type="text" id="apartament" th:field="*{apartament}" />
 
   <br /> <br />
-  <label for="bloc">Bloc:</label>
-  <input type="text" id="bloc" th:field="*{bloc}" />
+  <label for="numar">Numar:</label>
+  <input type="text" id="numar" th:field="*{numar}" />
 
   <br /> <br />
 
@@ -82,7 +84,7 @@
 
   <br /> <br />
   <label for="parola">Parola:</label>
-  <input type="email" id="parola" th:field="*{parola}" />
+  <input type="password" id="parola" th:field="*{parola}" />
 
   <br /> <br />
 

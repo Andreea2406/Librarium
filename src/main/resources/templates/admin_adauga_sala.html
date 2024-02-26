@@ -27,7 +27,7 @@
 </div>
 <br><br><br>
 
-<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+<form th:action="@{/adaugareSala}" th:object="${sala}" method="post">
     <label for="nume">Nume:</label>
     <input type="text" id="nume" th:field="*{nume}" />
 
@@ -35,8 +35,8 @@
 
 
     <br /> <br />
-    <label for="locuri_disponibile">Locuri disponibile:</label>
-    <input type="text" id="locuri_disponibile" th:field="*{locuri_disponibile}" />
+    <label for="locuriDisponibile">Locuri disponibile:</label>
+    <input type="text" id="locuriDisponibile" th:field="*{locuriDisponibile}" />
 
 
     <br /> <br />

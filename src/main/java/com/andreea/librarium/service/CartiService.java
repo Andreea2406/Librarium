@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,11 +28,18 @@ public class CartiService {
     public List<Carti> getAllBooks() {
         return cartiRepository.findAll();
     }
+
     public Carti getBookById(Integer id){
 //        Carti carti=cartiRepository.findById(id);
         return cartiRepository.findById(id).orElse(null);
 
     }
+//    public Carti obtineTitluCarte(Integer carteId) {
+//        Carti carti = cartiRepository.findById(carteId);
+//
+//        // Verificăm dacă cartea există și returnăm titlul sau un mesaj corespunzător
+//        return carteOptional.map(Carti::getTitlu).orElse("Cartea nu a fost găsită pentru ID-ul specificat");
+//    }
     public Carti updateCarte(Carti carti){
         return cartiRepository.save(carti);
     }

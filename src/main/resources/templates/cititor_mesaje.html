@@ -1,100 +1,968 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
   <title>Librarium</title>
+  <link rel="stylesheet" href="mystyles.css">
+  <link rel="stylesheet" href="myjs.js">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <style>
+    body {
+
+  background: rgba(250, 160, 100, .2);
+
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535b60;
+  background-color: #F7F0E8;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-image: url("http://bestanimations.com/Books/pretty-book-bench-nature-water-outdoors-animated-gif.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-origin: padding-box;
+  box-shadow: 7px 0px 10px rgba(0, 0, 0, .3), -7px 0px 10px rgba(0, 0, 0, .3);
+}
+
+#headerImage img {
+  width: 130px;
+  height: 110px;
+  border: 10px solid rgba(200, 80, 70, .3);
+  border-radius: 48%;
+  display: block;
+  opacity:100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.store {
+  background: rgba(40, 80, 100, .2);
+}
+
+h1 {
+  text-align: center;
+  font-family: Monospace;
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  background: #8a6f3a;
+  width: 340px;
+  margin: auto;
+}
+
+.button-container {
+    top: 0;
+    right: 9999;
+    margin: 10px;
+     display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.button {
+    /* Add your button styles here */
+<!--    padding: 10px 15px;-->
+<!--    margin-right: 10px;-->
+padding: 10px 15px;
+    margin-left: 10px; /* Add some space between buttons if needed */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $button-bg;
+  color: $button-text-color;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+
+
+}
+
+
+nav {
+  text-align: center;
+  margin: 25px;
+}
+
+nav a {
+  text-align: center;
+  padding: .7% 2%;
+  margin: 1.5% 1%;
+  text-decoration: none;
+  background-color: rgba(200, 80, 70, .7);
+  color: white;
+  display: inline block;
+}
+
+nav a:hover {
+  box-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #fff;
+}
+
+section {
+  padding: 1%;
+  background: rgba(200, 120, 40, .45);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+h2 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color: #581845;
+}
+h3 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h5 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#ffd9b3;
+}
+#slider {
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto 0 auto;
+  border-radius: 4px;
+}
+#slider ul {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  list-style: none;
+}
+
+#slider ul li {
+  position: left;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  height: 300px;
+  background: #ccc;
+  text-align: center;
+  line-height: 300px;
+}
+
+a.control_prev, a.control_next {
+  position: absolute;
+  top: 40%;
+  z-index: 999;
+  display: block;
+  padding: 4% 3%;
+  width: auto;
+  height: auto;
+  background: #2a2a2a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+a.control_prev:hover, a.control_next:hover {
+  opacity: 1;
+  -webkit-transition: all 0.2s ease;
+}
+
+a.control_prev {
+  border-radius: 0 2px 2px 0;
+}
+
+a.control_next {
+  right: 0;
+  border-radius: 2px 0 0 2px;
+}
+
+
+.container3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/*
+  HTML implementation of a Hip Chat redesign based on Jan Dvořák Dribbble shot.
+  https://dribbble.com/shots/1529065-HipChat-Redesign
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body{
+	background: #a9b89e;
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size: 12px;
+	color: #333f4d;
+}
+b{
+	font-weight: bold;
+}
+.window-wrapper{
+	background: #fff;
+	width: 780px;
+	margin: 30px auto;
+	border-radius: 6px;
+	box-shadow: 0 0 6px rgba(0,0,0,0.3);
+	overflow: hidden;
+	min-height: 530px;
+	position: relative;
+}
+.window-title{
+	padding: 14px;
+	position: relative;
+
+    > .title{
+        overflow: hidden;
+        text-align: center;
+      font-weight: bold;
+    }
+
+    > .expand{
+        position: absolute;
+        right: 14px;
+        top: 12px;
+    }
+}
+.dots{
+	float: left;
+	width: 50px;
+
+    > i{
+        margin-right: 2px;
+
+        &:nth-child(1){
+            color: #f57e7d;
+        }
+
+        &:nth-child(2){
+            color: #ffc881;
+        }
+
+        &:nth-child(3){
+            color: #82cf85;
+        }
+    }
+}
+
+.expand > i{
+	color: #cfd6e0;
+	font-size: 18px;
+	cursor: pointer;
+}
+.window-area{
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-left: 176px;
+}
+.conversation-list{
+	width: 176px;
+	background: #505d71;
+	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+
+    ul li {
+        &.active a{
+            background: #445166;
+	        color: #fff;
+        }
+            a{
+            padding: 15px;
+            color: #bcc3d0;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            border-bottom: 2px solid #586476;
+            transition: all 0.2s linear;
+                i{
+                    color: #79889d;
+                    font-size: 1.2em;
+
+                    &.fa-times{
+                        position: absolute;
+                        top:19px;
+                        right:21px;
+                        font-size: 10px;
+                    }
+                }
+
+                span{
+                    display: inline-block;
+                    margin-left: 14px;
+                }
+
+                &:hover{
+                    background: #445166;
+                    color: #fff;
+                }
+        }
+    }
+
+    .online{
+        color: #82cf85;
+    }
+
+    .idle{
+        color: #ffac69;
+    }
+
+    .offline{
+        color: #f57e7d;
+    }
+}
+
+.chat-area{
+	border-top: 1px solid #cfdae1;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 176px;
+    right:175px;
+	box-shadow: inset 0 1px 3px rgba(207, 218, 225, 0.42);
+
+    .title{
+        padding: 10px;
+        overflow: hidden;
+        line-height:15px;
+
+        .fa-search{
+            font-size: 14px;
+            float: right;
+            color: #a8bbc6;
+            cursor: pointer;
+        }
+    }
+}
+.chat-area .chat-list{
+	border-top: 1px solid #cfdae1;
+	border-bottom: 1px solid #cfdae1;
+	position: absolute;
+	left: 0;
+	top: 35px;
+	right: 0;
+	bottom: 44px;
+	overflow-y: auto;
+	outline: none;
+
+    & > div > .jspPane {
+        margin-left: 0 !important;
+    }
+}
+.chat-area ul{
+	margin-right: -4px;
+}
+.chat-area ul > li{
+	border-top: 1px solid #cfdae1;
+	overflow: hidden;
+	position: relative;
+}
+.chat-area ul > li.me{
+	background: #e4eaee;
+}
+.chat-area ul > li:first-child{
+	border-top: none;
+}
+.chat-area ul .name{
+	padding: 14px;
+	text-align: right;
+	width: 100px;
+	float: left;
+	color: #5d7185;
+	font-weight: bold;
+	line-height: 20px;
+}
+.chat-area ul .message{
+	padding: 14px;
+	border-left: 1px solid #cfdae1;
+	float: left;
+	color: #333f4d;
+	width: 214px;
+}
+.chat-area ul .message > p{
+	line-height: 20px;
+}
+.chat-area ul .message > p > .blue-label{
+	background: #6ea0ff;
+	color: #fff;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+.chat-area ul .message .msg-time{
+	position: absolute;
+	top:16px;
+	right: 15px;
+	color: #738ba3;
+	font-size: 9px;
+}
+.input-area{
+	background: #e4eaee;
+	padding: 6px;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-top: 1px solid #cfdae1;
+}
+.input-area .input-wrapper{
+	background: #fff;
+	border: 1px solid #cfdae1;
+	border-radius: 5px;
+	overflow: hidden;
+	float: left;
+}
+.input-area .input-wrapper input{
+	height: 30px;
+	line-height: 30px;
+	border: 0;
+	margin: 0;
+	padding: 0 10px;
+	outline: none;
+	color: #5D7185;
+	min-width: 271px;
+}
+.input-area .input-wrapper i{
+	font-size: 18px;
+	color: #a0b4c0;
+	margin-right: 10px;
+  margin-top:8px;
+	cursor: pointer;
+}
+.input-area > input{
+	background: #a0b4c0;
+	border: none;
+  letter-spacing:1px;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 4px;
+	float:right;
+	height: 36px;
+	line-height: 30px;
+	cursor: pointer;
+	font-family: 'Open Sans', Arial, sans-serif;
+   outline: none;
+}
+.right-tabs{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	border-left: 1px solid #cfdae1;
+	border-top: 1px solid #cfdae1;
+	width: 175px;
+}
+.right-tabs > ul.tabs{
+	overflow: hidden;
+}
+.right-tabs > ul.tabs > li{
+	float: left;
+	width: 33.3%;
+	text-align: center;
+	border-bottom: 1px solid #cfdae1;
+}
+.right-tabs > ul.tabs > li > a{
+	border-left: 1px solid #cfdae1;
+	color: #72a3ff;
+	display: block;
+	background: #eef2f8;
+	padding: 8px 0;
+  transition: background 0.2s linear;
+}
+
+.right-tabs > ul.tabs > li > a:hover{
+  background: #DDE5F1;
+}
+
+.right-tabs > ul.tabs > li.active{
+	border-bottom: none;
+}
+.right-tabs > ul.tabs > li.active > a{
+	background: #fff;
+	color: #c3ccd3;
+}
+.right-tabs > ul.tabs > li:first-child > a{
+	border-left: none;
+}
+.right-tabs > ul.tabs > li > a >i{
+	font-size: 18px
+}
+ul.tabs-container{
+	padding: 10px;
+	color: #6e7f91;
+}
+.right-tabs > .fa-cog{
+	position: absolute;
+	bottom: 14px;
+	right: 14px;
+	color: #a0b4c0;
+	font-size: 18px;
+	cursor: pointer;
+}
+.member-list > li{
+	padding: 5px 0;
+}
+.member-list > li .status{
+	margin: 0 10px 0 0;
+	font-size: 14px;
+}
+.member-list > li .status.online{
+	color: #82cf85;
+}
+.member-list > li .status.idle{
+	color: #ffac69;
+}
+.member-list > li .status.offline{
+	color: #f57e7d;
+}
+.member-list > li .time{
+	float: right;
+	font-size: 9px;
+	margin-top: 4px;
+}
+.my-account{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 29px;
+	padding: 8px;
+	background: #445166;
+
+  > .image{
+    width: 30px;
+    height: 30px;
+    float: left;
+    position: relative;
+
+    > i{
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+
+    > img{
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+    }
+  }
+
+  .name{
+    color: #fff;
+    font-weight: bold;
+    margin-left: 10px;
+    float: left;
+    cursor: pointer;
+
+    .availability{
+      display: block;
+      font-weight: normal;
+      color: #8391a1;
+      margin-top: 5px;
+    }
+  }
+}
+.jspDrag{
+	background: #A1AFC4;
+	border-radius: 10px;
+}
+.jspVerticalBar{
+	width: 7px;
+}
+
+  </style>
 </head>
+
 <body>
-<div class="grid-x grid-padding-x">
-  <div class="columns small-12 large-12">
-    <img src="images/logo.jpg" alt="My Image">
-    <a class="button2" href="cititor_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
 
-    <a class="button2" href="cititor_evenimente.html" style="text-align: center; ">Evenimente</a>
-    <a class="button2" href="cititor_rezervari_sali.html" style="text-align: center; ">Rezerva o sala</a>
-    <a class="button2" href="cititor_setari_profil.html" style="text-align: center; ">Setari profil</a>
+<div class="button-container">
+  <!--  //<button class="button" >Intra in cont</button>-->
+  <a class="button" href="index.html">Log out</a>
+</div>
 
-    <a class="button2" href="cititor_mesaje.html" style="text-align: center; ">Mesaje</a>
-    <a class="button1" href="index.html"; style="text-align: center;font-weight:bold   ">Deconectare</a>
+<div class="wrapper">
 
-    <!--  <img th: src="@{/images/logo.jpg}" alt="My Image">-->
+  <div class="store">
+    <!--    <h1>Librarium</h1>-->
+    <div id="headerImage">
+      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
+      <img src="images/logo2.jpg" />
 
+    </div>
+
+
+    <header id="homeSection">
+      <nav>
+        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="cititor_evenimente.html">Evenimente</a>
+        <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
+        <a href="cititor_mesaje.html">Comunitate</a>
+        <a href="cititor_setari_profil.html">Setari profil</a>
+
+        <!--        <a href="#gallerySection">Gallery</a>-->
+        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <hr style="color: red; margin: 20px;">
+      </nav>
+    </header>
   </div>
-</div>
-<br><br><br>
-<div class="column small-12 large-12">
 
-
-  <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
-  <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
-
-</div>
-<br><br><br>
-
-
-<div class="grid-x grid-padding-x">
-
-  <div class="grid-frame">
-
-    <div class="grid-block collapse medium-9 large-9 vertical">
-
-      <div class="grid-block">
-        <div class="grid-block small-12 medium-9 vertical">
-          <div class="grid-content">
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Kevin Gnapoor</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Trang Pak</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Coach Carr</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Trang Pak</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
+  <section id="aboutSection">
+    <h2>Evenimente</h2>
+    <div id="wrapper1">
+      <div class="window-wrapper">
+        <div class="window-title">
+          <div class="dots">
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
+            <i class="fa fa-circle"></i>
           </div>
-          <div class="message-input grid-content collapse shrink">
-              <span class="inline-label">
-                <input type="text" placeholder="Message">
-                <a href="#" class="button">Send</a>
-              </span>
+          <div class="title">
+            <span>Hip Chat</span>
+          </div>
+          <div class="expand">
+            <i class="fa fa-expand"></i>
           </div>
         </div>
-        <div class="grid-content medium-3 show-for-medium message-side-bar">
-          <section class="block-list">
-            <header>In This Room</header>
-            <ul>
-              <li><a href="#">Cady Heron</a></li>
-              <li><a href="#">Kevin Gnapoor</a></li>
-              <li><a href="#">Trang Pak</a></li>
-              <li><a href="#">Coach Carr</a></li>
-              <li><a href="#">Regina George</a></li>
+        <div class="window-area">
+          <div class="conversation-list">
+            <ul class="">
+              <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
+              <li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>
+              <li><a href="#"><i class="fa fa-circle-o online"></i></i><span>Cucu Ionel</span><i class="fa fa-times"></i></a></li>
+              <li><a href="#"><i class="fa fa-circle-o idle"></i></i><span>Jan Dvořák</span><i class="fa fa-times"></i></a></li>
+              <li><a href="#"><i class="fa fa-circle-o offline"></i></i><span>Clark Kent</span><i class="fa fa-times"></i></a></li>
+              <li><a href="#"><i class="fa fa-circle-o offline"></i></i><span>Ioana Marcu</span><i class="fa fa-times"></i></a></li>
             </ul>
-          </section>
+            <div class="my-account">
+              <div class="image">
+                <img src="https://secure.gravatar.com/avatar/de76e03aa6b5b0bf675c1e8a990da52f?s=64">
+                <i class="fa fa-circle online"></i>
+              </div>
+              <div class="name">
+                <span>Cucu Ionel</span>
+                <i class="fa fa-angle-down"></i>
+                <span class="availability">Available</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="chat-area">
+            <div class="title"><b>Conversation title</b><i class="fa fa-search"></i></div>
+            <div class="chat-list">
+              <ul>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>Hey, do you like the new interface? It's done with Font Awesome.</p>
+                    <span class="msg-time">5:00 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p><span class="blue-label">Cucu Ionel</span> I see what you did there.</p>
+                    <span class="msg-time">5:01 pm</span>
+                  </div>
+                </li>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>Feel free to look at the code if you want.</p>
+                    <span class="msg-time">5:02 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p>Yeah, will do.</p>
+                    <span class="msg-time">5:04 pm</span>
+                  </div>
+                </li>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>This is an example text reply.</p>
+                    <span class="msg-time">5:04 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p>I know, put some more.</p>
+                    <span class="msg-time">5:06 pm</span>
+                  </div>
+                </li>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>Here is another line.</p>
+                    <span class="msg-time">5:06 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p>Yeah, will do.</p>
+                    <span class="msg-time">5:04 pm</span>
+                  </div>
+                </li>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>Feel free to look at the code if you want.</p>
+                    <span class="msg-time">5:02 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p>Yeah, will do.</p>
+                    <span class="msg-time">5:04 pm</span>
+                  </div>
+                </li>
+                <li class="me">
+                  <div class="name">
+                    <span class="">Cucu Ionel</span>
+                  </div>
+                  <div class="message">
+                    <p>Feel free to look at the code if you want.</p>
+                    <span class="msg-time">5:02 pm</span>
+                  </div>
+                </li>
+                <li class="">
+                  <div class="name">
+                    <span class="">Christian Smith</span>
+                  </div>
+                  <div class="message">
+                    <p>Yeah, will do.</p>
+                    <span class="msg-time">5:04 pm</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="input-area">
+              <div class="input-wrapper">
+                <input type="text" value="">
+                <i class="fa fa-smile-o"></i>
+                <i class="fa fa-paperclip"></i>
+              </div>
+              <input type="button" value="Submit" class="send-btn">
+            </div>
+          </div>
+          <div class="right-tabs">
+            <ul class="tabs">
+              <li class="active">
+                <a href="#"><i class="fa fa-users"></i></a>
+              </li>
+              <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
+              <li><a href="#"><i class="fa fa-link"></i></a></li>
+            </ul>
+            <ul class="tabs-container">
+              <li class="active">
+                <ul class="member-list">
+                  <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>
+                  <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>
+                  <li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>
+                  <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>
+                </ul>
+              </li>
+              <li></li>
+              <li></li>
+            </ul>
+            <i class="fa fa-cog"></i>
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
 
 
 
+
+    <br>
+
+
+
+  </section>
+
+  <section id="genreSection">
+    <!--    <h2>Genres</h2>-->
+    <article>
+
+
+
+
+    </article>
+  </section>
+
+  <section id="gallerySection">
+    <!--    <h2>Gallery</h2>-->
+    <article>
+
+
+
+    </article>
+  </section>
+
+  <section id="contactSection">
+    <article>
+
+    </article>
+  </section>
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="assets/js/myjs.js"></script>
+<script>jQuery(document).ready(function ($) {
 
+  $('#checkbox').change(function(){
+    setInterval(function () {
+        moveRight();
+    }, 3000);
+  });
+
+	var slideCount = $('#slider ul li').length;
+	var slideWidth = $('#slider ul li').width();
+	var slideHeight = $('#slider ul li').height();
+	var sliderUlWidth = slideCount * slideWidth;
+
+	$('#slider').css({ width: slideWidth, height: slideHeight });
+
+	$('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+    $('#slider ul li:last-child').prependTo('#slider ul');
+
+    function moveLeft() {
+        $('#slider ul').animate({
+            left: + slideWidth
+        }, 200, function () {
+            $('#slider ul li:last-child').prependTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    function moveRight() {
+        $('#slider ul').animate({
+            left: - slideWidth
+        }, 200, function () {
+            $('#slider ul li:first-child').appendTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    $('a.control_prev').click(function () {
+        moveLeft();
+    });
+
+    $('a.control_next').click(function () {
+        moveRight();
+    });
+
+});
+</script>
+<script>
+$(function(){
+	$('.chat-area > .chat-list').jScrollPane({
+		mouseWheelSpeed: 30
+	});
+});
+</script>
 </body>
+
 </html>

@@ -2,6 +2,7 @@ package com.andreea.librarium.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -24,11 +25,11 @@ public class RezervariCarti {
 
     @NotNull
     @Column(name = "data_rezervare", nullable = false)
-    private LocalDate dataRezervare;
+    private Instant dataRezervare;
 
     @NotNull
-    @Column(name = "stare_rezervare", nullable = false)
-    private Boolean stareRezervare = false;
+    @Column(name = "data_expirarii", nullable = false)
+    private Instant dataExpirarii ;
 
     public Integer getId() {
         return id;
@@ -54,20 +55,19 @@ public class RezervariCarti {
         this.idUtilizator = idUtilizator;
     }
 
-    public LocalDate getDataRezervare() {
+    public Instant getDataRezervare() {
         return dataRezervare;
     }
 
-    public void setDataRezervare(LocalDate dataRezervare) {
+    public void setDataRezervare(Instant dataRezervare) {
         this.dataRezervare = dataRezervare;
     }
 
-    public Boolean getStareRezervare() {
-        return stareRezervare;
+    public Instant getDataExpirarii() {
+        return dataExpirarii;
     }
 
-    public void setStareRezervare(Boolean stareRezervare) {
-        this.stareRezervare = stareRezervare;
+    public void setDataExpirarii(Instant dataExpirarii) {
+        this.dataExpirarii = dataExpirarii;
     }
-
 }

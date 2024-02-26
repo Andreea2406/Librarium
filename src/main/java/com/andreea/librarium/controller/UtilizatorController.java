@@ -1,14 +1,12 @@
 package com.andreea.librarium.controller;
 
-import com.andreea.librarium.model.Carti;
-import com.andreea.librarium.model.Rol;
-import com.andreea.librarium.model.RoluriUtilizatori;
-import com.andreea.librarium.model.Utilizatori;
+import com.andreea.librarium.config.UserSession;
+import com.andreea.librarium.model.*;
 import com.andreea.librarium.repositories.RolRepository;
 import com.andreea.librarium.repositories.RoluriUtilizatoriRepository;
 import com.andreea.librarium.repositories.UtilizatoriRepository;
-import com.andreea.librarium.service.RolService;
-import com.andreea.librarium.service.UsersService;
+import com.andreea.librarium.service.*;
+import com.andreea.librarium.config.UserSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
@@ -33,19 +31,32 @@ public class UtilizatorController {
     private RolService rolService;
     private UtilizatoriRepository utilizatoriRepository;
     private RoluriUtilizatori roluriUtilizatori;
+    private CartiService cartiService;
 
     private RolRepository rolRepository;
     private Utilizatori utilizatori;
+    @Autowired
+    private UserSession userSession;
     private RoluriUtilizatoriRepository roluriUtilizatoriRepository;
-//    @Autowired
+    private RezervareCarteService rezervareCarteService;
+    private ImprumuturiService imprumuturiService;
+
+    //    @Autowired
 //    RoluriUtilizatori roluriUtilizatori;
     @Autowired
-    public UtilizatorController(UsersService usersService, RoluriUtilizatoriRepository roluriUtilizatoriRepository, RolRepository rolRepository, RolService rolService) {
+    public UtilizatorController(UsersService usersService, RoluriUtilizatoriRepository roluriUtilizatoriRepository, RolRepository rolRepository,
+                                RolService rolService,
+                                RezervareCarteService rezervareCarteService,
+                                ImprumuturiService imprumuturiService,
+                                UserSession userSession) {
 
         this.usersService = usersService;
         this.roluriUtilizatoriRepository=roluriUtilizatoriRepository;
         this.rolRepository = rolRepository;
         this.rolService=rolService;
+        this.rezervareCarteService=rezervareCarteService;
+        this.imprumuturiService=imprumuturiService;
+        this.userSession=userSession;
     }
 
 //    public UtilizatorController( {
@@ -57,6 +68,72 @@ public class UtilizatorController {
     public String returnCreareCont() {
         return "creare_cont";
     }
+    @GetMapping("/cititor_pagina_principala.html")
+    public String returnCititorPaginaPrincipala() {
+        return "cititor_pagina_principala";
+    }
+//    @GetMapping("/cititor_evenimente.html")
+//    public String returnCittitorEvenimente() {
+//        return "cititor_evenimente";
+//    }
+//    @GetMapping("/cititor_catalog.html")
+//    public String returnCititorCatalog(Model model) {
+//
+//        //String titluCarte = cartiService.obtineTitluCarte();
+//
+//        // adaugă titlul în model pentru a fi accesibil în Thymeleaf
+//       // model.addAttribute("titluCarte", titluCarte);
+//        List<Carti> carti = cartiService.getAllBooks();
+//        model.addAttribute("carti", carti);
+//        return "cititor_catalog";
+//    }
+//    @GetMapping("/cititor_rezervari_sali.html")
+//    public String returnCititorRezervariSali() {
+//        return "cititor_rezervari_sali";
+//    }
+    @GetMapping("/cititor_mesaje.html")
+    public String returnCititorMesaje() {
+        return "cititor_mesaje";
+    }
+    @GetMapping("/carte.html")
+    public String returnCarte() {
+        return "carte";
+    }
+    @GetMapping("/cititor_carte.html")
+    public String returnCititorCarte() {
+        return "cititor_carte";
+    }
+
+//    @GetMapping("/cititor_setari_profil")
+//    public String returnCisddtitorCarte(Model model) {
+//        Integer idUtilizatorLogat = userSession.getUserId();
+//        System.out.println("utii: " + idUtilizatorLogat);
+//        Utilizatori utilizatori = usersService.getUserById(idUtilizatorLogat);
+//        System.out.println("utii"+utilizatori);
+//
+//
+//        // Presupunând că ai o clasă UserSession care ține minte utilizatorul logat
+////        Utilizatori utilizator = utilizatoriRepository.findById(idUtilizatorLogat.longValue()).orElse(null); // Asigură-te că metoda findById acceptă un Long și că tipul ID-ului în UserSession este compatibil
+////
+////        Utilizatori utilizatori=usersService.getStudentById(idUtilizatorLogat);
+//
+//        model.addAttribute("utilizator", utilizatori);
+//        return "cititor_setari_profil";}
+//    @GetMapping("/cititor_setari_profil/{id}")
+//    public String returnCititorSetariProfil(@PathVariable("id") Integer id, Model model) {
+//        Integer idUtilizatorLogat = userSession.getUserId();
+//        System.out.println("utii");
+//        System.out.println(idUtilizatorLogat);
+//        //        Utilizatori utilizator = utilizatoriRepository.findById(idUtilizatorLogat.longValue()).orElse(null); // Asigură-te că metoda findById acceptă un Long și că tipul ID-ului în UserSession este compatibil
+//
+//        Utilizatori utilizatori=usersService.getStudentById(id);
+//       model.addAttribute("utilizatori",utilizatori);
+//        return "cititor_setari_profil";
+//    }
+//    @GetMapping("/cititor_rezervari_imprumuturi.html")
+//    public String returnCititorImprumuturiRez() {
+//        return "cititor_rezervari_imprumuturi";
+//    }
 
 
 //    @Controller
@@ -132,6 +209,9 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
     Utilizatori authenticated = usersService.authenticate(utilizatori.getEmail(), utilizatori.getParola());
 
     if (authenticated != null) {
+        System.out.println("UserId during login: " + authenticated.getId());
+        userSession.setUserId(authenticated.getId());
+
         Set<Rol> roles = usersService.getRolesForUser(authenticated.getId());
 
         if (roles.stream().anyMatch(rol -> "admin".equals(rol.getNumeRol()))) {
@@ -143,7 +223,9 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
         }
         else if (roles.stream().anyMatch(rol -> "bibliotecar".equals(rol.getNumeRol()))) {
             model.addAttribute("userLogin", authenticated.getEmail());
-            return "bibliotecar_pagina_principala";
+            return "redirect:/bibliotecar_pagina_principala";
+
+//            return "bibliotecar_pagina_principala";
         }else {
             // Handle other roles or no roles
             return "error_page";
@@ -333,6 +415,19 @@ public String deleteUser(@PathVariable Integer id){
 }
 
 
+    @GetMapping("/cititor_rezervari_imprumuturi.html")
+    public String afiseazaRezervarileSiImprumuturileUtilizatorului(Model model) {
+        Integer idUtilizatorLogat = userSession.getUserId(); // Obține ID-ul utilizatorului logat
+        System.out.println("ID-ul utilizatorului logat: " + idUtilizatorLogat);
+
+        // Inițializează listele ca liste goale în cazul în care serviciul returnează null
+        List<Imprumuturi> imprumuturiList = imprumuturiService.getImprumuturiByUserId(idUtilizatorLogat);
+        List<RezervariCarti> rezervariList = rezervareCarteService.getRezervariByUserId(idUtilizatorLogat);
+        model.addAttribute("imprumuturi", imprumuturiList);
+        model.addAttribute("rezervari", rezervariList);
+
+        return "cititor_rezervari_imprumuturi"; // Numele paginii tale Thymeleaf
+    }
 
 
 

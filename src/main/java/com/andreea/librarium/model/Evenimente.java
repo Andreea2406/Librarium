@@ -1,9 +1,17 @@
 package com.andreea.librarium.model;
 
+import com.andreea.librarium.serialization.TimeStampDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.security.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -20,26 +28,51 @@ public class Evenimente {
     @Column(name = "nume", nullable = false)
     private String nume;
 
-    @NotNull
-    @Column(name = "data_ora_inceput", nullable = false)
-    private Instant dataOraInceput;
+
+    public String getDataInceput() {
+        return dataInceput;
+    }
 
     @NotNull
-    @Column(name = "data_ora_final", nullable = false)
-    private Instant dataOraFinal;
+    @Column(name = "data_inceput", nullable = false)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+
+    private String dataInceput;
+
+    @NotNull
+    @Column(name = "ora_inceput", nullable = false)
+    @JsonFormat(pattern = "HH:mm")
+
+    private String oraInceput;
+
+    @NotNull
+    @Column(name = "data_final", nullable = false)
+    @JsonFormat(pattern = "dd.MM.yyyy")
+
+    private String dataFinal;
+
+    @NotNull
+    @Column(name = "ora_final", nullable = false)
+    @JsonFormat(pattern = "HH:mm")
+
+    private String oraFinal;
+
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_sala", nullable = false)
     private SaliBiblioteca idSala;
 
-    @Size(max = 255)
+    @Size(max = 65535) // Maximum size for LONGTEXT in MySQL
     @NotNull
     @Column(name = "descriere", nullable = false)
     private String descriere;
 
     @OneToMany(mappedBy = "idEveniment")
     private Set<InregistrareEveniment> inregistrareEveniments = new LinkedHashSet<>();
+
+    public Evenimente() {
+    }
 
     public Integer getId() {
         return id;
@@ -57,21 +90,37 @@ public class Evenimente {
         this.nume = nume;
     }
 
-    public Instant getDataOraInceput() {
-        return dataOraInceput;
+
+
+    public void setDataInceput(String dataInceput) {
+        this.dataInceput = dataInceput;
     }
 
-    public void setDataOraInceput(Instant dataOraInceput) {
-        this.dataOraInceput = dataOraInceput;
+    public String getOraInceput() {
+        return oraInceput;
     }
 
-    public Instant getDataOraFinal() {
-        return dataOraFinal;
+    public void setOraInceput(String oraInceput) {
+        this.oraInceput = oraInceput;
     }
 
-    public void setDataOraFinal(Instant dataOraFinal) {
-        this.dataOraFinal = dataOraFinal;
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
     }
+
+    public String getOraFinal() {
+        return oraFinal;
+    }
+
+    public void setOraFinal(String oraFinal) {
+        this.oraFinal = oraFinal;
+    }
+
+    public String  getDataFinal() {
+        return dataFinal;
+    }
+
+
 
     public SaliBiblioteca getIdSala() {
         return idSala;
@@ -96,5 +145,15 @@ public class Evenimente {
     public void setInregistrareEveniments(Set<InregistrareEveniment> inregistrareEveniments) {
         this.inregistrareEveniments = inregistrareEveniments;
     }
+
+//    public Evenimente(String nume, Object dataOraInceput, Object dataOraFinal, SaliBiblioteca idSala, String descriere) {
+//        this.nume = nume;
+//        this.dataOraInceput = (LocalDateTime ) dataOraInceput;
+//        this.dataOraFinal = (LocalDateTime ) dataOraFinal;
+//        this.idSala = idSala;
+//        this.descriere = descriere;
+//    }
+
+
 
 }

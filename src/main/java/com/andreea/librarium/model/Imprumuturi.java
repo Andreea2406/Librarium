@@ -29,7 +29,18 @@ public class Imprumuturi {
     @NotNull
     @Column(name = "data_ora_return", nullable = false)
     private Instant dataOraReturn;
+    @NotNull
+    @Column(name = "isFinalizat", nullable = false)
+    private Boolean isFinalizat;
 
+    // Getter și setter pentru isFinalizat
+    public Boolean getIsFinalizat() {
+        return isFinalizat;
+    }
+
+    public void setIsFinalizat(Boolean isFinalizat) {
+        this.isFinalizat = isFinalizat;
+    }
     public Integer getId() {
         return id;
     }

@@ -57,8 +57,24 @@ public class CartiController {
         model.addAttribute("carti", carti);
         return "admin_carti";
     }
+    @GetMapping("/cititor_catalog.html")
+    public String returnCititorCatalog(Model model) {
 
+        //String titluCarte = cartiService.obtineTitluCarte();
 
+        // adaugă titlul în model pentru a fi accesibil în Thymeleaf
+        // model.addAttribute("titluCarte", titluCarte);
+        List<Carti> carti = cartiService.getAllBooks();
+        model.addAttribute("carti", carti);
+        return "cititor_catalog";
+    }
+@GetMapping("cititor_carte/{id}")
+public String afisCarteCititor(@PathVariable("id") Integer id, Model model){
+        Carti carti= cartiService.getBookById(id);
+    model.addAttribute("carti", carti);
+    return "cititor_carte";
+
+}
     @GetMapping("admin_carti/edit/{id}")
     public String read(@PathVariable("id") Integer id, Model model)
     {

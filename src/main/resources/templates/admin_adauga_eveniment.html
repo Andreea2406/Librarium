@@ -27,22 +27,29 @@
 </div>
 <br><br><br>
 
-<form action="#" th:action="@{/submit}" th:object="${user}" method="post">
+<form  th:action="@{/adaugareEveniment}" th:object="${eveniment}" method="post">
   <label for="nume">Nume:</label>
   <input type="text" id="nume" th:field="*{nume}" />
 
   <br /> <br />
-  <label for="data_ora_inceput">Data si ora inceput:</label>
-  <input type="text" id="data_ora_inceput" th:field="*{data_ora_inceput}" />
+  <label for="dataInceput">Data inceput:</label>
+  <input type="text" id="dataInceput" th:field="*{dataInceput}" />
+  <br /> <br />
+  <label for="oraInceput">Ora inceput:</label>
+  <input type="text" id="oraInceput" th:field="*{oraInceput}" />
+  <br /> <br />
+
+  <label for="dataFinal">Data final:</label>
+  <input type="text" id="dataFinal" th:field="*{dataFinal}" />
+  <br /> <br />
+
+  <label for="oraFinal">Ora final:</label>
+  <input type="text" id="oraFinal" th:field="*{oraFinal}" />
+
 
   <br /> <br />
-  <label for="data_ora_final">Data si ora final:</label>
-  <input type="text" id="data_ora_final" th:field="*{data_ora_final}" />
-
-
-  <br /> <br />
-  <label for="id_sala">Sala:</label>
-  <input type="text" id="id_sala" th:field="*{id_sala}" />
+  <label for="idSala">Sala:</label>
+  <input type="text" id="idSala" th:field="*{idSala}" />
 
   <br /> <br />
   <label for="descriere">Descriere:</label>

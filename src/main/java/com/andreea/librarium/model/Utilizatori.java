@@ -374,4 +374,8 @@ public class Utilizatori {
     public void getRoles(Set<Rol> roles) {
         this.role = roles;
     }
+
+    public Utilizatori orElseThrow(Object o) {
+        return null;
+    }
 }
