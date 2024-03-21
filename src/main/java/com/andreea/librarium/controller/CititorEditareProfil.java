@@ -1,6 +1,8 @@
 package com.andreea.librarium.controller;
 
 import com.andreea.librarium.config.UserSession;
+import com.andreea.librarium.model.Carti;
+import com.andreea.librarium.model.CartiFavorite;
 import com.andreea.librarium.model.RoluriUtilizatori;
 import com.andreea.librarium.model.Utilizatori;
 import com.andreea.librarium.repositories.RolRepository;
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CititorEditareProfil {
@@ -29,12 +34,13 @@ public class CititorEditareProfil {
     private RoluriUtilizatoriRepository roluriUtilizatoriRepository;
     private RezervareCarteService rezervareCarteService;
     private ImprumuturiService imprumuturiService;
+    private CartiFavoriteService cartiFavoriteService;
     @Autowired
     public CititorEditareProfil(UsersService usersService, RoluriUtilizatoriRepository roluriUtilizatoriRepository, RolRepository rolRepository,
                                 RolService rolService,
                                 RezervareCarteService rezervareCarteService,
                                 ImprumuturiService imprumuturiService,
-                                UserSession userSession){
+                                UserSession userSession,CartiFavoriteService cartiFavoriteService, CartiService cartiService){
 
 
 
@@ -45,6 +51,9 @@ public class CititorEditareProfil {
     this.rezervareCarteService=rezervareCarteService;
     this.imprumuturiService=imprumuturiService;
     this.userSession=userSession;
+    this.cartiFavoriteService=cartiFavoriteService;
+    this.cartiService=cartiService;
+
 }
     @GetMapping("/cititor_setari_profil")
     public String vizualizeazaSetariProfil(Model model) {
@@ -53,7 +62,10 @@ public class CititorEditareProfil {
             Utilizatori utilizator = usersService.getStudentById(idUtilizatorLogat);
             if (utilizator != null) {
                 model.addAttribute("utilizator", utilizator);
-                System.out.println("utii"+utilizator);
+
+                // This method returns a list of CartiFavorite entities, not IDs.
+                List<CartiFavorite> cartiFavorite = cartiFavoriteService.findFavoriteCartiIdsByUserId(idUtilizatorLogat);
+                model.addAttribute("cartiFavorite", cartiFavorite);
 
                 return "cititor_setari_profil";
             } else {
@@ -65,6 +77,31 @@ public class CititorEditareProfil {
             return "redirect:/login";
         }
     }
+
+//    @GetMapping("/cititor_setari_profil")
+//    public String vizualizeazaSetariProfil(Model model) {
+//        Integer idUtilizatorLogat = userSession.getUserId(); // Obține ID-ul din sesiune
+//        if (idUtilizatorLogat != null) {
+//            Utilizatori utilizator = usersService.getStudentById(idUtilizatorLogat);
+//            if (utilizator != null) {
+//                model.addAttribute("utilizator", utilizator);
+//
+//                List<Integer> cartiFavoriteIds = cartiFavoriteService.findFavoriteCartiIdsByUserId(idUtilizatorLogat);
+//                List<Carti> cartiFavorite = cartiFavoriteIds.stream()
+//                        .map(id -> cartiService.getBookById(id)) // Presupunând că există o metodă `findById` în serviciul tău de cărți
+//                        .collect(Collectors.toList());
+//                model.addAttribute("cartiFavorite", cartiFavorite);
+//
+//                return "cititor_setari_profil";
+//            } else {
+//                // Tratează cazul în care utilizatorul nu este găsit
+//                return "pagina_eroare"; // Sau o altă logică adecvată
+//            }
+//        } else {
+//            // Utilizatorul nu este logat sau sesiunea a expirat
+//            return "redirect:/login";
+//        }
+//    }
     @GetMapping("/cititor_editare_profil")
     public String afiseazaFormularEditareProfil(Model model) {
         Integer idUtilizatorLogat = userSession.getUserId();

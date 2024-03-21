@@ -1,11 +1,14 @@
 package com.andreea.librarium.controller;
 
+import com.andreea.librarium.config.UserSession;
+import com.andreea.librarium.model.CartiFavorite;
 import com.andreea.librarium.model.Utilizatori;
 import com.andreea.librarium.model.Carti;
 
 import com.andreea.librarium.repositories.CartiRepository;
 import com.andreea.librarium.repositories.RolRepository;
 
+import com.andreea.librarium.service.CartiFavoriteService;
 import com.andreea.librarium.service.CartiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,17 +20,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
 public class CartiController {
     private RolRepository rolRepository;
     private CartiService cartiService;
+    @Autowired
+    private UserSession userSession;
+    private CartiFavoriteService cartiFavoriteService;
     private  CartiRepository cartiRepository;
     @Autowired
-    public CartiController(CartiService cartiService, CartiRepository cartiRepository) {
+    public CartiController(CartiService cartiService, CartiRepository cartiRepository,UserSession userSession,
+                           CartiFavoriteService cartiFavoriteService) {
         this.cartiService=cartiService;
         this.cartiRepository=cartiRepository;
+        this.userSession=userSession;
+        this.cartiFavoriteService=cartiFavoriteService;
 
     }
 
@@ -57,18 +67,55 @@ public class CartiController {
         model.addAttribute("carti", carti);
         return "admin_carti";
     }
+//    @GetMapping("/cititor_catalog.html")
+//    public String returnCititorCatalog(Model model) {
+//
+//        //String titluCarte = cartiService.obtineTitluCarte();
+//
+//        // adaugă titlul în model pentru a fi accesibil în Thymeleaf
+//        // model.addAttribute("titluCarte", titluCarte);
+//        List<Carti> carti = cartiService.getAllBooks();
+//        model.addAttribute("carti", carti);
+//        return "cititor_catalog";
+//    }
+
+
+
     @GetMapping("/cititor_catalog.html")
     public String returnCititorCatalog(Model model) {
+        Integer userId = userSession.getUserId(); // Obține ID-ul din sesiune
 
-        //String titluCarte = cartiService.obtineTitluCarte();
-
-        // adaugă titlul în model pentru a fi accesibil în Thymeleaf
-        // model.addAttribute("titluCarte", titluCarte);
         List<Carti> carti = cartiService.getAllBooks();
+        List<CartiFavorite> cartiFavorite = cartiFavoriteService.findFavoriteCartiIdsByUserId(userId);
+
+        // Transform the list of CartiFavorite entities into a list of book IDs
+        List<Integer> cartiFavoriteIds = cartiFavorite.stream()
+                .map(CartiFavorite::getCarteId) // Extract the book ID
+                .collect(Collectors.toList());
+
         model.addAttribute("carti", carti);
+        model.addAttribute("cartiFavoriteIds", cartiFavoriteIds);
+
         return "cititor_catalog";
     }
-@GetMapping("cititor_carte/{id}")
+
+//    @GetMapping("/cititor_catalog.html")
+//    public String returnCititorCatalog(Model model) {
+//        // Presupunând că ai o metodă pentru a obține ID-ul utilizatorului curent
+//        Integer userId = userSession.getUserId(); // Aceeași presupunere ca mai sus
+//
+//        List<Carti> carti = cartiService.getAllBooks();
+//        List<Integer> cartiFavoriteIds = cartiFavoriteService.findFavoriteCartiIdsByUserId(userId);
+//
+//        // Opțional: Transformă lista de cărți într-o listă de DTO-uri dacă ai nevoie să adaugi informații suplimentare
+//        // Pentru simplitate, vom presupune că lucrăm direct cu entități și adăugăm doar ID-urile cărților favorite în model
+//        model.addAttribute("carti", carti);
+//        model.addAttribute("cartiFavoriteIds", cartiFavoriteIds);
+//
+//        return "cititor_catalog";
+//    }
+
+    @GetMapping("cititor_carte/{id}")
 public String afisCarteCititor(@PathVariable("id") Integer id, Model model){
         Carti carti= cartiService.getBookById(id);
     model.addAttribute("carti", carti);
@@ -132,6 +179,16 @@ public String afisCarteCititor(@PathVariable("id") Integer id, Model model){
         cartiService.deleteCarteById(id);
         return "redirect:/admin_carti";
     }
+
+
+    // Presupunând că ai o metodă care returnează o listă de cărți și informații despre favorite
+// Metoda din controller care pregătește datele pentru pagina cu cărți
+
+
+
+
+
+
 
 
 //    @GetMapping("/admin_adauga_carte")

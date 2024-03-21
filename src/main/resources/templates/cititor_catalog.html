@@ -8,16 +8,16 @@
   <style>
     body {
 
-  background: rgba(250, 160, 100, .2);
-background-color:#F7F0E8;
-}
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #535b60;
-  background-color: #F7F0E8;
-}
+        background: rgba(250, 160, 100, .2);
+         background-color:#F7F0E8;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      color: #535b60;
+      background-color: #F7F0E8;
+    }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
@@ -208,7 +208,7 @@ ul.box4 li {
     position: relative;
     float: left;
     width: 300px;
-    height: 500px;
+    height: 600px;
     padding: 0;
     border: 1px solid #efefef;
     margin: 0 30px 30px 0;
@@ -573,6 +573,37 @@ body {
   height: auto;
   display: block;
 }
+/* Stiluri generale pentru butoane */
+.button-favorite {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Stiluri pentru butonul de adăugare la favorite */
+.button-add-favorite {
+  background-color: #FFD700; /* Galben auriu */
+  color: #581845; /* Purpuriu închis */
+}
+
+.button-add-favorite:hover {
+  background-color: #ffdf00; /* Galben deschis pentru efect de hover */
+}
+
+/* Stiluri pentru butonul de eliminare din favorite */
+.button-remove-favorite {
+  background-color: #DAA520; /* Maro auriu */
+  color: #fff;
+}
+
+.button-remove-favorite:hover {
+  background-color: #f0e68c; /* Khaki deschis pentru efect de hover */
+}
+
   </style>
 </head>
 
@@ -700,32 +731,73 @@ body {
 
       </section>
     </form>
-    <section id="genreSection">   <article>
-    <div class="div2" th:each="carte : ${carti}">
+<!--    <section id="genreSection">   <article>-->
+<!--    <div class="div2" th:each="carte : ${carti}">-->
 
 
-      <div class="result">
+<!--      <div class="result">-->
 
 
-        <a th:href="@{'cititor_carte/' + ${carte.id}}">
-          <h4 th:text="${carte.titlu}">Titlul Cărții</h4>
-        </a>
+<!--        <a th:href="@{'cititor_carte/' + ${carte.id}}">-->
+<!--          <h4 th:text="${carte.titlu}">Titlul Cărții</h4>-->
+<!--        </a>-->
+<!--        <div th:if="${cartiFavorite.contains(carte.id)}">-->
+<!--          &lt;!&ndash; Cartea este favorită, afișează butonul de eliminare &ndash;&gt;-->
+<!--          <form th:action="@{'/elimina_din_favorite/' + ${carte.id}}" method="post">-->
+<!--            <button type="submit">Elimină de la favorite</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--        <div th:if="${!cartiFavorite.contains(carte.id)}">-->
+<!--          &lt;!&ndash; Cartea nu este favorită, afișează butonul de adăugare &ndash;&gt;-->
+<!--          <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">-->
+<!--            <button type="submit">Adaugă la favorite</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
 
-            </div>
 
+<!--    </div>-->
 
+<!--    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
 
-    </div>
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    </article></section>
+<!--    </article></section>-->
 
 <!--    <div class="div2" th:each="carte : ${carti}">-->
 
-<!--    <section id="genreSection">-->
-<!--      <article>-->
-<!--        <div class="container3">-->
+    <section id="genreSection">
+      <article>
+
+
+        <div class="container3">
+          <ul class="box3">
+            <li th:each="carte : ${carti}">
+              <div class="book-container">
+                <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+
+                <!-- Imagini, titluri și butoane specifice fiecărei cărți -->
+                <h4 th:text="${carte.titlu}">Titlul Cărții</h4>
+                <div th:if="${cartiFavoriteIds.contains(carte.id)}">
+                  <!-- Cartea este la favorite, afișează butonul de eliminare -->
+                  <form th:action="@{'/elimina_din_favorite/' + ${carte.id}}" method="post">
+                    <button type="submit" class="button-favorite button-remove-favorite">Elimină din favorite</button>
+                  </form>
+                </div>
+                <div th:if="${!cartiFavoriteIds.contains(carte.id)}">
+                  <!-- Cartea nu este la favorite, afișează butonul de adăugare -->
+                  <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">
+                    <button type="submit" class="button-favorite button-add-favorite">Adaugă la favorite</button>
+                  </form>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+
+
+
+        <!--        <div class="container3">-->
 <!--          <ul class="box3">-->
 <!--            <li>-->
 
@@ -733,15 +805,18 @@ body {
 <!--                <img class="image1" src="images/bookcover.jpg" alt="Image 1">-->
 <!--                <a th:href="@{'cititor_carte/' + ${carte.id}}">-->
 <!--                  <h4 th:text="${carte.titlu}">Titlul Cărții</h4>-->
+<!--                  <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">&ndash;&gt;-->
+<!--                                <button type="submit">Adaugă la favorite</button>-->
+<!--                              </form>-->
 <!--                </a>-->
 <!--              </div>-->
 <!--            </li>-->
 <!--          </ul>-->
 <!--        </div>-->
-<!--      </article>-->
-<!--    </section>-->
+      </article>
+    </section>
 
-<!--    </div>-->
+    </div>
     <section id="contactSection">
       <!--    <h2>Contact Book Store</h2>-->
       <article>

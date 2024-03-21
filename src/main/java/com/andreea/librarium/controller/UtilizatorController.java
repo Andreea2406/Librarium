@@ -19,18 +19,13 @@ import javax.websocket.server.PathParam;
 import java.util.*;
 
 @Controller
-//@ComponentScan(basePackages = {"C:\\Librarium\\src\\main\\java\\com\\andreea\\librarium\\service"})
 public class UtilizatorController {
-    //    @GetMapping("/")
-//    public String showIndex() {
-//        return "index";
-//    }
-//
 
     private UsersService usersService;
     private RolService rolService;
     private UtilizatoriRepository utilizatoriRepository;
     private RoluriUtilizatori roluriUtilizatori;
+    @Autowired
     private CartiService cartiService;
 
     private RolRepository rolRepository;
@@ -48,7 +43,8 @@ public class UtilizatorController {
                                 RolService rolService,
                                 RezervareCarteService rezervareCarteService,
                                 ImprumuturiService imprumuturiService,
-                                UserSession userSession) {
+                                UserSession userSession,
+                                CartiService cartiService) {
 
         this.usersService = usersService;
         this.roluriUtilizatoriRepository=roluriUtilizatoriRepository;
@@ -57,6 +53,7 @@ public class UtilizatorController {
         this.rezervareCarteService=rezervareCarteService;
         this.imprumuturiService=imprumuturiService;
         this.userSession=userSession;
+        this.cartiService=cartiService;
     }
 
 //    public UtilizatorController( {
@@ -166,19 +163,14 @@ public class UtilizatorController {
                 utilizatori.getParola()
 
         );
-        //return registeredUser==null?"error_page":"redirect:/login";
         if (registeredUser != null) {
-            // Create a UserRole entity and associate it with the registered user
             RoluriUtilizatori userRole = new RoluriUtilizatori();
             userRole.setIdUtilizator(registeredUser);
-//            userRole.setIdRol(1); // Set the user role
             Optional<Rol> optionalRole = rolRepository.findByNumeRol("user");
             Rol userRoleEntity = optionalRole.orElse(null);
 
-            //Rol userRoleEntity = rolRepository.findByName("user"); // Replace with actual repository method
             userRole.setIdRol(userRoleEntity); // Set the user role entity
 
-            // Save the user role to the database
             usersService.saveUserRole(userRole);
 
             return "redirect:/login";
@@ -469,6 +461,81 @@ public String deleteUser(@PathVariable Integer id){
         // Logică pentru afișarea paginii rol_bibliotecar
         return "rol_bibliotecar";
     }
+
+//    @PostMapping("/adauga_la_favorite/{carteId}")
+//    public String adaugaLaFavorite(@PathVariable Integer carteId,Model model) {
+//        // Aici va trebui să obții ID-ul utilizatorului curent logat
+//        Integer userId = userSession.getUserId();
+//        System.out.println("userrId: " + userSession.getUserId());
+//        // Presupunem că ai o metodă care îți returnează utilizatorul logat pe baza principal-ului
+//        if (userId != null) {
+//            Utilizatori utilizatori = usersService.getUserById(userId);
+//            if (utilizatori != null) {
+//            // Presupunem că ai o metodă în serviciul tău care adaugă cartea la favorite folosind ID-ul utilizatorului și ID-ul cărții
+//            cartiService.adaugaLaFavorite(userId, carteId);
+//
+//            // Redirecționează înapoi la catalog sau la o pagină de succes          return "redirect:/admin_cititori";
+//            return "redirect:/cititor_catalog.html";}
+//            return "error_page";
+//        } else {
+//            // Tratează cazul în care ID-ul utilizatorului nu este în sesiune (de exemplu, utilizatorul nu este logat)
+//            model.addAttribute("error", "Trebuie să fii logat pentru a adăuga la favorite.");
+//            return "logare";
+//        }
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @PostMapping("/adauga_la_favorite/{carteId}")
+//    public String adaugaLaFavorite(@PathVariable Integer carteId, Model model) {
+//        // Obține ID-ul utilizatorului curent logat
+//        Integer userId = userSession.getUserId();
+//        System.out.println("userId: " + userId);
+//
+//        // Verifică dacă ID-ul utilizatorului este prezent
+//        if (userId != null) {
+//            // Verifică dacă cartea este deja adăugată la favorite
+//            if (!cartiService.esteCarteFavorita(userId, carteId)) {
+//                // Dacă cartea nu este în lista de favorite, adaug-o
+//                cartiService.adaugaLaFavorite(userId, carteId);
+//                // Redirecționează înapoi la catalog sau la o pagină de succes
+//                return "redirect:/cititor_catalog.html";
+//            } else {
+//                // Dacă cartea este deja favorită, poți trimite un mesaj sau redirecționa către o altă pagină
+//                model.addAttribute("message", "Cartea este deja în lista ta de favorite.");
+//                return "pagina_informativa"; // Sau orice pagină unde vrei să afișezi acest mesaj
+//            }
+//        } else {
+//            // Tratează cazul în care ID-ul utilizatorului nu este în sesiune (utilizatorul nu este logat)
+//            model.addAttribute("error", "Trebuie să fii logat pentru a adăuga la favorite.");
+//            return "logare";
+//        }
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //    @PostMapping("/update/{id}")

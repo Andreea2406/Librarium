@@ -133,6 +133,9 @@ h3 {
   font-family: Helvetica, cursive;
   color:#4d0000;
 }
+h4{
+color: #FBE4C4;
+}
 h5 {
   font-size: 30px;
   font-family: Helvetica, cursive;
@@ -427,7 +430,9 @@ ul.box4 li:after {
 
       <div>
         <form th:action="@{/cititor_editare_profil}" method="get">
-          <button type="submit">Editează</button>
+          <button type="submit" class="btn btn-primary" style="color:#f5f5dc;
+          width:130px; border: 1px solid #4d0000; background-color: #4d0000;">Editează</button>
+
         </form>
       </div>
 
@@ -435,7 +440,10 @@ ul.box4 li:after {
 
 
     </div>
-      <!-- Adaugă restul câmpurilor aici -->
+
+    <!--          <button type="submit">Editează</button>-->
+
+    <!-- Adaugă restul câmpurilor aici -->
 <!--    </div>-->
 <!--    </div>-->
   </section>
@@ -445,6 +453,19 @@ ul.box4 li:after {
 
   <section id="aboutSection1">
     <h2>Carti favorite</h2>
+    <div class="container3">
+      <ul class="box3" th:if="${cartiFavorite} != null">
+        <li th:each="carteFav : ${cartiFavorite}">
+          <div class="book-container">
+            <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+            <h4 th:text="${carteFav.carte.titlu}">Titlul Cărții</h4>
+            <form th:action="@{/elimina_din_favorite/{carteId}(carteId=${carteFav.carte.id})}" method="post">
+              <button type="submit" class="btn btn-danger">Elimină din favorite</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
   </section>
 </div>
 <section id="genreSection">
