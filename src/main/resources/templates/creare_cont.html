@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Librarium</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -187,16 +187,9 @@ h5 {
             <img src="images/logo2.jpg" />
             <header id="homeSection">
                 <nav>
-                    <a href="cititor_pagina_principala.html">Acasa</a>
-                    <a href="cititor_evenimente.html">Evenimente</a>
-                    <a href="cititor_catalog.html">Catalog</a>
-                    <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
-                    <a href="cititor_mesaje.html">Comunitate</a>
-                    <a href="cititor_setari_profil.html">Setari profil</a>
-
-
-                    <!--        <a href="#gallerySection">Gallery</a>-->
-                    <!--        <a href="#contactSection">Contact Book Store</a>-->
+                    <a href="/">Acasa</a>
+                    <a href="http://localhost:8080/evenimente.html">Evenimente</a>
+                    <a href="http://localhost:8080/catalog.html">Catalog</a>
                     <hr style="color: red; margin: 20px;">
                 </nav>
             </header>
@@ -335,10 +328,9 @@ h5 {
                             <div class="columns large-centered large-5 medium-5 medium-centered small-12 small-centered cell">
                                 <input type="submit"name="sign-in" value="Login">
 
-                                <!--                <button type="submit" class="btn btn-success" value="Register">Trimite</button>-->
                             </div>
                             <div class="form-group">
-                                <span>Ai deja cont?<a href="/" th:href="@{/logare}">Intra in cont</a></span>
+                                <span>Ai deja cont?<a href="/" th:href="@{/login}">Intra in cont</a></span>
                             </div>
                         </form>
                     </div>

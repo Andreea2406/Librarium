@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface BibliotecariRepository extends JpaRepository<Utilizatori, Integer> {
     @Query("SELECT utilizator FROM Utilizatori utilizator JOIN utilizator.role role WHERE role.numeRol = 'bibliotecar'")
-//    List<Utilizatori> findUserByRole(int role);
     List<Utilizatori> findAllBibliotecari();
 
 

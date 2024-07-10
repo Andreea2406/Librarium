@@ -218,17 +218,14 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -239,19 +236,17 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
         <a href="cititor_pagina_principala.html">Acasa</a>
         <a href="cititor_evenimente.html">Evenimente</a>
         <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_imprumuturi.html">Rezervariile mele</a>
+
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
   </div>
 
-  <section id="aboutSection">
-
-  </section>
 
   <br><br><br>
   <section id="evSection">
@@ -261,11 +256,11 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
       <br><br><br>
       <div class="small-12 large-2 cell"
-           style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-radius: 50px; height:400px;">
+           style=" background-color: rgba(255,255,255,0.73)
+           ;background-size: cover;background-attachment: fixed;border-radius: 50px; height:800px;">
 
         <br>
         <div id="wrapper1">
-          <!-- Exemplu pentru împrumuturi -->
           <h2>Împrumuturile Mele</h2>
           <div th:if="${imprumuturi != null and !imprumuturi.isEmpty()}">
             <table>
@@ -274,6 +269,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <th>Titlul Cărții</th>
                 <th>Data Împrumut</th>
                 <th>Data Returnare</th>
+                <th> </th>
               </tr>
               </thead>
               <tbody>
@@ -281,6 +277,12 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <td th:text="${imprumut.idCarte.titlu}">Titlul cărții</td>
                 <td th:text="${#dates.format(imprumut.dataOraImprumut, 'dd/MM/yyyy HH:mm')}">Data împrumut</td>
                 <td th:text="${#dates.format(imprumut.dataOraReturn, 'dd/MM/yyyy HH:mm')}">Data returnare</td>
+                <td>
+                  <form th:action="@{/anuleaza-imprumut}" method="post">
+                    <input type="hidden" name="idImprumut" th:value="${imprumut.id}"/>
+                    <button type="submit"  class="custom-btn btn-12">Anulează</button>
+                  </form>
+                </td>
               </tr>
               </tbody>
             </table>
@@ -298,6 +300,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <th>Titlul Cărții</th>
                 <th>Data Rezervării</th>
                 <th>Data Expirării</th>
+                <th> </th>
               </tr>
               </thead>
               <tbody>
@@ -305,6 +308,12 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <td th:text="${rezervare.idCarte.titlu}">Titlul cărții</td>
                 <td th:text="${#dates.format(rezervare.dataRezervare, 'dd/MM/yyyy HH:mm')}">Data rezervării</td>
                 <td th:text="${#dates.format(rezervare.dataExpirarii, 'dd/MM/yyyy HH:mm')}">Data expirării</td>
+                <td>
+                  <form th:action="@{/anuleaza-rezervare}" method="post">
+                    <input type="hidden" name="idRezervare" th:value="${rezervare.id}"/>
+                    <button type="submit"  class="custom-btn btn-12">Anulează</button>
+                  </form>
+                </td>
               </tr>
               </tbody>
             </table>
@@ -313,20 +322,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
             <p>Nu există rezervări.</p>
           </div>
 
-          <!--          <div th:if="${imprumuturi.isEmpty()}">-->
-<!--            <p>Nu ai niciun împrumut activ.</p>-->
-<!--          </div>-->
-<!--          <div th:unless="${imprumuturi.isEmpty()}">-->
-<!--            <ul>-->
-<!--              <li th:each="imprumut : ${imprumuturi}">-->
-<!--                <span th:text="${imprumut.idCarte.titlu}">Titlul cărții</span> - -->
-<!--                <span th:text="${imprumut.dataOraImprumut}">Data împrumut</span> până la-->
-<!--                <span th:text="${imprumut.dataOraReturn}">Data returnare</span>-->
-<!--              </li>-->
-<!--            </ul>-->
-<!--          </div>-->
 
-          <!-- Similar, ajustează pentru rezervări -->
 
           <br>
 
@@ -355,7 +351,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
 </div>
 <br><br><br>
-<a class="button" href="cititor_sali_rezervate.html">Rezervariile mele</a>
 
 </div>
 

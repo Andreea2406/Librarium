@@ -63,7 +63,7 @@ public class Evenimente {
     @JoinColumn(name = "id_sala", nullable = false)
     private SaliBiblioteca idSala;
 
-    @Size(max = 65535) // Maximum size for LONGTEXT in MySQL
+    @Size(max = 65535)
     @NotNull
     @Column(name = "descriere", nullable = false)
     private String descriere;
@@ -146,13 +146,8 @@ public class Evenimente {
         this.inregistrareEveniments = inregistrareEveniments;
     }
 
-//    public Evenimente(String nume, Object dataOraInceput, Object dataOraFinal, SaliBiblioteca idSala, String descriere) {
-//        this.nume = nume;
-//        this.dataOraInceput = (LocalDateTime ) dataOraInceput;
-//        this.dataOraFinal = (LocalDateTime ) dataOraFinal;
-//        this.idSala = idSala;
-//        this.descriere = descriere;
-//    }
+
+
 
 
 

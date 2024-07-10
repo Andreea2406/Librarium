@@ -792,8 +792,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -801,9 +800,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -815,20 +812,9 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
         <a class="button2" th:href="bibliotecar_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
         <a class="button1"  th:href="bibliotecar_evenimente.html"; style="text-align: center;font-weight:bold   ">Evenimente</a>
         <a class="button2"  th:href="bibliotecar_sali.html" style="text-align: center; ">Sali biblioteca</a>
-        <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Mesaje</a>
+        <a class="button2" th:href="bibliotecar_mesaje.html" style="text-align: center;">Mesaje</a>
         <a class="button2" th:href="bibliotecar_setari_profil" style="text-align: center;">Setari</a>
 
-        <!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-        <!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-        <!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
-
-
-
-
-
-
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -839,9 +825,11 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
       <div class="column small-12 large-12">
 
 
-        <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
-        <a href="#" class="button"  style="background-color: #b1533f; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
-
+        <form id="searchForm" action="/bibliotecar_pagina_principala/search" method="get">
+          <input type="text" id="searchInput" name="searchTerm" placeholder="Cauta dupa titlu sau autor" style="border-radius: 25px;">
+          <button type="submit" class="button" style="background-color: #b1533f; font-size: 20px; border-radius: 20px; color:white;">Cauta</button>
+          <a th:if="${searchTerm != null}" href="/bibliotecar_pagina_principala" class="button" style="background-color: #b1533f; font-size: 20px; border-radius: 20px; color:white;">Anulează căutare</a>
+        </form>
       </div>
       <br><br><br>
       <a th:href="@{/bibliotecar_adauga_carte}" class="button"  style="float: left;background-color: #DBA46D; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Adauga carte </a>
@@ -869,7 +857,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
         </tr>
 
-        <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
         <tr th:each="carte : ${carti}">
           <td th:text="${carte.id}">ID</td>
           <td th:text="${carte.titlu}">Titilu</td>
@@ -889,12 +876,12 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
           <td th:text="${carte.disponibilitate}">Disponibilitate</td>
           <td>
 
-            <!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/edit/{id}(id=${carti.id})}" class="btn btn-primary">Editare</a>-->
             <a th:if="${carti != null}" th:href="@{/bibliotecar_pagina_principala/edit/{id}(id=${carte.id})}" class="btn btn-primary" style="background-color: #F3AC64;">Editare</a>
-            <!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/{id}(id=${carti.id})}" class="btn btn-danger">Stergere</a>-->
-            <a th:each="carte : ${carti}" th:href="@{/bibliotecar_pagina_principala/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>
-
+           </td>
+          <td>
+            <a th:if="${carti != null}" th:href="@{/bibliotecar_pagina_principala/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>
           </td>
+
 
 
 
@@ -911,7 +898,14 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 </div>
 
 <br><br><br>
-
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = /*[[${userId}]]*/ 'defaultId';
+            localStorage.setItem('userId', userId);
+        });
+        /*]]>*/
+    </script>
 </body>
 </html>
 

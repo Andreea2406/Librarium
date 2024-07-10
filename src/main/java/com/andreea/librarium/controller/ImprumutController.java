@@ -30,7 +30,7 @@ public class ImprumutController {
 
     @Autowired
 
-    private ImprumuturiService imprumuturiService; // Inject your service
+    private ImprumuturiService imprumuturiService;
 private ImprumuturiRepository imprumuturiRepository;
 private Carti carti;
 private UsersService usersService;
@@ -51,45 +51,34 @@ public ImprumutController(ImprumuturiService imprumuturiService, ImprumuturiRepo
 }
     @PostMapping("/imprumuta")
     public String imprumutaCarte(@RequestParam("id") Integer idCarte, Model model) {
-        // Obține userId din userSession
         Integer userId = userSession.getUserId();
-        System.out.println("userId: " + userSession.getUserId());
-        System.out.println("idCarte: " + idCarte);
-        // Verifică dacă userId este nenul și diferit de zero
-        if (userId != null ) {
-            System.out.println("hereee");
-            // Obține întregul obiect Utilizatori pentru userId
-            //            Utilizatori utilizator = usersService.getStudentById(idUtilizator);
-            System.out.println("userIdd: " + userId);
 
-            Utilizatori utilizatori = usersService.getUserById(userId); // Replace with your Utilizatori service method
+        if (userId != null ) {
+
+
+            Utilizatori utilizatori = usersService.getUserById(userId);
 
             if (utilizatori != null) {
-                Carti carti = cartiService.getBookById(idCarte); // Înlocuiește cu metoda ta de service pentru Carti
+                Carti carti = cartiService.getBookById(idCarte);
 
-                // Creează un obiect Imprumuturi
                 Imprumuturi imprumut = new Imprumuturi();
                 imprumut.setIdCarte(carti);
                 imprumut.setIdUtilizator(utilizatori);
 
-                // Setează alte date precum dataOraImprumut și dataOraReturn
                 Instant now = Instant.now();
                 imprumut.setDataOraImprumut(now);
-                imprumut.setDataOraReturn(now.plus(30, ChronoUnit.DAYS)); // Exemplu: Data de returnare după 30 de zile
+                imprumut.setDataOraReturn(now.plus(30, ChronoUnit.DAYS));
+                imprumut.setIsFinalizat(false);
 
-                // Salvează înregistrarea Imprumuturi
                 imprumuturiService.saveImprumut(imprumut);
 
-                // Redirecționează sau întoarce un răspuns în consecință
-                return "redirect:/catalog.html";
+                return "redirect:/cititor_rezervari_imprumuturi.html";
             } else {
-                // Tratează cazul în care utilizatorul nu a fost găsit
-                // Poate ar trebui să redirecționezi către o pagină de eroare sau să întorci alt răspuns
+
                 return "error_page";
             }
         } else {
-            // Tratează cazul în care userId nu este setat corect
-            // Poate ar trebui să redirecționezi către o pagină de eroare sau să întorci alt răspuns
+
             return "error_page";
         }
     }

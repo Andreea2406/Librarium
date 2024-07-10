@@ -33,7 +33,7 @@ public class Imprumuturi {
     @Column(name = "isFinalizat", nullable = false)
     private Boolean isFinalizat;
 
-    // Getter și setter pentru isFinalizat
+
     public Boolean getIsFinalizat() {
         return isFinalizat;
     }

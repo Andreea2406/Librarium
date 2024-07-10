@@ -50,10 +50,6 @@ public class Rol {
         this.id = id;
         this.numeRol = numeRol;
     }
-//    @Override
-//    public String toString() {
-//        return "Rol{id=" + id + ", numeRol='" + numeRol + "'}";
-//    }
 
     public Rol() { }
     public Rol(String name) {

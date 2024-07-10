@@ -1,95 +1,9 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>Librarium</title>-->
 
-<!--</head>-->
-<!--<body>-->
-
-<!--<div class="grid-x grid-padding-x">-->
-<!--  <div class="columns small-12 large-12">-->
-<!--  <img src="images/logo.jpg" alt="My Image">-->
-
-<!--    <a class="button2" href="#" style="text-align: center; ">Evenimente</a>-->
-
-<!--    <a th:href="@{/login}  ">Intra in cont</a>-->
-<!--    <a th:href="@{/register}">Cont nou<</a>-->
-
-<!--    &lt;!&ndash;  <img th: src="@{/images/logo.jpg}" alt="My Image">&ndash;&gt;-->
-
-<!--  </div>-->
-<!--</div>-->
-
-<!--<br><br><br>-->
-<!--<div class="column small-12 large-12" style=" opacity: 80%;  border-radius: 25px ; ">-->
-
-
-
-<!--  <div class="column small-12 large-12">-->
-
-
-<!--    <input type="text" placeholder="Cauta o carte" style="border-radius: 25px">-->
-<!--    <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>-->
-
-<!--  </div>-->
-
-<!--</div>-->
-
-<!--<br><br><br>-->
-<!--<div class="small-12 large-2 cell"-->
-<!--     style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-color: #33b4c2;border-width:2px;border-style:solid;border-radius: 50px;">-->
-
-<!--  <br>-->
-<!--  <h2 th:text="${message}">Numele cartii</h2>-->
-<!--  <h1 th:inline="text" >-->
-
-<!--    <small th:text="${text}">Autor</small>-->
-<!--  </h1>-->
-
-
-<!--  <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> vezi detalii </a>-->
-
-<!--  <br><br>-->
-
-<!--  <br><br>-->
-
-<!--</div>-->
-
-<!--<br><br><br>-->
-<!--<div class="small-12 large-2 cell"-->
-<!--     style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-color: #33b4c2;border-width:2px;border-style:solid;border-radius: 50px;">-->
-
-<!--  <br>-->
-<!--  <h2 th:text="${message}">Numele cartii</h2>-->
-<!--  <h1 th:inline="text" >-->
-
-<!--    <small th:text="${text}">Autor</small>-->
-<!--  </h1>-->
-
-
-<!--  <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> vezi detalii </a>-->
-
-<!--  <br><br>-->
-
-<!--  <br><br>-->
-
-<!--</div>-->
-
-
-
-
-
-
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <title>Librarium</title>
-  <link rel="stylesheet" href="mystyles.css">
-  <link rel="stylesheet" href="myjs.js">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
   <style>
@@ -284,6 +198,65 @@ a.control_next {
   right: 0;
   border-radius: 2px 0 0 2px;
 }
+.custom-link {
+  color: #663300;
+}
+
+.events-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+            background-color: #d6ab81; /* Creamy background to match the page */
+            color: #510906;
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensure rounded corners */
+
+        }
+        .events-table th, .events-table td {
+            padding: 12px 15px;
+        }
+        .events-table th {
+            background-color: #cc9257;
+            font-weight: bold;
+        }
+        .events-table tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        .events-table tr:nth-of-type(even) {
+            background-color: #6f461c;
+        }
+        .events-table tr:last-of-type {
+            border-bottom: 2px solid #510906;
+        }
+  .events-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+ .event-card {
+    background-color: #F7F0E8;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.event-day {
+    font-size: 24px;
+    font-weight: bold;
+}
+.event-month {
+    font-size: 18px;
+}
 
 .events-list {
   width: 100%;
@@ -344,23 +317,52 @@ a.control_next {
 
 }
 #div2 {
-    display: inline-block;
-    position:right;
-    float:right;
-    width:600px;
-    height:60px;
+     display: inline-block;
+     margin: 0 auto; /* Centrarea orizontală a div-ului */
+    box-sizing: border-box;
+    width:999px;
+    height:100px;
+
 
 }
 .container3 {
+
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
+.row {
+    display: flex;
+    justify-content: center;
+}
 
+.column {
+    flex: 1;
+    max-width: 300px; /* sau o dimensiune potrivită pentru coloana ta */
+    margin: 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.box3 {
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.box3 li {
+    text-align: center;
+    margin-bottom: 60px;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 ul.box,
 ul.box2,
-ul.box3,
 ul.box4 {
     position: relative;
     z-index: 1;
@@ -372,7 +374,6 @@ ul.box4 {
 
 ul.box li,
 ul.box2 li,
-ul.box3 li,
 ul.box4 li {
     position: relative;
     float: left;
@@ -500,16 +501,13 @@ ul.box4 li:after {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -524,13 +522,11 @@ ul.box4 li:after {
 
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-<!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
+
         <a th:href="@{/cititor_setari_profil}">Setari profil</a>
 
 
 
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -538,109 +534,36 @@ ul.box4 li:after {
 
   <section id="aboutSection">
     <h2>Evenimente</h2>
-    <div id="wrapper1">
-      <div id="div1">
-        <div id="slider">
-          <a href="#" class="control_next">>></a>
-          <a href="#" class="control_prev"><</a>
-          <ul>
-            <li>SLIDE 1</li>
-            <li style="background: #aaa;">SLIDE 2</li>
-            <li>SLIDE 3</li>
-            <li style="background: #aaa;">SLIDE 4</li>
-          </ul>
-        </div>
-      </div>
-      <div id="div2">
+
         <div class="container">
-          <div class="section">
-            <!-- Blog style taken from https://codepen.io/Michael-luke/pen/PzGywb?editors=1000 -->
-            <div class="blog-post blog-single-post">
-              <!--            <div class="single-post-title">-->
-              <!--              <h2>Title</h2>-->
-              <!--            </div>-->
-              <div class="single-post-content" style="background-color:#F7F0E8">
-                <table class="events-list">
-                  <tr>
-                    <td>
-                      <div class="event-date">
-                        <div class="event-day">16</div>
-                        <div class="event-month">MAR</div>
-                      </div>
-                    </td>
-                    <td>
-                      Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus.
-                    </td>
-                    <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Siemens Arena</td>
-                    <td class="event-price hidden-xs">$50.00</td>
-                    <td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="event-date">
-                        <div class="event-day">5</div>
-                        <div class="event-month">APR</div>
-                      </div>
-                    </td>
-                    <td>
-                      Phasellus et est quis diam iaculis fringilla id nec sapien.
-                    </td>
-                    <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Nike Arena</td>
-                    <td class="event-price hidden-xs">FREE</td>
-                    <td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="event-date">
-                        <div class="event-day">31</div>
-                        <div class="event-month">MAY</div>
-                      </div>
-                    </td>
-                    <td>
-                      Ut consectetur commodo justo, sed sollicitudin massa venenatis ut 2013.
-                    </td>
-                    <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
-                    <td class="event-price hidden-xs">$30.00</td>
-                    <td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="event-date">
-                        <div class="event-day">17</div>
-                        <div class="event-month">SEP</div>
-                      </div>
-                    </td>
-                    <td>
-                      Pellentesque justo turpis, fringilla sit amet pulvinar ut, tincidunt nec leo.
-                    </td>
-                    <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Samsung Arena</td>
-                    <td class="event-price hidden-xs">FREE</td>
-                    <td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="event-date">
-                        <div class="event-day">16</div>
-                        <div class="event-month">MAR</div>
-                      </div>
-                    </td>
-                    <td>
-                      Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus.
-                    </td>
-                    <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> Siemens Arena</td>
-                    <td class="event-price hidden-xs">$50.00</td>
-                    <td><a href="#" class="btn btn-grey btn-sm event-more">Read More</a></td>
-                  </tr>
+          <table class="events-table">
+            <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nume</th>
+              <th>Locație</th>
+              <th>Descriere</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="eveniment : ${evenimente}">
+              <td>
+                <div class="event-date">
+                  <p th:text="'Data inceput: '+${eveniment.dataInceput} + ', Ora inceput: '+${eveniment.oraInceput}"></p>
+                  <p th:text="'Data final: '+${eveniment.dataFinal} + ', Ora final: '+${eveniment.oraFinal}"></p>
+                </div>
+              </td>
+              <td> <h3 th:text="${eveniment.nume}"></h3></td>
+              <td><p th:text="${eveniment.idSala.nume}"></p></td>
 
+              <td> <p th:text="${eveniment.descriere}"></p></td>
+              <td>
+              </td>
+            </tr>
+            </tbody>
+          </table>
 
-
-                </table>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
 
@@ -654,94 +577,74 @@ ul.box4 li:after {
   </section>
 
   <section id="genreSection">
-    <!--    <h2>Genres</h2>-->
     <article>
-      <br><br> <br> <br> <br><br> <br>  <br> <br>      <br>      <br> <br> <br>      <br>      <br>
       <br><br> <br> <br>
-      <h3>Explorați resursele noastre online de la A la Z</h3>
-      <br><br> <br> <br>
-      <div class="container3">
-        <ul class="box3">
-          <li>  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
+      <section>
+        <h3>Explorați resursele noastre online de la A la Z</h3>
+        <br><br> <br> <br>
+        <div class="container3">
+          <div class="row">
+            <div class="column">
+              <ul class="box3">
+                <li th:each="carte : ${carti1}">
+                  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+                  <a th:href="@{'/cititor_carte/' + ${carte.id}}">
+                    <h3 th:text="${carte.titlu}" >Titlu Carte</h3>
+                  </a>
+                  <p th:text="${carte.autor}">Autor</p>
+                </li>
+              </ul>
+            </div>
+            <div class="column">
+              <ul class="box3">
+                <li th:each="carte : ${carti2}">
+                  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+                  <a th:href="@{'/cititor_carte/' + ${carte.id}}">
+                    <h3 th:text="${carte.titlu}">Titlu Carte</h3>
+                  </a>
+                  <p th:text="${carte.autor}">Autor</p>
+                </li>
+              </ul>
+            </div>
+            <div class="column">
+              <ul class="box3">
+                <li th:each="carte : ${carti3}">
+                  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+                  <a th:href="@{'/cititor_carte/' + ${carte.id}}">
+                    <h3 th:text="${carte.titlu}" >Titlu Carte</h3>
+                  </a>
+                  <p th:text="${carte.autor}">Autor</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
+        <a href="cititor_catalog.html" >  <h3> vezi mai multe</h3></a>
+      </section>
 
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-
-          </li>
-        </ul>
-
-        <ul class="box2">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-        </ul>
-
-
-        <ul class="box4">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-        </ul>
-
-        <ul class="box">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-        </ul>
-      </div>
-      <a href="#" >  <h3> vezi mai multe</h3></a>
 
     </article>
   </section>
 
   <section id="gallerySection">
-    <!--    <h2>Gallery</h2>-->
     <article>
       <h3>Servicii si facilitati</h3>
       <div class="smallBizResources__itemsWrapper">
         <div class="smallBizResources__item">
           <div class="smallBizResources__img">
-            <!--            <img src="https://cdn3.iconfinder.com/data/icons/business-finance-1-4/154/B2-512.png">-->
           </div>
           <h5 class="smallBizResources__type">Servicii contra cost</h5>
         </div>
 
         <div class="smallBizResources__item">
           <div class="smallBizResources__img">
-            <!--            <img-->
-            <!--                    src="https://cdn1.iconfinder.com/data/icons/material-core/20/home-512.png">-->
           </div>
           <h5 class="smallBizResources__type">Imprumut la domicilu</h5>
         </div>
 
         <div class="smallBizResources__item">
           <div class="smallBizResources__img">
-            <!--            <img src="images/ic1.png">-->
-            <!--&lt;!&ndash;                    src="https://cdn1.iconfinder.com/data/icons/aami-web-internet/64/aami3-96-512.png"&ndash;&gt;-->
 
           </div>
           <h5 class="smallBizResources__type">Comunitate</h5>
@@ -753,7 +656,6 @@ ul.box4 li:after {
   </section>
 
   <section id="contactSection">
-    <!--    <h2>Contact Book Store</h2>-->
     <article>
 
     </article>
@@ -763,6 +665,16 @@ ul.box4 li:after {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="assets/js/myjs.js"></script>
+
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = /*[[${userId}]]*/ 'defaultId'; // Expresia Thymeleaf pentru a popula userId
+            localStorage.setItem('userId', userId);
+        });
+        /*]]>*/
+    </script>
+
 <script>jQuery(document).ready(function ($) {
 
   $('#checkbox').change(function(){

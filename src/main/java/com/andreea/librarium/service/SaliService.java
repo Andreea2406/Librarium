@@ -32,18 +32,13 @@ public class SaliService {
         return saliRepository.save(saliBiblioteca);
     }
     public SaliBiblioteca deleteSalaById(Integer id) {
-        // Fetch the entity by ID
         SaliBiblioteca saliBiblioteca=saliRepository.findById(id).orElse(null);
 
-        // Check if the entity exists
         if (saliBiblioteca != null) {
-            // Delete the entity
             saliRepository.delete(saliBiblioteca);
 
-            // Return the deleted entity or relevant information
             return saliBiblioteca;
         } else {
-            // If the entity does not exist, you might handle it accordingly
             return null;
         }
     }

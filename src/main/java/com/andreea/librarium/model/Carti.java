@@ -70,7 +70,7 @@ public class Carti {
     @Column(name = "inaltime", nullable = false)
     private String inaltime;
 
-    @Size(max = 65535) // Maximum size for LONGTEXT in MySQL
+    @Size(max = 65535)
     @NotNull
     @Column(name = "descriere", nullable = false, columnDefinition = "LONGTEXT")
     private String descriere;

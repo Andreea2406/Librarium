@@ -19,6 +19,5 @@ public class RolService {
     public Optional<Rol> findById(Integer roleId) {
         return rolRepository.findById(roleId);
     }
-    // Other methods related to roles can be added here
 
 }

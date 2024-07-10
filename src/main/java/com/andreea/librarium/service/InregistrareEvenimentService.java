@@ -7,9 +7,11 @@ import com.andreea.librarium.repositories.EvenimenteRepository;
 import com.andreea.librarium.repositories.InregistrareEvenimentRepository;
 import com.andreea.librarium.repositories.UtilizatoriRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class InregistrareEvenimentService {
@@ -22,6 +24,9 @@ public class InregistrareEvenimentService {
 
     @Autowired
     private UtilizatoriRepository utilizatoriRepository;
+    public List<InregistrareEveniment> getRegistrationsForCurrentUser(Integer userId) {
+        return inregistrareEvenimentRepository.findByUserId(userId);
+    }
 
     public boolean inscrieUtilizatorLaEveniment(Integer idEveniment, Integer idUtilizator) {
         try {
@@ -29,7 +34,7 @@ public class InregistrareEvenimentService {
             Utilizatori utilizator = utilizatoriRepository.findById(idUtilizator);
 
             if (eveniment == null || utilizator == null) {
-                return false; // Evenimentul sau utilizatorul nu există
+                return false;
             }
 
             InregistrareEveniment inregistrareEveniment = new InregistrareEveniment();
@@ -38,10 +43,18 @@ public class InregistrareEvenimentService {
             inregistrareEveniment.setDataInregistrarii(LocalDate.now());
 
             inregistrareEvenimentRepository.save(inregistrareEveniment);
-            return true; // Înregistrare efectuată cu succes
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false; // A apărut o eroare la înregistrare
+            return false;
+        }
+    }
+    public boolean anuleazaInscriere(Integer idInregistrare) {
+        try {
+            inregistrareEvenimentRepository.deleteById(idInregistrare);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

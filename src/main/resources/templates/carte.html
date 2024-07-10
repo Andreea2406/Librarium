@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Evenimente</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="mystyles.css">
   <link rel="stylesheet" href="myjs.js">
   <style>
@@ -222,7 +222,6 @@ ul.box4 li:after {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
   <a class="button" th:href="@{/login} ">Intra in cont</a>
   <a class="button" th:href="@{/register}">Cont nou</a>
 </div>
@@ -230,9 +229,7 @@ ul.box4 li:after {
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -240,20 +237,13 @@ ul.box4 li:after {
 
     <header id="homeSection">
       <nav>
-        <a href="index.html">Acasa</a>
-        <a href="#aboutSection">Evenimente</a>
-        <a href="#genreSection">Catalog</a>
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <a href="/">Acasa</a>
+        <a href="http://localhost:8080/evenimente.html">Evenimente</a>
+        <a href="http://localhost:8080/catalog.html">Catalog</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
   </div>
-
-  <!--  <section id="aboutSection">-->
-  <!--    <h2>Nume eveniment</h2>-->
-
-  <!--  </section>-->
 
   <br><br><br>
   <section id="evSection">
@@ -263,33 +253,37 @@ ul.box4 li:after {
 
       <br><br><br>
       <div class="small-12 large-2 cell"
-           style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-radius: 50px; height:500px;">
+           style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-radius: 50px; height:900px;">
 
         <br>
         <div id="wrapper1">
           <div class="div1" style="height: 300px;width:250px">
-            <img src="images/bookcover.jpg"/>
+            <img src="/images/bookcover.jpg" alt="Cover" />
+
 
 
           </div>
           <br>
-          <div class="div2" style="border-color: #cc8800;border-width:2px;border-style:solid;border-radius: 50px;height: 400px;width:800px">
-            <h3 >Titlu Carte</h3>
-            <h4>Titlu
-              Autor
-              Categorie
-              Limba
-              Data publicării:
-              Editura:
-              Tip copertă:
-              Nr Pag:
-              Colectie:
-              Traducatori:
-              ISBN:
-              Dimensiuni:
-            </h4>
-            <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+          <div class="div2" style="border-color: #cc8800;border-width:2px;border-style:solid;border-radius: 50px;height: 600px;width:800px">
+            <div class="div2" th:each="carte : ${carti}" th:with="carteId=${carte.id}">
+              <a th:href="@{'cititor_carte/' + ${carte.id}}"> </a>
+              <h4 th:text="'Titlu: ' + ${carte.titlu}">Titlul Cărții</h4>
 
+              <h4 th:text="'Categorie: '+${carte.categorie}">Categorie</h4>
+              <h4 th:text="'Limba: '+${carte.limba}">Limba</h4>
+              <h4 th:text= "'Tip coperta: '+${carte.tipCoperta}" ></h4>
+              <h4 th:text= "'Numar pagini: '+${carte.nrPagini}"  ></h4>
+              <h4 th:text= "'Autor: '+${carte.autor}" ></h4>
+              <h4 th:text= "'Colectie: '+${carte.colectie}" ></h4>
+              <h4 th:text="'ISBN: '+${carte.isbn}"  ></h4>
+              <h4 th:text= "'Latime: '+${carte.latime}" ></h4>
+              <h4 th:text= "'Inaltime: '+${carte.inaltime}" ></h4>
+              <h4 th:text="'Data publicarii: '+${carte.dataPublicarii}"  ></h4>
+              <h4 th:text= "'Disponibilitate: '+${carte.disponibilitate}"  ></h4>
+
+
+
+            </div>
           </div>
         </div>
 
@@ -302,8 +296,10 @@ ul.box4 li:after {
   <section>
     <div class="div2" style="background-color: rgba(255,255,255,0.73) ;border-color: #cc8800;border-width:2px;border-style:solid;border-radius: 50px;height: 250px;width:900px">
       <h3 >Descriere Carte</h3>
+      <div class="div2" th:each="carte : ${carti}">
 
-      <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h4>
+        <h4 th:text="${carte.descriere}"  ></h4>
+      </div>
 
     </div>
   </section>
@@ -315,33 +311,25 @@ ul.box4 li:after {
 
     <h3>Alte publicatii</h3>
     <div class="container3">
-      <ul class="box3">
-        <li>  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
-          <a href="carte.html"> <h4>Titlu Carte</h4></a>
-        </li>
-        <ul class="box2">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a>
-          </li>
-
-        </ul>
-
-
-
-
-      </ul>
+      <div th:each="randomBook : ${randomBooks}" class="random-book">
+        <img class="image1" th:src="@{/images/bookcover.jpg}" alt="Image 1">
+        <a th:href="@{'/carte/' + ${randomBook.id}}">
+          <h4 th:text="${randomBook.titlu}">Titlu Carte</h4>
+        </a>
+        <p th:text="${randomBook.autor}">Autor</p>
+      </div>
+      <br>
     </div>
 
+
   </section>
-  <a class="button" href="catalog.html">Inapoi la catalog</a>
+  <a class="button" href="http://localhost:8080/catalog.html">Inapoi la catalog</a>
 
 </div>
 <br><br><br>
 
 </div>
+
 
 </body>
 </html>

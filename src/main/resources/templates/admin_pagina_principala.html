@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin</title>
+    <title>Librarium</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link  th:href="@{/css/design.css}" rel="stylesheet" type="text/css">
@@ -804,8 +804,7 @@ body {
 </head>
 <body>
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -813,9 +812,7 @@ body {
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -823,25 +820,14 @@ body {
 
     <header id="homeSection">
       <nav>
-        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="admin_pagina_principala.html">Acasa</a>
         <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
         <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
         <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
         <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
-<!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-<!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-<!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
-
-
-
         <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
+        <a class="button2" href="admin_mesaje.html" style="text-align: center; ">Mesaje</a>
 
-        <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
-        <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
-
-
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -852,9 +838,6 @@ body {
         <canvas id="myChart"></canvas>
 
       </div>
-
-
-
     </section>
 
   </div>
@@ -863,34 +846,39 @@ body {
 </div>
 
 
-
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar', // Change the type of chart (e.g., 'line', 'pie', etc.)
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'red', 'blue', 'yellow', 'green', 'purple', 'orange'
-                ],
-                borderColor: [
-                    'red', 'blue', 'yellow', 'green', 'purple', 'orange'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    fetch('/api/favorite-categories')
+        .then(response => response.json())
+        .then(data => {
+            const labels = Object.keys(data);
+            const values = Object.values(data);
+            const backgroundColors = ['red', 'blue', 'yellow', 'green', 'purple', 'orange'];
+            const borderColors = ['darkred', 'darkblue', 'gold', 'darkgreen', 'indigo', 'darkorange'];
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Favorites',
+                        data: values,
+                        backgroundColor: backgroundColors.slice(0, labels.length),
+                        borderColor: borderColors.slice(0, labels.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
-            }
-        }
-    });
+            });
+        });
 </script>
+
 
 
 </body>

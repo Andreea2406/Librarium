@@ -786,17 +786,15 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
 
 </style>
-  <title>Title</title>
+  <title>Librarium</title>
 </head>
 <body>
-<!--th:action="@{'/edit/' + ${utilizator.id}}"-->
 
 
 
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -804,9 +802,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -814,25 +810,13 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
     <header id="homeSection">
       <nav>
-        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="admin_pagina_principala.html">Acasa</a>
         <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
         <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
         <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
         <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
-        <!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-        <!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-        <!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
-
-
-
         <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
-
-        <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
-        <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
-
-
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <a class="button2" href="admin_mesaje.html" style="text-align: center; ">Mesaje</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -855,9 +839,9 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
         <input type="text" th:field="*{descriere}" placeholder="Descriere">
         <button th:action="@{/admin_evenimente}" type="submit">Salvează</button>
 
-        <!-- Adăugați câmpuri pentru celelalte atribute ale utilizatorului -->
-        <!--  <button th:href="@{/admin_evenimente}" type="submit">Salvează</button>-->
+
       </form>
+      <a href="http://localhost:8080/admin_evenimente.html" class="button"  style="background-color: #F3AC64; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Renunta </a>
 
 
     </section>
@@ -866,7 +850,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
   <br><br><br><br><br><br>
 </div>
-<!--<form th:action="@{/admin_carti/{id}(id=${carte.id}) }" th:object="${carte}" method="post">-->
 
 
 </body>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Evenimente</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="mystyles.css">
   <link rel="stylesheet" href="myjs.js">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -219,17 +219,14 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -240,11 +237,12 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
         <a href="cititor_pagina_principala.html">Acasa</a>
         <a href="cititor_evenimente.html">Evenimente</a>
         <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_imprumuturi.html">Rezervariile mele</a>
+
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -259,7 +257,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
   <section id="evSection">
     <div class="column small-12 large-12" style="opacity: 80%; border-radius: 25px;">
 
-      <!-- Bucla pentru fiecare eveniment, creând un nou div pentru fiecare -->
       <div th:each="eveniment : ${evenimente}" style="margin-bottom: 20px;">
         <div style="background-color: rgba(255,255,255,0.73); border-radius: 50px; padding: 20px;">
           <div style="border-color: #cc8800; border-width:2px; border-style:solid; border-radius: 50px; height: 200px; width: 100%;">
@@ -273,7 +270,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
             <p th:text="'Descriere: '+${eveniment.descriere}"></p>
             <p th:text="'Sala: '+${eveniment.idSala.nume}"></p>
-            <!-- Butonul de înscriere -->
             <form th:action="@{/inscrie-te}" method="post">
               <input type="hidden" name="idEveniment" th:value="${eveniment.id}" />
               <button type="submit" class="custom-btn btn-5">Înscrie-te</button>
@@ -288,9 +284,19 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
 
 </div>
+<a class="button" href="cititor_evenimentele_mele.html">Evenimentele mele</a>
+
 <br><br><br>
 
 </div>
 
+<script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function() {
+            const userId = /*[[${userId}]]*/ 'defaultId'; // Expresia Thymeleaf pentru a popula userId
+            localStorage.setItem('userId', userId);
+        });
+        /*]]>*/
+    </script>
 </body>
 </html>

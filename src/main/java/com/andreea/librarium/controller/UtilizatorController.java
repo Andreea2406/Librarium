@@ -2,21 +2,25 @@ package com.andreea.librarium.controller;
 
 import com.andreea.librarium.config.UserSession;
 import com.andreea.librarium.model.*;
+import com.andreea.librarium.repositories.CartiRepository;
 import com.andreea.librarium.repositories.RolRepository;
 import com.andreea.librarium.repositories.RoluriUtilizatoriRepository;
 import com.andreea.librarium.repositories.UtilizatoriRepository;
 import com.andreea.librarium.service.*;
-import com.andreea.librarium.config.UserSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.security.core.parameters.P;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.websocket.server.PathParam;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static net.minidev.asm.DefaultConverter.convertToLong;
 
 @Controller
 public class UtilizatorController {
@@ -25,6 +29,7 @@ public class UtilizatorController {
     private RolService rolService;
     private UtilizatoriRepository utilizatoriRepository;
     private RoluriUtilizatori roluriUtilizatori;
+    private EvenimenteService evenimenteService;
     @Autowired
     private CartiService cartiService;
 
@@ -35,16 +40,19 @@ public class UtilizatorController {
     private RoluriUtilizatoriRepository roluriUtilizatoriRepository;
     private RezervareCarteService rezervareCarteService;
     private ImprumuturiService imprumuturiService;
+    private final CartiRepository cartiRepository;
+    private final ParticipantConversatieService participantConversatieService;
 
-    //    @Autowired
-//    RoluriUtilizatori roluriUtilizatori;
+
     @Autowired
     public UtilizatorController(UsersService usersService, RoluriUtilizatoriRepository roluriUtilizatoriRepository, RolRepository rolRepository,
                                 RolService rolService,
                                 RezervareCarteService rezervareCarteService,
                                 ImprumuturiService imprumuturiService,
                                 UserSession userSession,
-                                CartiService cartiService) {
+                                CartiService cartiService,
+
+                                EvenimenteService evenimenteService, CartiRepository cartiRepository, ParticipantConversatieService participantConversatieService) {
 
         this.usersService = usersService;
         this.roluriUtilizatoriRepository=roluriUtilizatoriRepository;
@@ -54,89 +62,107 @@ public class UtilizatorController {
         this.imprumuturiService=imprumuturiService;
         this.userSession=userSession;
         this.cartiService=cartiService;
+        this.evenimenteService=evenimenteService;
+        this.cartiRepository = cartiRepository;
+        this.participantConversatieService = participantConversatieService;
     }
 
-//    public UtilizatorController( {
-//
-//    }
+
 
 
     @GetMapping("/creare_cont")
     public String returnCreareCont() {
         return "creare_cont";
     }
+    @GetMapping("/cauta")
+    public String searchBooks(@RequestParam("query") String query, Model model) {
+        List<Carti> carti = cartiService.searchBooks(query);
+        if (carti.isEmpty()) {
+            model.addAttribute("errorMessage", "Nu există cărți care să corespundă interogării tale.");
+            return "error_page";
+
+        }
+        model.addAttribute("carti", carti);
+        model.addAttribute("isCatalogPage", false);
+
+        return "catalog";
+    }
+    @GetMapping("/filtrare")
+    public String filterBooks(@RequestParam(value = "query", required = false) String query,
+                              @RequestParam(value = "categorie", required = false) String categorie,
+                              @RequestParam(value = "autor", required = false) String autor,
+                              @RequestParam(value = "editura", required = false) String editura,
+                              @RequestParam(value = "limba", required = false) String limba,
+                              Model model) {
+
+        List<Carti> cartiList = cartiService.filterBooks(query, categorie, autor, editura, limba);
+
+
+        model.addAttribute("carti", cartiList);
+        model.addAttribute("query", query);
+        model.addAttribute("categorie", categorie);
+        model.addAttribute("autor", autor);
+        model.addAttribute("editura", editura);
+        model.addAttribute("limba", limba);
+
+        return "catalog";
+    }
     @GetMapping("/cititor_pagina_principala.html")
-    public String returnCititorPaginaPrincipala() {
+    public String returnCititorPaginaPrincipala(Model model) {
+        Integer idUtilizatorLogat = userSession.getUserId();
+        model.addAttribute("userId",idUtilizatorLogat);
+        Integer userId = userSession.getUserId();
+        List<Evenimente> evenimente = evenimenteService.getAllEvenimente();
+        List<Carti> carti = cartiService.findFirst9();
+        List<Evenimente> firstFourEvenimente = evenimente.stream().limit(3).collect(Collectors.toList());
+        model.addAttribute("carti1", carti.subList(0, 3));
+        model.addAttribute("carti2", carti.subList(3, 6));
+        model.addAttribute("carti3", carti.subList(6, 9));
+        model.addAttribute("evenimente", evenimente);
+
+
+
+        if (userId != null) {
+            model.addAttribute("userSession", userSession);
+        } else {
+            System.out.println("EROARE");
+
+        }
         return "cititor_pagina_principala";
     }
-//    @GetMapping("/cititor_evenimente.html")
-//    public String returnCittitorEvenimente() {
-//        return "cititor_evenimente";
-//    }
-//    @GetMapping("/cititor_catalog.html")
-//    public String returnCititorCatalog(Model model) {
-//
-//        //String titluCarte = cartiService.obtineTitluCarte();
-//
-//        // adaugă titlul în model pentru a fi accesibil în Thymeleaf
-//       // model.addAttribute("titluCarte", titluCarte);
-//        List<Carti> carti = cartiService.getAllBooks();
-//        model.addAttribute("carti", carti);
-//        return "cititor_catalog";
-//    }
-//    @GetMapping("/cititor_rezervari_sali.html")
-//    public String returnCititorRezervariSali() {
-//        return "cititor_rezervari_sali";
-//    }
+
+
     @GetMapping("/cititor_mesaje.html")
     public String returnCititorMesaje() {
+
         return "cititor_mesaje";
     }
+
+
+
     @GetMapping("/carte.html")
     public String returnCarte() {
         return "carte";
     }
+
+    @GetMapping("carte/{id}")
+    public String afisCarte(@PathVariable("id") Integer id, Model model){
+        Carti carti= cartiService.getBookById(id);
+        model.addAttribute("carti", carti);
+        List<Carti> randomBooks = cartiService.getRandomBooks(3);
+        model.addAttribute("randomBooks", randomBooks);
+        return "carte";
+
+    }
+
+
+
+
     @GetMapping("/cititor_carte.html")
     public String returnCititorCarte() {
         return "cititor_carte";
     }
 
-//    @GetMapping("/cititor_setari_profil")
-//    public String returnCisddtitorCarte(Model model) {
-//        Integer idUtilizatorLogat = userSession.getUserId();
-//        System.out.println("utii: " + idUtilizatorLogat);
-//        Utilizatori utilizatori = usersService.getUserById(idUtilizatorLogat);
-//        System.out.println("utii"+utilizatori);
-//
-//
-//        // Presupunând că ai o clasă UserSession care ține minte utilizatorul logat
-////        Utilizatori utilizator = utilizatoriRepository.findById(idUtilizatorLogat.longValue()).orElse(null); // Asigură-te că metoda findById acceptă un Long și că tipul ID-ului în UserSession este compatibil
-////
-////        Utilizatori utilizatori=usersService.getStudentById(idUtilizatorLogat);
-//
-//        model.addAttribute("utilizator", utilizatori);
-//        return "cititor_setari_profil";}
-//    @GetMapping("/cititor_setari_profil/{id}")
-//    public String returnCititorSetariProfil(@PathVariable("id") Integer id, Model model) {
-//        Integer idUtilizatorLogat = userSession.getUserId();
-//        System.out.println("utii");
-//        System.out.println(idUtilizatorLogat);
-//        //        Utilizatori utilizator = utilizatoriRepository.findById(idUtilizatorLogat.longValue()).orElse(null); // Asigură-te că metoda findById acceptă un Long și că tipul ID-ului în UserSession este compatibil
-//
-//        Utilizatori utilizatori=usersService.getStudentById(id);
-//       model.addAttribute("utilizatori",utilizatori);
-//        return "cititor_setari_profil";
-//    }
-//    @GetMapping("/cititor_rezervari_imprumuturi.html")
-//    public String returnCititorImprumuturiRez() {
-//        return "cititor_rezervari_imprumuturi";
-//    }
-
-
-//    @Controller
-//    public class RegistrationController {
-//
-//        }
 
     @GetMapping("/register")
     public String getCreareCont(Model model) {
@@ -154,9 +180,8 @@ public class UtilizatorController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute Utilizatori utilizatori) {
-        System.out.println("register request: "+utilizatori);
         Utilizatori registeredUser= usersService.registrationUser(utilizatori.getNume(), utilizatori.getPrenume(),
-                utilizatori.getCNP(),utilizatori.getTelefon(),utilizatori.getEmail(),utilizatori.getStrada(),utilizatori.getOras()
+                utilizatori.getVarsta(),utilizatori.getTelefon(),utilizatori.getEmail(),utilizatori.getStrada(),utilizatori.getOras()
                 , utilizatori.getCodPostal(),
                 utilizatori.getJudet(),utilizatori.getApartament(),utilizatori.getNumar(),
                 utilizatori.getScara(),utilizatori.getOcupatie(),
@@ -169,57 +194,41 @@ public class UtilizatorController {
             Optional<Rol> optionalRole = rolRepository.findByNumeRol("user");
             Rol userRoleEntity = optionalRole.orElse(null);
 
-            userRole.setIdRol(userRoleEntity); // Set the user role entity
+            userRole.setIdRol(userRoleEntity);
 
             usersService.saveUserRole(userRole);
+            participantConversatieService.addUser(1, registeredUser.getId());
 
             return "redirect:/login";
         } else {
             return "error_page";
         }
     }
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute Utilizatori utilizatori,Model model) {
-//        System.out.println("login request: "+utilizatori);
-//        Utilizatori authenticated= usersService.authenticate(utilizatori.getEmail(),
-//                utilizatori.getParola());
-//        if(authenticated!=null){
-//            model.addAttribute("userLogin",authenticated.getEmail());
-////            return "cititor_pagina_principala";
-//            return "admin_pagina_principala";
-//
-//            // return "admin_cititori";
-//        }else {
-//
-//            return "error_page";
-//        }
-//
-//    }
+
 @PostMapping("/login")
 public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
-    System.out.println("login request: " + utilizatori);
     Utilizatori authenticated = usersService.authenticate(utilizatori.getEmail(), utilizatori.getParola());
 
     if (authenticated != null) {
-        System.out.println("UserId during login: " + authenticated.getId());
         userSession.setUserId(authenticated.getId());
 
         Set<Rol> roles = usersService.getRolesForUser(authenticated.getId());
+        model.addAttribute("userId", authenticated.getId());
 
         if (roles.stream().anyMatch(rol -> "admin".equals(rol.getNumeRol()))) {
             model.addAttribute("userLogin", authenticated.getEmail());
             return "admin_pagina_principala";
         } else if (roles.stream().anyMatch(rol -> "user".equals(rol.getNumeRol()))) {
             model.addAttribute("userLogin", authenticated.getEmail());
-            return "cititor_pagina_principala";
+            model.addAttribute("userSession", authenticated.getId());
+
+            return "redirect:/cititor_pagina_principala.html";
         }
         else if (roles.stream().anyMatch(rol -> "bibliotecar".equals(rol.getNumeRol()))) {
             model.addAttribute("userLogin", authenticated.getEmail());
             return "redirect:/bibliotecar_pagina_principala";
 
-//            return "bibliotecar_pagina_principala";
         }else {
-            // Handle other roles or no roles
             return "error_page";
         }
     } else {
@@ -230,24 +239,13 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
     @GetMapping("/admin_adauga_cititor")
     public String returnAdminAdaugaCititor(Model model) {
         model.addAttribute("user", new Utilizatori());
-        return "admin_adauga_cititor"; // Returnați pagina cu formularul de adăugare a utilizatorului
+        return "admin_adauga_cititor";
     }
 
 
 
 
 
-//    @GetMapping("/admin_cititori")
-//    public String afiseazaUtilizatori(Model model) {
-//        List<Utilizatori> utilizatori = usersService.getAllUsers();
-//        model.addAttribute("utilizatori", utilizatori);
-//        return "admin_cititori";
-//    }
-//    @GetMapping("admin_cititori/")
-//    public String read(@RequestParam("id") int id, Model model)
-//    {
-//        return "admin_cititori";
-//    }
 
     @GetMapping("admin_cititori/edit/{id}")
     public String read(@PathVariable("id") Integer id, Model model) {
@@ -261,7 +259,7 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
             utilizatori.setSelectedRole(currentRole);
             model.addAttribute("currentRole", currentRole);
         } else {
-            model.addAttribute("currentRole", ""); // or handle the case when no roles are present
+            model.addAttribute("currentRole", "");
         }
 
         model.addAttribute("utilizatori", utilizatori);
@@ -282,30 +280,10 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
 
     @GetMapping("/admin_editeaza_cititor/{id}")
     public String afiseazaFormularEditare(@PathParam("id") Long id, Model model) {
-//      Utilizatori utilizator = usersService.getUtilizatorById(Math.toIntExact(id));
-//        Optional<Utilizatori> utilizator = utilizatoriRepository.findById(id);
-        System.out.println("aici");
-//        model.addAttribute("utilizator", utilizator);
+
         return "admin_editeaza_cititor";
     }
-//    @GetMapping("/makeBibliotecar/{id}")
-//    public  String afiseazaRolBibliotecar(@PathParam("id") Long id, Model model){
-//
-//    return "rol_bibliotecar";
-//    }
-//@GetMapping("/makeBibliotecar/{id}")
-//public String afiseazaRolBibliotecar(@PathVariable("id") Long id, Model model) {
-//    Utilizatori updatedUser = usersService.makeBibliotecar(Math.toIntExact(id));
-//
-//    if (updatedUser != null) {
-//        model.addAttribute("utilizator", updatedUser);
-//        return "redirect:/rol_bibliotecar";
-//    } else {
-//        return "error_page";
-//    }
-//}
-//
-//
+
 
 
     @PostMapping("/adaugare")
@@ -313,17 +291,14 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
         Utilizatori newUser = usersService.saveUser(utilizator);
         RoluriUtilizatori userRole = new RoluriUtilizatori();
         userRole.setIdUtilizator(newUser);
-//            userRole.setIdRol(1); // Set the user role
         Optional<Rol> optionalRole = rolRepository.findByNumeRol("user");
         Rol userRoleEntity = optionalRole.orElse(null);
 
-        //Rol userRoleEntity = rolRepository.findByName("user"); // Replace with actual repository method
-        userRole.setIdRol(userRoleEntity); // Set the user role entity
+        userRole.setIdRol(userRoleEntity);
 
-        // Save the user role to the database
         usersService.saveUserRole(userRole);
         if (newUser != null) {
-            return "admin_cititori";
+            return "redirect:/admin_cititori";
         } else {
             return "error_page";
         }
@@ -331,30 +306,15 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
 
 
 
-//    @PostMapping("/atribuire")
-//    public String makingBibliotecar(@PathVariable Integer id,@ModelAttribute Utilizatori utilizatori) {
-//        usersService.makeUserBibliotecar(id);
-//
-//        Utilizatori newUser = usersService.saveUser(utilizatori);
-//
-//        if (newUser != null) {
-//            return "admin_cititori";
-//        } else {
-//            return "error_page";
-//        }
-//    }
-
     @GetMapping("/admin_cititori")
     public String afiseazaUtilizatori(Model model) {
-        System.out.println("Se acceseaza /admin_cititori"); // Mesaj de debug
 
         List<Utilizatori> utilizatori = usersService.getAllUsers();
         model.addAttribute("utilizatori", utilizatori);
         return "admin_cititori";
     }
 
-    //    @PostMapping("/edit/{id}")
-//    @PostMapping("/edit/{id}")
+
     @PostMapping("/admin_cititori/{id}")
     public String actualizeazaUtilizator(@PathVariable Integer id,
                                          @ModelAttribute("utilizatori") Utilizatori utilizator,
@@ -366,7 +326,7 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
         if (existingUtilizator != null) {
             existingUtilizator.setNume(utilizator.getNume());
             existingUtilizator.setPrenume(utilizator.getPrenume());
-            existingUtilizator.setCNP(utilizator.getCNP());
+            existingUtilizator.setVarsta(utilizator.getVarsta());
             existingUtilizator.setTelefon(utilizator.getTelefon());
             existingUtilizator.setEmail(utilizator.getEmail());
             existingUtilizator.setStrada(utilizator.getStrada());
@@ -379,7 +339,6 @@ public String login(@ModelAttribute Utilizatori utilizatori, Model model) {
             existingUtilizator.setOcupatie(utilizator.getOcupatie());
             existingUtilizator.setParola(utilizator.getParola());
 
-            // Clear existing roles
             if (selectedRoles != null) {
                 Set<Rol> rolesToAdd = new HashSet<>();
 
@@ -406,19 +365,49 @@ public String deleteUser(@PathVariable Integer id){
         return "redirect:/admin_cititori";
 }
 
+    @GetMapping("/admin_cititori/cautare")
+    public String cautaUtilizatori(@RequestParam("nume") String nume, Model model) {
+        List<Utilizatori> utilizatori = usersService.searchUsersByName(nume);
+        model.addAttribute("utilizatori", utilizatori);
+        model.addAttribute("cautareActiva", true);
 
+        return "admin_cititori";
+    }
     @GetMapping("/cititor_rezervari_imprumuturi.html")
     public String afiseazaRezervarileSiImprumuturileUtilizatorului(Model model) {
-        Integer idUtilizatorLogat = userSession.getUserId(); // Obține ID-ul utilizatorului logat
-        System.out.println("ID-ul utilizatorului logat: " + idUtilizatorLogat);
+        Integer idUtilizatorLogat = userSession.getUserId();
 
-        // Inițializează listele ca liste goale în cazul în care serviciul returnează null
         List<Imprumuturi> imprumuturiList = imprumuturiService.getImprumuturiByUserId(idUtilizatorLogat);
         List<RezervariCarti> rezervariList = rezervareCarteService.getRezervariByUserId(idUtilizatorLogat);
         model.addAttribute("imprumuturi", imprumuturiList);
         model.addAttribute("rezervari", rezervariList);
 
-        return "cititor_rezervari_imprumuturi"; // Numele paginii tale Thymeleaf
+        return "cititor_rezervari_imprumuturi";
+    }
+    @PostMapping("/anuleaza-imprumut")
+    public String anuleazaImprumut(@RequestParam("idImprumut") Integer idImprumut, RedirectAttributes redirectAttributes) {
+        boolean rezultat = imprumuturiService.anuleazaImprumut(idImprumut);
+
+        if (rezultat) {
+            redirectAttributes.addFlashAttribute("mesajSucces", "Împrumutul a fost anulat cu succes!");
+        } else {
+            redirectAttributes.addFlashAttribute("mesajEroare", "Nu s-a putut anula împrumutul.");
+        }
+
+        return "redirect:/cititor_rezervari_imprumuturi.html";
+    }
+
+    @PostMapping("/anuleaza-rezervare")
+    public String anuleazaRezervare(@RequestParam("idRezervare") Integer idRezervare, RedirectAttributes redirectAttributes) {
+        boolean rezultat = rezervareCarteService.anuleazaRezervare(idRezervare);
+
+        if (rezultat) {
+            redirectAttributes.addFlashAttribute("mesajSucces", "Rezervarea a fost anulată cu succes!");
+        } else {
+            redirectAttributes.addFlashAttribute("mesajEroare", "Nu s-a putut anula rezervarea.");
+        }
+
+        return "redirect:/cititor_rezervari_imprumuturi.html";
     }
 
 
@@ -427,308 +416,85 @@ public String deleteUser(@PathVariable Integer id){
 
 
 
+    @GetMapping("/")
+    public String indexPage(Model model) {
+        List<Evenimente> evenimente = evenimenteService.getAllEvenimente();
+        model.addAttribute("evenimente", evenimente);
+        List<Carti> carti = cartiService.findFirst9();
+
+        model.addAttribute("carti1", carti.subList(0, 3));
+        model.addAttribute("carti2", carti.subList(3, 6));
+        model.addAttribute("carti3", carti.subList(6, 9));
+        return "index.html";
+    }
+    @GetMapping("/evenimente.html")
+    public String returnEvenimente(Model model) {
+        List<Evenimente> evenimente = evenimenteService.getAllEvenimente();
+        model.addAttribute("evenimente", evenimente);
+        return "evenimente.html";
+    }
+    @GetMapping("/catalog.html")
+    public String afiseazaCatalog(Model model,@RequestParam(defaultValue = "0") int page){
+        int size = 12;
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<Carti> allBooks = cartiRepository.findAll();
+        List<Carti> uniqueBooks = allBooks.stream()
+                .distinct()
+                .collect(Collectors.toList());
+        int totalBooks = uniqueBooks.size();
+        int totalPages = (int) Math.ceil((double) totalBooks / size);
+
+        int start = Math.min(page * size, totalBooks);
+        int end = Math.min((start + size), totalBooks);
+        List<Carti> paginatedBooks = uniqueBooks.subList(start, end);
+        Page<Carti> cartiPage = new PageImpl<>(uniqueBooks.subList(start, end), pageRequest, uniqueBooks.size());
+
+        model.addAttribute("carti", cartiPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("isCatalogPage", true);
+
+        return "catalog";
 
 
-//    @RequestMapping(value="admin_cititori/{id}", method = RequestMethod.GET)
-//    public String findById(@PathVariable Long id) {
-//        System.out.println("ID"+id);
-//        return "ID found"+id;
-//    }
+    }
 
-    //@GetMapping("admin_cititori")
-//public String afisAdminCititori(){
-//        return "admin_cititori";
-//}
 
-//    @GetMapping("admin_cititori/edit/{id}")
-//    public String read(@PathVariable("id") Integer id, Model model)
-//    {
-//
-//        Utilizatori utilizatori = usersService.getStudentById(id);
-//        model.addAttribute("utilizatori", utilizatori);
-//        return "admin_editeaza_cititor";
-//    }
+
+
+
     @GetMapping ("/admin_cititori/makeBibliotecar/{id}")
     public String makeBibliotecar(@PathVariable("id") Integer id, Model model) {
         Utilizatori utilizatori = usersService.getStudentById(id);
         model.addAttribute("utilizatori", utilizatori);
-        //usersService.makeUserBibliotecar(id);
 
         return "rol_bibliotecar";
     }
     @GetMapping("/rol_bibliotecar")
     public String afiseazaPaginaRolBibliotecar(Model model) {
-        // Logică pentru afișarea paginii rol_bibliotecar
         return "rol_bibliotecar";
     }
-
-//    @PostMapping("/adauga_la_favorite/{carteId}")
-//    public String adaugaLaFavorite(@PathVariable Integer carteId,Model model) {
-//        // Aici va trebui să obții ID-ul utilizatorului curent logat
-//        Integer userId = userSession.getUserId();
-//        System.out.println("userrId: " + userSession.getUserId());
-//        // Presupunem că ai o metodă care îți returnează utilizatorul logat pe baza principal-ului
-//        if (userId != null) {
-//            Utilizatori utilizatori = usersService.getUserById(userId);
-//            if (utilizatori != null) {
-//            // Presupunem că ai o metodă în serviciul tău care adaugă cartea la favorite folosind ID-ul utilizatorului și ID-ul cărții
-//            cartiService.adaugaLaFavorite(userId, carteId);
-//
-//            // Redirecționează înapoi la catalog sau la o pagină de succes          return "redirect:/admin_cititori";
-//            return "redirect:/cititor_catalog.html";}
-//            return "error_page";
-//        } else {
-//            // Tratează cazul în care ID-ul utilizatorului nu este în sesiune (de exemplu, utilizatorul nu este logat)
-//            model.addAttribute("error", "Trebuie să fii logat pentru a adăuga la favorite.");
-//            return "logare";
-//        }
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @PostMapping("/adauga_la_favorite/{carteId}")
-//    public String adaugaLaFavorite(@PathVariable Integer carteId, Model model) {
-//        // Obține ID-ul utilizatorului curent logat
-//        Integer userId = userSession.getUserId();
-//        System.out.println("userId: " + userId);
-//
-//        // Verifică dacă ID-ul utilizatorului este prezent
-//        if (userId != null) {
-//            // Verifică dacă cartea este deja adăugată la favorite
-//            if (!cartiService.esteCarteFavorita(userId, carteId)) {
-//                // Dacă cartea nu este în lista de favorite, adaug-o
-//                cartiService.adaugaLaFavorite(userId, carteId);
-//                // Redirecționează înapoi la catalog sau la o pagină de succes
-//                return "redirect:/cititor_catalog.html";
-//            } else {
-//                // Dacă cartea este deja favorită, poți trimite un mesaj sau redirecționa către o altă pagină
-//                model.addAttribute("message", "Cartea este deja în lista ta de favorite.");
-//                return "pagina_informativa"; // Sau orice pagină unde vrei să afișezi acest mesaj
-//            }
-//        } else {
-//            // Tratează cazul în care ID-ul utilizatorului nu este în sesiune (utilizatorul nu este logat)
-//            model.addAttribute("error", "Trebuie să fii logat pentru a adăuga la favorite.");
-//            return "logare";
-//        }
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @PostMapping("/update/{id}")
-//    @PostMapping("/edit/{id}")
-////    public String actualizeazaUtilizator(@PathVariable("id") Integer id, @Valid Utilizatori utilizator , Model model) {
-//
-//    public String actualizeazaUtilizator(@PathVariable Integer id, @ModelAttribute Utilizatori utilizator) {
-//
-//        Utilizatori existingUtilizator = usersService.getUtilizatorById(utilizator.getId());
-//
-//        if (existingUtilizator != null) {
-//            System.out.println("aici");
-//            existingUtilizator.setNume(utilizator.getNume());
-//            existingUtilizator.setPrenume(utilizator.getPrenume());
-//            existingUtilizator.setVarsta(utilizator.getVarsta());
-//            existingUtilizator.setTelefon(utilizator.getTelefon());
-//            existingUtilizator.setEmail(utilizator.getEmail());
-//            existingUtilizator.setStrada(utilizator.getStrada());
-//            existingUtilizator.setOras(utilizator.getOras());
-//            existingUtilizator.setCodPostal(utilizator.getCodPostal());
-//            existingUtilizator.setJudet(utilizator.getJudet());
-//            existingUtilizator.setApartament(utilizator.getApartament());
-//            existingUtilizator.setNumar(utilizator.getNumar());
-//            existingUtilizator.setScara(utilizator.getScara());
-//            existingUtilizator.setOcupatie(utilizator.getOcupatie());
-//            existingUtilizator.setParola(utilizator.getParola());
-//            // ... și actualizați celelalte câmpuri
-//            utilizatoriRepository.save(existingUtilizator);
-//            System.out.println("aici");
-//            Utilizatori updatedUtilizator = usersService.saveUser(existingUtilizator);
-//
-//            if (updatedUtilizator != null) {
-//                return "admin_cititori";
-//            }
-//        }
-//        System.out.println("aici");
-//        return "error_page";
-//    }
-//
-////    @GetMapping("/admin_cititori/edit/{id}")
-////    public String editCustomer(@PathVariable Integer id, Model model){
-////        Utilizatori utilizator=usersService.getUtilizatorById(id);
-//////        Customer thisCustomer=customerRepository.getById(id);
-////        model.addAttribute("utilizator",utilizator);
-////        return "admin_editeaza_cititor";
-////    }
-//@GetMapping("/admin_editeaza_cititor/{id}")
-//public String afiseazaFormularEditare(@PathVariable Integer id, Model model) {
-//    // Obțineți utilizatorul cu ID-ul specificat din serviciu sau din baza de date
-//    Utilizatori utilizator = usersService.getUtilizatorById(id);
-//
-//    // Verificați dacă utilizatorul există
-//    if (utilizator != null) {
-//        // Adăugați utilizatorul în model pentru a-l afișa în formular
-//        model.addAttribute("utilizator", utilizator);
-//
-//        // Returnați numele paginii Thymeleaf unde veți afișa formularul de editare
-//        return "admin_editeaza_cititor";
-//    } else {
-//        // Dacă utilizatorul nu există, puteți să tratați acest caz aici sau să redirecționați către o pagină de eroare
-//        return "error_page"; // Înlocuiți "pagina_de_eroare" cu pagina de eroare reală
-//    }
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/editare_cititor")
-//    public String returnEditareCititor(Model model) {
-//        model.addAttribute("user", new Utilizatori());
-//        return "editare_cititor";
-//    }
-
-
-
-
-//    @PostMapping("/adaugare")
-//    public String addUser(@ModelAttribute Utilizatori utilizatori) {
-//        Utilizatori newUser = usersService.saveUser(utilizatori); // Apelați serviciul pentru a adăuga utilizatorul
-//        System.out.println("Utilizatorul a fost adăugat cu succes: " + newUser.getId());
-//
-//        if (newUser != null) {
-//            // Utilizatorul a fost adăugat cu succes
-//            return "admin_cititori"; // Redirecționați la pagina de administrare a cititorilor
-//        } else {
-//            System.out.println("Adăugarea utilizatorului a eșuat.");
-//            // Tratați cazul în care adăugarea a eșuat
-//            return "error_page"; // Puteți redirecționa către o pagină de eroare sau face altceva
-//        }
-//    }
-//    @GetMapping("/adaiugare")
-//    public String getAdaugare(Model model) {
-//        model.addAttribute("user",new Utilizatori());
-//        return "admin_cititori";
-//
-//    }
-
-//    @GetMapping("/admin_cititori")
-//    public String afiseazaUtilizatori(Model model) {
-//        List<Utilizatori> utilizatori = usersService.getAllUsers();
-//        model.addAttribute("utilizatori", utilizatori);
-//        return "admin_cititori";
-//    }
-//    @GetMapping("/admin_cititori")
-//    public String returnAdminCititori() {
-//        return "admin_cititori";
-//    }
-//
-
-
-
-
-
-
-
-
-//    @GetMapping("/admin_adauga_cititor")
-//    public String returnAdminAdaugaCititor() {
-//        return "admin_adauga_cititor";
-//    }
-//    @GetMapping("/admin_cititori/new"){
-//        public String showNewForm(Model model){
-//            return j;
-//        }
-//    }
 }
 
 
-//    private UserService userService;
-//
-//    public UtilizatorController(UserService userService) {
-//        super();
-//        this.userService = userService;
-//    }
-//
-//    @GetMapping("/")
-//    public String getIndex() {
-//        return "index";
-//    }
-//    @PostMapping("/register")
-//    public String registerUserAccount(@ModelAttribute("user")UserRegistrationDTO registrationDTO){
-//
-//        userService.save(registrationDTO);
-//        return "redirect:/register?success";
-//    }
-//    //@ModelAttribute("user")
-////public  UserRegistrationDTO userRegistrationDTO(){
-////        return new UserRegistrationDTO();
-////}
-//    @Autowired
-//    private UtilizatoriRepository utilizatoriRepository;
-//
-//    @GetMapping("/register")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("user", new UserRegistrationDTO());
-//        return "creare_cont";
-//    }
-////
-////
-////
-////    @PostMapping("/register")
-////    public String processRegistrationForm(@ModelAttribute("user") Utilizatori user) {
-////
-////        // Here you can add validation and processing logic
-////        // Hash the password, set other fields, etc.
-////        utilizatoriRepository.save(user);
-////
-////        return "redirect:/register:succes"; // Redirect to a success page
-////    }
-////    @GetMapping("/cititor_pagina_principala")
-////    public String returnPaginaPrincipala(Model model) {
-////        model.addAttribute("user", new Utilizatori());
-////        return "cititor_pagina_principala";
-////    }
-////    @GetMapping("/creare_cont")
-////    public String returnCreareCont(Model model) {
-////        model.addAttribute("user", new Utilizatori());
-////        return "creare_cont";
-////    }
-////    @GetMapping("/login")
-////    public String returnLogare() {
-////
-////        return "logare";
-////    }
-//
-//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

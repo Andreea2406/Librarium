@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,7 +26,14 @@ public class RezervareSaliService {
         this.saliService = saliService;
         this.utilizatoriRepository = utilizatoriRepository;
     }
-
+    public boolean anuleazaRezervareSala(Integer idRezervareSala) {
+        try {
+            rezervareSaliRepository.deleteById(idRezervareSala);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public RezervariSali adaugaRezervare(Integer salaId, Integer utilizatorId, Instant dataOraInceput, Instant dataOraFinal) {
         SaliBiblioteca sala = saliService.getSalaById(salaId);
         if (sala == null) {
@@ -42,8 +50,11 @@ public class RezervareSaliService {
         rezervare.setIdUtilizator(utilizator);
         rezervare.setDataOraInceput(dataOraInceput);
         rezervare.setDataOraFinal(dataOraFinal);
-        rezervare.setStareRezervare(true); // Presupunem că rezervarea este activă imediat după creare
+        rezervare.setStareRezervare(true);
 
         return rezervareSaliRepository.save(rezervare);
+    }
+    public List<RezervariSali> getRezervariByUserId(Integer utilizatorId) {
+        return rezervareSaliRepository.findByIdUtilizator_Id(utilizatorId);
     }
 }

@@ -1,7 +1,6 @@
 package com.andreea.librarium.controller;
 
 import com.andreea.librarium.config.UserSession;
-import com.andreea.librarium.model.Carti;
 import com.andreea.librarium.model.CartiFavorite;
 import com.andreea.librarium.model.RoluriUtilizatori;
 import com.andreea.librarium.model.Utilizatori;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class CititorEditareProfil {
@@ -57,65 +55,38 @@ public class CititorEditareProfil {
 }
     @GetMapping("/cititor_setari_profil")
     public String vizualizeazaSetariProfil(Model model) {
-        Integer idUtilizatorLogat = userSession.getUserId(); // Obține ID-ul din sesiune
+        Integer idUtilizatorLogat = userSession.getUserId();
         if (idUtilizatorLogat != null) {
             Utilizatori utilizator = usersService.getStudentById(idUtilizatorLogat);
             if (utilizator != null) {
                 model.addAttribute("utilizator", utilizator);
 
-                // This method returns a list of CartiFavorite entities, not IDs.
                 List<CartiFavorite> cartiFavorite = cartiFavoriteService.findFavoriteCartiIdsByUserId(idUtilizatorLogat);
                 model.addAttribute("cartiFavorite", cartiFavorite);
 
                 return "cititor_setari_profil";
             } else {
-                // Tratează cazul în care utilizatorul nu este găsit
-                return "pagina_eroare"; // Sau o altă logică adecvată
+                return "pagina_eroare";
             }
         } else {
-            // Utilizatorul nu este logat sau sesiunea a expirat
             return "redirect:/login";
         }
     }
 
-//    @GetMapping("/cititor_setari_profil")
-//    public String vizualizeazaSetariProfil(Model model) {
-//        Integer idUtilizatorLogat = userSession.getUserId(); // Obține ID-ul din sesiune
-//        if (idUtilizatorLogat != null) {
-//            Utilizatori utilizator = usersService.getStudentById(idUtilizatorLogat);
-//            if (utilizator != null) {
-//                model.addAttribute("utilizator", utilizator);
-//
-//                List<Integer> cartiFavoriteIds = cartiFavoriteService.findFavoriteCartiIdsByUserId(idUtilizatorLogat);
-//                List<Carti> cartiFavorite = cartiFavoriteIds.stream()
-//                        .map(id -> cartiService.getBookById(id)) // Presupunând că există o metodă `findById` în serviciul tău de cărți
-//                        .collect(Collectors.toList());
-//                model.addAttribute("cartiFavorite", cartiFavorite);
-//
-//                return "cititor_setari_profil";
-//            } else {
-//                // Tratează cazul în care utilizatorul nu este găsit
-//                return "pagina_eroare"; // Sau o altă logică adecvată
-//            }
-//        } else {
-//            // Utilizatorul nu este logat sau sesiunea a expirat
-//            return "redirect:/login";
-//        }
-//    }
     @GetMapping("/cititor_editare_profil")
     public String afiseazaFormularEditareProfil(Model model) {
         Integer idUtilizatorLogat = userSession.getUserId();
         if (idUtilizatorLogat == null) {
-            return "redirect:/login"; // Redirecționare la pagina de login dacă utilizatorul nu este logat
+            return "redirect:/login";
         }
 
         Utilizatori utilizator = usersService.getStudentById(idUtilizatorLogat);
         if (utilizator == null) {
-            return "pagina_eroare"; // Pagina de eroare sau mesaj corespunzător dacă utilizatorul nu este găsit
+            return "pagina_eroare";
         }
 
         model.addAttribute("utilizatorForm", utilizator);
-        return "cititor_editare_profil"; // Numele paginii de editare
+        return "cititor_editare_profil";
     }
     @PostMapping("/cititor_editare_profil")
     public String proceseazaEditareProfil(@ModelAttribute("utilizatorForm") Utilizatori utilizatorForm,
@@ -125,7 +96,6 @@ public class CititorEditareProfil {
             return "redirect:/login";
         }
 
-        // Asigurați-vă că actualizați doar utilizatorul curent logat
         Utilizatori existingUtilizator = usersService.getStudentById(idUtilizatorLogat);
         if (existingUtilizator == null) {
             return "pagina_eroare";
@@ -133,7 +103,7 @@ public class CititorEditareProfil {
         if (existingUtilizator != null) {
             existingUtilizator.setNume(utilizatorForm.getNume());
             existingUtilizator.setPrenume(utilizatorForm.getPrenume());
-            existingUtilizator.setCNP(utilizatorForm.getCNP());
+            existingUtilizator.setVarsta(utilizatorForm.getVarsta());
             existingUtilizator.setTelefon(utilizatorForm.getTelefon());
             existingUtilizator.setEmail(utilizatorForm.getEmail());
             existingUtilizator.setStrada(utilizatorForm.getStrada());
@@ -148,9 +118,7 @@ public class CititorEditareProfil {
             Utilizatori updatedUtilizator = usersService.updateUtilizator(existingUtilizator);
 
         }
-        // Actualizați detalii utilizator și salvați în baza de date
-//        usersService.updateUtilizator(utilizatorForm);
-        return "redirect:/cititor_setari_profil"; // Redirecționare la pagina de profil după actualizare
+        return "redirect:/cititor_setari_profil";
     }
 
 

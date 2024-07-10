@@ -19,22 +19,20 @@ public class Utilizatori {
     private Integer id;
 
     @Size(max = 255)
-    // @NotNull
     @Column(name = "nume", nullable = false)
     private String nume;
 
     @Size(max = 255)
-    //@NotNull
     @Column(name = "prenume", nullable = false)
     private String prenume;
 
-    //@NotNull
-    @Size(max = 255)
-    @Column(name = "CNP", nullable = false)
-    private String CNP;
 
     @Size(max = 255)
-    // @NotNull
+    @Column(name = "varsta", nullable = false)
+    private String varsta;
+
+    @Size(max = 255)
+
     @Column(name = "telefon", nullable = false)
     private String telefon;
 
@@ -44,37 +42,36 @@ public class Utilizatori {
     private String email;
 
     @Size(max = 255)
-    //@NotNull
     @Column(name = "strada", nullable = false)
     private String strada;
 
     @Size(max = 255)
-    //@NotNull
+
     @Column(name = "oras", nullable = false)
     private String oras;
 
     @Size(max = 50)
-    //@NotNull
+
     @Column(name = "cod_postal", nullable = false, length = 50)
     private String codPostal;
 
     @Size(max = 255)
-    //@NotNull
+
     @Column(name = "judet", nullable = false)
     private String judet;
 
     @Size(max = 50)
-    //@NotNull
+
     @Column(name = "apartament", nullable = false, length = 50)
     private String apartament;
 
     @Size(max = 255)
-    //@NotNull
+
     @Column(name = "numar", nullable = false)
     private String numar;
 
     @Size(max = 255)
-    //@NotNull
+
     @Column(name = "scara", nullable = false)
     private String scara;
 
@@ -96,20 +93,19 @@ public class Utilizatori {
     @OneToMany(mappedBy = "idUtilizator")
     private Set<Imprumuturi> imprumuturis = new LinkedHashSet<>();
 
-    //    @OneToMany(mappedBy = "idUtilizator")
-//    private Set<RoluriUtilizatori> roluriUtilizatoris = new LinkedHashSet<>();
+
     @OneToMany(mappedBy = "idUtilizator", fetch = FetchType.EAGER)
     private Set<RoluriUtilizatori> roluriUtilizatoris = new LinkedHashSet<>();
 
 
-    //    public Set<Rol> getRoles() {
-//        return roluriUtilizatoris.stream().map(RoluriUtilizatori::getIdRol).collect(Collectors.toSet());
-//    }
+
     public Set<Rol> getRole() {
         return roluriUtilizatoris.stream()
                 .map(RoluriUtilizatori::getIdRol)
                 .collect(Collectors.toSet());
     }
+    @ManyToMany(mappedBy = "utilizatori")
+    private Set<Conversatie> conversatii = new HashSet<>();
 
 
     @OneToMany(mappedBy = "idUtilizator")
@@ -118,11 +114,11 @@ public class Utilizatori {
     public Utilizatori() {
     }
 
-    public Utilizatori(Integer id, String nume, String prenume, String CNP, String telefon, String email, String strada, String oras, String codPostal, String judet, String apartament, String numar, String scara, String ocupatie, String parola) {
+    public Utilizatori(Integer id, String nume, String prenume, String varsta, String telefon, String email, String strada, String oras, String codPostal, String judet, String apartament, String numar, String scara, String ocupatie, String parola) {
         this.id = id;
         this.nume = nume;
         this.prenume = prenume;
-        this.CNP = CNP;
+        this.varsta = varsta;
         this.telefon = telefon;
         this.email = email;
         this.strada = strada;
@@ -165,12 +161,12 @@ public class Utilizatori {
         this.prenume = prenume;
     }
 
-    public String getCNP() {
-        return CNP;
+    public String getVarsta() {
+        return varsta;
     }
 
-    public void setCNP(String CNP) {
-        this.CNP = CNP;
+    public void setVarsta(String varsta) {
+        this.varsta = varsta;
     }
 
     public String getTelefon() {
@@ -192,9 +188,7 @@ public class Utilizatori {
     public String getStrada() {
         return strada;
     }
-    //    public String getStrada() {
-//        return strada;
-//    }
+
 
     public void setStrada(String strada) {
         this.strada = strada;
@@ -309,13 +303,13 @@ public class Utilizatori {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Utilizatori that = (Utilizatori) o;
-        return Objects.equals(id, that.id) && Objects.equals(nume, that.nume) && Objects.equals(prenume, that.prenume) && Objects.equals(CNP, that.CNP) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email) && Objects.equals(strada, that.strada) && Objects.equals(oras, that.oras) && Objects.equals(codPostal, that.codPostal) && Objects.equals(judet, that.judet) && Objects.equals(apartament, that.apartament) && Objects.equals(numar, that.numar) && Objects.equals(scara, that.scara) && Objects.equals(ocupatie, that.ocupatie) && Objects.equals(parola, that.parola);
+        return Objects.equals(id, that.id) && Objects.equals(nume, that.nume) && Objects.equals(prenume, that.prenume) && Objects.equals(varsta, that.varsta) && Objects.equals(telefon, that.telefon) && Objects.equals(email, that.email) && Objects.equals(strada, that.strada) && Objects.equals(oras, that.oras) && Objects.equals(codPostal, that.codPostal) && Objects.equals(judet, that.judet) && Objects.equals(apartament, that.apartament) && Objects.equals(numar, that.numar) && Objects.equals(scara, that.scara) && Objects.equals(ocupatie, that.ocupatie) && Objects.equals(parola, that.parola);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, nume, prenume, CNP, telefon, email, strada, oras, codPostal, judet, apartament, numar, scara, ocupatie, parola);
+        return Objects.hash(id, nume, prenume, varsta, telefon, email, strada, oras, codPostal, judet, apartament, numar, scara, ocupatie, parola);
     }
 
     @Override
@@ -324,7 +318,7 @@ public class Utilizatori {
                 "id=" + id +
                 ", nume='" + nume + '\'' +
                 ", prenume='" + prenume + '\'' +
-                ", CNP=" + CNP +
+                ", varsta=" + varsta +
                 ", telefon='" + telefon + '\'' +
                 ", email='" + email + '\'' +
                 ", strada='" + strada + '\'' +
@@ -352,14 +346,12 @@ public class Utilizatori {
         this.role.add(role);
     }
 
-//        @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @ManyToMany
     @JoinTable(
             name = "roluri_utilizatori",
             joinColumns = @JoinColumn(name = "id_utilizator"),
             inverseJoinColumns = @JoinColumn(name = "id_rol")
     )
-//    private Set<Rol> roles = new HashSet<>();
     public String getSelectedRole() {
         return selectedRole;
     }

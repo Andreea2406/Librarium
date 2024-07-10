@@ -1,112 +1,1616 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Admin</title>
-  <link rel="stylesheet" href="path/to/your/css/styles.css">
+  <title>Librarium</title>
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
+  <style>
+.chat-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 30%;
+  background-color: #2c3e50;
+  color: white;
+  overflow-y: auto;
+}
+.chat-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+.sidebar {
+  width: 30%;
+  background-color: #2c3e50;
+  color: white;
+  overflow-y: auto;
+}
+
+.chat-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ecf0f1;
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #34495e;
+  color: white;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-footer {
+  padding: 10px;
+  background-color: #bdc3c7;
+}
+
+.chat-footer input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+@mixin font-bold {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+@mixin font {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder {
+        @content;
+    }
+    &::-moz-placeholder {
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #fff;
+    --black: #000;
+    --bg: #f8f8f8;
+    --grey: #999;
+    --dark: #1a1a1a;
+    --light: #e6e6e6;
+    --wrapper: 1000px;
+    --blue: #00b0ff;
+}
+
+body {
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    @include font;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/image.jpg');
+    background-size: cover;
+    background-repeat: none;
+}
+.wrapper {
+    position: relative;
+    left: 50%;
+    width: var(--wrapper);
+    height: 800px;
+    transform: translate(-50%, 0);
+}
+.container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 75%;
+    background-color: var(--white);
+    transform: translate(-50%, -50%);
+    .left {
+        float: left;
+        width: 37.6%;
+        height: 100%;
+        border: 1px solid var(--light);
+        background-color: var(--white);
+        .top {
+            position: relative;
+            width: 100%;
+            height: 96px;
+            padding: 29px;
+            &:after {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                display: block;
+                width: 80%;
+                height: 1px;
+                content: '';
+                background-color: var(--light);
+                transform: translate(-50%, 0);
+            }
+        }
+        input {
+            float: left;
+            width: 188px;
+            height: 42px;
+            padding: 0 15px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+            border-radius: 21px;
+            @include font();
+            &:focus {
+                outline: none;
+            }
+        }
+        a.search {
+            display: block;
+            float: left;
+            width: 42px;
+            height: 42px;
+            margin-left: 10px;
+            border: 1px solid var(--light);
+            background-color: var(--blue);
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/name-type.png');
+            background-repeat: no-repeat;
+            background-position: top 12px left 14px;
+            border-radius: 50%;
+        }
+        .people {
+            margin-left: -1px;
+            border-right: 1px solid var(--light);
+            border-left: 1px solid var(--light);
+            width: calc(100% + 2px);
+            .person {
+                position: relative;
+                width: 100%;
+                padding: 12px 10% 16px;
+                cursor: pointer;
+                background-color: var(--white);
+                &:after {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    display: block;
+                    width: 80%;
+                    height: 1px;
+                    content: '';
+                    background-color: var(--light);
+                    transform: translate(-50%, 0);
+                }
+                img {
+                    float: left;
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
+                    border-radius: 50%;
+																				object-fit: cover;
+                }
+                .name {
+                    font-size: 14px;
+                    line-height: 22px;
+                    color: var(--dark);
+                    @include font-bold;
+                }
+                .time {
+                    font-size: 14px;
+                    position: absolute;
+                    top: 16px;
+                    right: 10%;
+                    padding: 0 0 5px 5px;
+                    color: var(--grey);
+                    background-color: var(--white);
+                }
+                .preview {
+                    font-size: 14px;
+                    display: inline-block;
+                    overflow: hidden !important;
+                    width: 70%;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    color: var(--grey);
+                }
+                &.active,&:hover {
+                    margin-top: -1px;
+                    margin-left: -1px;
+                    padding-top: 13px;
+                    border: 0;
+                    background-color: var(--blue);
+                    width: calc(100% + 2px);
+                    padding-left: calc(10% + 1px);
+                    span {
+                        color: var(--white);
+                        background: transparent;
+                    }
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .right {
+        position: relative;
+        float: left;
+        width: 62.4%;
+        height: 100%;
+        .top {
+            width: 100%;
+            height: 47px;
+            padding: 15px 29px;
+            background-color: #eceff1;
+            span {
+                font-size: 15px;
+                color: var(--grey);
+                .name {
+                    color: var(--dark);
+                    @include font-bold;
+                }
+            }
+        }
+        .chat {
+            position: relative;
+            display: none;
+            overflow: hidden;
+            padding: 0 35px 92px;
+            border-width: 1px 1px 1px 0;
+            border-style: solid;
+            border-color: var(--light);
+            height: calc(100% - 48px);
+            justify-content: flex-end;
+            flex-direction: column;
+            &.active-chat {
+                display: block;
+                display: flex;
+                .bubble {
+                    transition-timing-function: cubic-bezier(.4,-.04, 1, 1);
+                    @for $i from 1 through 10 {
+                        &:nth-of-type(#{$i}) {
+                            animation-duration: .15s * $i;
+                        }
+                    }
+                }
+            }
+        }
+        .write {
+            position: absolute;
+            bottom: 29px;
+            left: 30px;
+            height: 42px;
+            padding-left: 8px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+            width: calc(100% - 58px);
+            border-radius: 5px;
+            input {
+                font-size: 16px;
+                float: left;
+                width: 347px;
+                height: 40px;
+                padding: 0 10px;
+                color: var(--dark);
+                border: 0;
+                outline: none;
+                background-color: #eceff1;
+                @include font;
+            }
+            .write-link {
+                &.attach {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/attachment.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+                &.smiley {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/smiley.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+                &.send {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        margin-left: 11px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/send.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+            }
+        }
+        .bubble {
+            font-size: 16px;
+            position: relative;
+            display: inline-block;
+            clear: both;
+            margin-bottom: 8px;
+            padding: 13px 14px;
+            vertical-align: top;
+            border-radius: 5px;
+            &:before {
+                position: absolute;
+                top: 19px;
+                display: block;
+                width: 8px;
+                height: 6px;
+                content: '\00a0';
+                transform: rotate(29deg) skew(-35deg);
+            }
+            &.you {
+                float: left;
+                color: var(--white);
+                background-color: var(--blue);
+                align-self: flex-start;
+                animation-name: slideFromLeft;
+                &:before {
+                    left: -3px;
+                    background-color: var(--blue);
+                }
+            }
+            &.me {
+                float: right;
+                color: var(--dark);
+                background-color: #eceff1;
+                align-self: flex-end;
+                animation-name: slideFromRight;
+                &:before {
+                    right: -3px;
+                    background-color: #eceff1;
+                }
+            }
+        }
+        .conversation-start {
+            position: relative;
+            width: 100%;
+            margin-bottom: 27px;
+            text-align: center;
+            span {
+                font-size: 14px;
+                display: inline-block;
+                color: var(--grey);
+                &:before,&:after {
+                    position: absolute;
+                    top: 10px;
+                    display: inline-block;
+                    width: 30%;
+                    height: 1px;
+                    content: '';
+                    background-color: var(--light);
+                }
+                &:before {
+                    left: 0;
+                }
+                &:after {
+                    right: 0;
+                }
+            }
+        }
+    }
+}
+@keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}
+
+
+    body {
+
+  background: rgba(250, 160, 100, .2);
+
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535b60;
+  background-color: #F7F0E8;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+
+
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-image: url("http://bestanimations.com/Books/pretty-book-bench-nature-water-outdoors-animated-gif.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-origin: padding-box;
+  box-shadow: 7px 0px 10px rgba(0, 0, 0, .3), -7px 0px 10px rgba(0, 0, 0, .3);
+}
+
+#headerImage img {
+  width: 130px;
+  height: 110px;
+  border: 10px solid rgba(200, 80, 70, .3);
+  border-radius: 48%;
+  display: block;
+  opacity:100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.store {
+  background: rgba(40, 80, 100, .2);
+}
+
+h1 {
+  text-align: center;
+  font-family: Monospace;
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  background: #8a6f3a;
+  width: 340px;
+  margin: auto;
+}
+
+.button-container {
+    top: 0;
+    right: 9999;
+    margin: 10px;
+     display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.button {
+    /* Add your button styles here */
+<!--    padding: 10px 15px;-->
+<!--    margin-right: 10px;-->
+padding: 10px 15px;
+    margin-left: 10px; /* Add some space between buttons if needed */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $button-bg;
+  color: $button-text-color;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+
+
+}
+
+
+nav {
+  text-align: center;
+  margin: 25px;
+}
+
+nav a {
+  text-align: center;
+  padding: .7% 2%;
+  margin: 1.5% 1%;
+  text-decoration: none;
+  background-color: rgba(200, 80, 70, .7);
+  color: white;
+  display: inline block;
+}
+
+nav a:hover {
+  box-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #fff;
+}
+
+section {
+  padding: 1%;
+  background: rgba(200, 120, 40, .45);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+h2 {
+  font-size: 80px;
+  font-family: Helvetica, cursive;
+  color: #581845;
+  font-weight: bold;
+}
+h3 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h5 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#ffd9b3;
+}
+#slider {
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto 0 auto;
+  border-radius: 4px;
+}
+#slider ul {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+  list-style: none;
+}
+
+#slider ul li {
+  position: left;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  height: 300px;
+  background: #ccc;
+  text-align: center;
+  line-height: 300px;
+}
+
+a.control_prev, a.control_next {
+  position: absolute;
+  top: 40%;
+  z-index: 999;
+  display: block;
+  padding: 4% 3%;
+  width: auto;
+  height: auto;
+  background: #2a2a2a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+a.control_prev:hover, a.control_next:hover {
+  opacity: 1;
+  -webkit-transition: all 0.2s ease;
+}
+
+a.control_prev {
+  border-radius: 0 2px 2px 0;
+}
+
+a.control_next {
+  right: 0;
+  border-radius: 2px 0 0 2px;
+}
+
+
+.container3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/*
+  HTML implementation of a Hip Chat redesign based on Jan Dvořák Dribbble shot.
+  https://dribbble.com/shots/1529065-HipChat-Redesign
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+body{
+	background: #a9b89e;
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size: 12px;
+	color: #333f4d;
+}
+b{
+	font-weight: bold;
+}
+.window-wrapper{
+	background: #fff;
+	width: 780px;
+	margin: 30px auto;
+	border-radius: 6px;
+	box-shadow: 0 0 6px rgba(0,0,0,0.3);
+	overflow: hidden;
+	min-height: 530px;
+	position: relative;
+}
+.window-title{
+	padding: 14px;
+	position: relative;
+
+    > .title{
+        overflow: hidden;
+        text-align: center;
+      font-weight: bold;
+    }
+
+    > .expand{
+        position: absolute;
+        right: 14px;
+        top: 12px;
+    }
+}
+.dots{
+	float: left;
+	width: 50px;
+
+    > i{
+        margin-right: 2px;
+
+        &:nth-child(1){
+            color: #f57e7d;
+        }
+
+        &:nth-child(2){
+            color: #ffc881;
+        }
+
+        &:nth-child(3){
+            color: #82cf85;
+        }
+    }
+}
+
+.expand > i{
+	color: #cfd6e0;
+	font-size: 18px;
+	cursor: pointer;
+}
+.window-area{
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-left: 176px;
+}
+.conversation-list{
+	width: 176px;
+	background: #505d71;
+	float: left;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+
+    ul li {
+        &.active a{
+            background: #445166;
+	        color: #fff;
+        }
+            a{
+            padding: 15px;
+            color: #bcc3d0;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            border-bottom: 2px solid #586476;
+            transition: all 0.2s linear;
+                i{
+                    color: #79889d;
+                    font-size: 1.2em;
+
+                    &.fa-times{
+                        position: absolute;
+                        top:19px;
+                        right:21px;
+                        font-size: 10px;
+                    }
+                }
+
+                span{
+                    display: inline-block;
+                    margin-left: 14px;
+                }
+
+                &:hover{
+                    background: #445166;
+                    color: #fff;
+                }
+        }
+    }
+
+    .online{
+        color: #82cf85;
+    }
+
+    .idle{
+        color: #ffac69;
+    }
+
+    .offline{
+        color: #f57e7d;
+    }
+}
+
+.chat-area{
+	border-top: 1px solid #cfdae1;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 176px;
+    right:175px;
+	box-shadow: inset 0 1px 3px rgba(207, 218, 225, 0.42);
+
+    .title{
+        padding: 10px;
+        overflow: hidden;
+        line-height:15px;
+
+        .fa-search{
+            font-size: 14px;
+            float: right;
+            color: #a8bbc6;
+            cursor: pointer;
+        }
+    }
+}
+.chat-area .chat-list{
+	border-top: 1px solid #cfdae1;
+	border-bottom: 1px solid #cfdae1;
+	position: absolute;
+	left: 0;
+	top: 35px;
+	right: 0;
+	bottom: 44px;
+	overflow-y: auto;
+	outline: none;
+
+    & > div > .jspPane {
+        margin-left: 0 !important;
+    }
+}
+.chat-area ul{
+	margin-right: -4px;
+}
+.chat-area ul > li{
+	border-top: 1px solid #cfdae1;
+	overflow: hidden;
+	position: relative;
+}
+.chat-area ul > li.me{
+	background: #e4eaee;
+}
+.chat-area ul > li:first-child{
+	border-top: none;
+}
+.chat-area ul .name{
+	padding: 14px;
+	text-align: right;
+	width: 100px;
+	float: left;
+	color: #5d7185;
+	font-weight: bold;
+	line-height: 20px;
+}
+.chat-area ul .message{
+	padding: 14px;
+	border-left: 1px solid #cfdae1;
+	float: left;
+	color: #333f4d;
+	width: 214px;
+}
+.chat-area ul .message > p{
+	line-height: 20px;
+}
+.chat-area ul .message > p > .blue-label{
+	background: #6ea0ff;
+	color: #fff;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+.chat-area ul .message .msg-time{
+	position: absolute;
+	top:16px;
+	right: 15px;
+	color: #738ba3;
+	font-size: 9px;
+}
+.input-area{
+	background: #e4eaee;
+	padding: 6px;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-top: 1px solid #cfdae1;
+}
+.input-area .input-wrapper{
+	background: #fff;
+	border: 1px solid #cfdae1;
+	border-radius: 5px;
+	overflow: hidden;
+	float: left;
+}
+.input-area .input-wrapper input{
+	height: 30px;
+	line-height: 30px;
+	border: 0;
+	margin: 0;
+	padding: 0 10px;
+	outline: none;
+	color: #5D7185;
+	min-width: 271px;
+}
+.input-area .input-wrapper i{
+	font-size: 18px;
+	color: #a0b4c0;
+	margin-right: 10px;
+  margin-top:8px;
+	cursor: pointer;
+}
+.input-area > input{
+	background: #a0b4c0;
+	border: none;
+  letter-spacing:1px;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 4px;
+	float:right;
+	height: 36px;
+	line-height: 30px;
+	cursor: pointer;
+	font-family: 'Open Sans', Arial, sans-serif;
+   outline: none;
+}
+.right-tabs{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	border-left: 1px solid #cfdae1;
+	border-top: 1px solid #cfdae1;
+	width: 175px;
+}
+.right-tabs > ul.tabs{
+	overflow: hidden;
+}
+.right-tabs > ul.tabs > li{
+	float: left;
+	width: 33.3%;
+	text-align: center;
+	border-bottom: 1px solid #cfdae1;
+}
+.right-tabs > ul.tabs > li > a{
+	border-left: 1px solid #cfdae1;
+	color: #72a3ff;
+	display: block;
+	background: #eef2f8;
+	padding: 8px 0;
+  transition: background 0.2s linear;
+}
+
+.right-tabs > ul.tabs > li > a:hover{
+  background: #DDE5F1;
+}
+
+.right-tabs > ul.tabs > li.active{
+	border-bottom: none;
+}
+.right-tabs > ul.tabs > li.active > a{
+	background: #fff;
+	color: #c3ccd3;
+}
+.right-tabs > ul.tabs > li:first-child > a{
+	border-left: none;
+}
+.right-tabs > ul.tabs > li > a >i{
+	font-size: 18px
+}
+ul.tabs-container{
+	padding: 10px;
+	color: #6e7f91;
+}
+.right-tabs > .fa-cog{
+	position: absolute;
+	bottom: 14px;
+	right: 14px;
+	color: #a0b4c0;
+	font-size: 18px;
+	cursor: pointer;
+}
+.member-list > li{
+	padding: 5px 0;
+}
+.member-list > li .status{
+	margin: 0 10px 0 0;
+	font-size: 14px;
+}
+.member-list > li .status.online{
+	color: #82cf85;
+}
+.member-list > li .status.idle{
+	color: #ffac69;
+}
+.member-list > li .status.offline{
+	color: #f57e7d;
+}
+.member-list > li .time{
+	float: right;
+	font-size: 9px;
+	margin-top: 4px;
+}
+.my-account{
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 29px;
+	padding: 8px;
+	background: #445166;
+
+  > .image{
+    width: 30px;
+    height: 30px;
+    float: left;
+    position: relative;
+
+    > i{
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+
+    > img{
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+    }
+  }
+
+  .name{
+    color: #fff;
+    font-weight: bold;
+    margin-left: 10px;
+    float: left;
+    cursor: pointer;
+
+    .availability{
+      display: block;
+      font-weight: normal;
+      color: #8391a1;
+      margin-top: 5px;
+    }
+  }
+}
+.jspDrag{
+	background: #A1AFC4;
+	border-radius: 10px;
+}
+.jspVerticalBar{
+	width: 7px;
+}
+
+  </style>
 </head>
+
 <body>
-<div class="grid-x grid-padding-x">
-  <div class="columns small-12 large-12">
-    <img src="images/logo.jpg" alt="My Image">
-    <a class="button2" href="admin_cititori.html" style="text-align: center; ">Cititori</a>
 
-    <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
-    <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
-    <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
-    <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
-    <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
-    <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
+<div class="button-container">
+  <a class="button" href="/">Log out</a>
+</div>
 
-    <a class="button2" href="index.html" style="text-align: center; ">Deconectare</a>
+<div class="wrapper">
 
+  <div class="store">
+    <div id="headerImage">
+      <img src="images/logo2.jpg" />
+
+    </div>
 
 
+    <header id="homeSection">
+      <nav>
+        <a href="admin_pagina_principala.html">Acasa</a>
+        <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
+        <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
+        <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
+        <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
+        <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
+        <a class="button2" href="admin_mesaje.html" style="text-align: center; ">Mesaje</a>
+
+
+        <hr style="color: red; margin: 20px;">
+      </nav>
+    </header>
   </div>
-</div>
-</div>
-<br><br><br>
 
-<div class="column small-12 large-12">
+  <section id="aboutSection">
 
 
-  <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
-  <a href="#" class="button"  style="background-color: #33b4c2; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
-
-</div>
-<br><br><br>
-
-
-<div class="grid-x grid-padding-x">
-
-  <div class="grid-frame">
-
-    <div class="grid-block collapse medium-9 large-9 vertical">
-
-      <div class="grid-block">
-        <div class="grid-block small-12 medium-9 vertical">
-          <div class="grid-content">
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Kevin Gnapoor</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Trang Pak</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Coach Carr</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Trang Pak</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
-            <h4><img src="http://placehold.it/30x30"> Cady Heron</h4>
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat.</p>
-            <hr />
+    <div class="wrapper">
+      <div class="container">
+        <div class="left">
+          <div class="top">
+            <input type="text" placeholder="Search" />
+            <a href="javascript:;" class="search"></a>
           </div>
-          <div class="message-input grid-content collapse shrink">
-              <span class="inline-label">
-                <input type="text" placeholder="Message">
-                <a href="#" class="button">Send</a>
-              </span>
+          <div class="manage-users">
+            <h3>Gestionare utilizatori</h3>
+            <br>
+
+            <form id="addUserForm">
+              <input type="email" id="userEmailToAdd" name="email" placeholder="Email utilizator pentru adăugare" required>
+
+              <select id="conversatieSelect" name="conversatieId">
+              </select>
+              <button type="button" id="addUserButton">Adaugă Utilizator</button>
+
+            </form>
+
+
+            <br><br> <br><br> <br><br>
+
+            <form id="removeUserForm">
+              <input type="email" id="userEmailToRemove" placeholder="Email utilizator pentru eliminare" required>
+              <button type="button" id="removeUserButton">Elimină Utilizator</button>
+            </form>
+            <br><br> <br><br> <br><br> <br><br>
+            <h2 style=" font-weight: bold;font-size: 20px;">Creeaza o conversatie noua!</h2><br><br>
+            <form id="createConversatieForm">
+              <label for="titlu" style=" text-align: left;display: block;">Titlu:</label><br> <br><br>
+              <input type="text" id="titlu" name="titlu" placeholder="Titlu conversație" required>
+              <br><br> <br><br> <br><br>
+              <button type="button" class="btn btn-primary" id="createConversatieButton" style="background-color:#8a6f3a">Crează conversație nouă</button>
+            </form>
           </div>
-        </div>
-        <div class="grid-content medium-3 show-for-medium message-side-bar">
-          <section class="block-list">
-            <header>In This Room</header>
-            <ul>
-              <li><a href="#">Cady Heron</a></li>
-              <li><a href="#">Kevin Gnapoor</a></li>
-              <li><a href="#">Trang Pak</a></li>
-              <li><a href="#">Coach Carr</a></li>
-              <li><a href="#">Regina George</a></li>
+          <br><br>
+          <ul class="people">
+            <ul class="people">
+              <th:block th:each="reader : ${readers}">
+                <li class="person" th:data-chat="${reader.id}">
+                  <img th:src="@{${reader.photoUrl}}" alt="" />
+                  <span class="name" th:text="${reader.nume}">Nume Cititor</span>
+                  <span class="preview">Mesaj recent...</span>
+                </li>
+              </th:block>
             </ul>
-          </section>
+
+
+          </ul>
         </div>
+        <div class="right">
+          <div class="top"><span>To: <span class="name"></span></span></div>
+          <div id="successMessage" class="alert alert-success" style="display:none; position: fixed; top: 10px; right: 10px; z-index: 1000;">
+            Utilizator adăugat cu succes!
+          </div>
+          <div id="conversatieMessage" class="alert alert-success" style="display:none; position: fixed; top: 10px; right: 10px; z-index: 1000;">
+            Conversație creată cu succes!
+          </div>
+        </div>
+
+
+      </div>
+      <div id="removeSuccessMessage" class="alert alert-success" style="display:none; position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        Utilizator eliminat cu succes!
       </div>
     </div>
 
-  </div>
 
 
 
+    <br>
+
+
+
+  </section>
+
+  <section id="genreSection">
+    <article>
+
+
+
+
+    </article>
+  </section>
+
+  <section id="gallerySection">
+    <article>
+
+
+
+    </article>
+  </section>
+
+  <section id="contactSection">
+    <article>
+
+    </article>
+  </section>
 
 </div>
+<script>
+//Încărcarea Convorbirilor la Încărcarea Paginii
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/conversatii')
+    .then(response => {
+        console.log(response);
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        const selectElement = document.getElementById('conversatieSelect');
+        data.forEach(conversatie => {
+            const option = new Option(conversatie.titlu, conversatie.id);
+            selectElement.add(option);
+        });
+    })
+    .catch(error => console.error('Eroare la încărcarea conversațiilor:', error));
+});
 
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/vendor/what-input.js"></script>
-<script src="js/vendor/foundation.js"></script>
-<script src="js/app.js"></script>
+
+
+
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  // Când pagina este complet încărcată, se execută acest cod
+
+    // Face o cerere către server pentru a obține toate conversațiile
+            fetch('/api/conversatii')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('conversatieSelect');
+// Iterează prin fiecare conversație primită și adaugă opțiuni în elementul <select>
+                data.forEach(conversatie => {
+                    const option = new Option(conversatie.titlu, conversatie.id);
+                    selectElement.add(option);
+                });
+            })
+            .catch(error => console.error('Eroare la încărcarea conversațiilor:', error));
+
+          //Crearea unei conversatii noi
+
+            document.getElementById('createConversatieButton').addEventListener('click', function() {
+                const titlu = document.getElementById('titlu').value;
+                fetch('/api/conversatii/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ titlu: titlu })
+                })
+                .then(response => {
+                    if (response.ok) {
+                    showSuccessMessage('conversatieMessage');
+                        return response.json();
+                    }
+                    throw new Error('Eroare la crearea conversației');
+                })
+                .then(data => {
+                    console.log('Conversație creată cu succes:', data);
+                })
+                .catch(error => console.error('Eroare:', error));
+            });
+
+    document.getElementById('removeUserButton').addEventListener('click', removeUserFromConversatie);
+
+// Handler pentru adăugarea unui utilizator
+document.getElementById('addUserButton').addEventListener('click', addUserToConversatie);
+
+function addUserToConversatie() {
+    const email = document.getElementById('userEmailToAdd').value;
+    // Aici se folosește parseInt pentru a converti valoarea la un număr întreg
+    const conversatieId = parseInt(document.getElementById('conversatieSelect').value, 10);
+
+    // Verific dacă conversatieId este un număr valid întreg
+    if (isNaN(conversatieId)) {
+        console.error('ConversatieId este invalid!');
+        return; // Ieșire din funcție dacă ID-ul nu este valid
+    }
+
+    fetch('/api/addUserToConversatie', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            conversatieId: conversatieId
+        })
+    })
+    .then(response => {
+        if(response.ok) {
+
+        showSuccessMessage('successMessage');
+            return response.json();
+        }
+        throw new Error('Request failed');
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+ // Funcție pentru afișarea unui mesaj de succes temporar
+    function showSuccessMessage(elementId) {
+        const messageElement = document.getElementById(elementId);
+        messageElement.style.display = 'block';
+        setTimeout(() => {
+            messageElement.style.display = 'none';
+        }, 3000);
+    }
+
+     // Funcție pentru eliminarea unui utilizator dintr-o conversație
+    function removeUserFromConversatie() {
+        const email = document.getElementById('userEmailToRemove').value;
+            const conversatieId = parseInt(document.getElementById('conversatieSelect').value, 10);
+
+// Verifică dacă ID-ul conversației este valid
+        if (isNaN(conversatieId)) {
+            console.error('ConversatieId este invalid!');
+            return;
+        }
+        // Face o cerere POST către server pentru a elimina utilizatorul din conversație
+
+        fetch('/api/removeUserFromConversatie', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                conversatieId: conversatieId
+            })
+        })
+        .then(response => {
+            console.log('Response:', response);
+            if(response.ok) {
+                showSuccessMessage('removeSuccessMessage');
+                return response.json();
+            }
+            throw new Error('Request failed');
+        })
+        .then(data => {
+            console.log('User removed successfully:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
+});
+</script>
+
+
+
+<script th:inline="javascript">
+//Conectarea la WebSocket pentru Chat:
+  /*<![CDATA[*/
+  function connect() {
+      var socket = new SockJS('/chat'); // Verifică calea WebSocket configurată în Spring
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function(frame) {
+          console.log('Conectat: ' + frame);
+          // Abonare la un topic specific pentru a primi mesaje
+          stompClient.subscribe('/topic/public', function(mesaj) { // Ajustează calea conform configurației serverului
+              showMessage(JSON.parse(mesaj.body).content);
+          });
+      });
+  }
+  window.addEventListener("load", connect);
+  /*]]>*/
+</script>
+
+<script>
+function startSupportChat() {
+    fetch('/start-support-chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: 'currentUserId' }) // Replace with the current user's ID
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Support chat started with conversation ID:', data.conversationId);
+        alert('You are now chatting with support!');
+    })
+    .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+    });
+}
+</script>
+<script>document.querySelector('.chat[data-chat=person2]').classList.add('active-chat')
+document.querySelector('.person[data-chat=person2]').classList.add('active')
+
+let friends = {
+    list: document.querySelector('ul.people'),
+    all: document.querySelectorAll('.left .person'),
+    name: ''
+  },
+  chat = {
+    container: document.querySelector('.container .right'),
+    current: null,
+    person: null,
+    name: document.querySelector('.container .right .top .name')
+  }
+
+friends.all.forEach(f => {
+  f.addEventListener('mousedown', () => {
+    f.classList.contains('active') || setAciveChat(f)
+  })
+});
+
+function setAciveChat(f) {
+  friends.list.querySelector('.active').classList.remove('active')
+  f.classList.add('active')
+  chat.current = chat.container.querySelector('.active-chat')
+  chat.person = f.getAttribute('data-chat')
+  chat.current.classList.remove('active-chat')
+  chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat')
+  friends.name = f.querySelector('.name').innerText
+  chat.name.innerHTML = friends.name
+}
+</script>
+
+
+
+
+
+<script>document.addEventListener('DOMContentLoaded', function() {
+</script>
+<script th:inline="javascript">
+//Conectarea la WebSocket pentru Chat:
+        /*<![CDATA[*/
+        var stompClient = null;
+
+        function connect() {
+            var socket = new SockJS('/chat');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log('Conectat: ' + frame);
+                stompClient.subscribe('/topic/mesaje', function(mesaj) {
+                    showMessage(JSON.parse(mesaj.body).content);
+                });
+            });
+        }
+
+        function sendMessage() {
+            var messageContent = document.getElementById('messageInput').value.trim();
+            if(messageContent && stompClient) {
+                var chatMessage = {
+                    sender: "NumeUtilizator", // Ajustează conform necesităților
+                    content: messageContent,
+                    type: 'CHAT'
+                };
+                stompClient.send("/app/mesaj", {}, JSON.stringify(chatMessage));
+                document.getElementById('messageInput').value = '';
+            }
+        }
+
+        function showMessage(message) {
+            var messageArea = document.getElementById('messageArea');
+            var messageElement = document.createElement('div');
+            messageElement.innerText = message;
+            messageArea.appendChild(messageElement);
+        }
+
+        connect();
+        /*]]>*/
+    </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>jQuery(document).ready(function ($) {
+
+  $('#checkbox').change(function(){
+    setInterval(function () {
+        moveRight();
+    }, 3000);
+  });
+
+	var slideCount = $('#slider ul li').length;
+	var slideWidth = $('#slider ul li').width();
+	var slideHeight = $('#slider ul li').height();
+	var sliderUlWidth = slideCount * slideWidth;
+
+	$('#slider').css({ width: slideWidth, height: slideHeight });
+
+	$('#slider ul').css({ width: sliderUlWidth, marginLeft: - slideWidth });
+
+    $('#slider ul li:last-child').prependTo('#slider ul');
+
+    function moveLeft() {
+        $('#slider ul').animate({
+            left: + slideWidth
+        }, 200, function () {
+            $('#slider ul li:last-child').prependTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    function moveRight() {
+        $('#slider ul').animate({
+            left: - slideWidth
+        }, 200, function () {
+            $('#slider ul li:first-child').appendTo('#slider ul');
+            $('#slider ul').css('left', '');
+        });
+    };
+
+    $('a.control_prev').click(function () {
+        moveLeft();
+    });
+
+    $('a.control_next').click(function () {
+        moveRight();
+    });
+
+});
+</script>
+
+<script>
+$(function(){
+	$('.chat-area > .chat-list').jScrollPane({
+		mouseWheelSpeed: 30
+	});
+});
+</script>
+<script>document.querySelector('.chat[data-chat=person2]').classList.add('active-chat')
+document.querySelector('.person[data-chat=person2]').classList.add('active')
+
+let friends = {
+    list: document.querySelector('ul.people'),
+    all: document.querySelectorAll('.left .person'),
+    name: ''
+  },
+  chat = {
+    container: document.querySelector('.container .right'),
+    current: null,
+    person: null,
+    name: document.querySelector('.container .right .top .name')
+  }
+
+friends.all.forEach(f => {
+  f.addEventListener('mousedown', () => {
+    f.classList.contains('active') || setAciveChat(f)
+  })
+});
+
+function setAciveChat(f) {
+  friends.list.querySelector('.active').classList.remove('active')
+  f.classList.add('active')
+  chat.current = chat.container.querySelector('.active-chat')
+  chat.person = f.getAttribute('data-chat')
+  chat.current.classList.remove('active-chat')
+  chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat')
+  friends.name = f.querySelector('.name').innerText
+  chat.name.innerHTML = friends.name
+}</script>
+
 </body>
+
 </html>
-
-

@@ -791,8 +791,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -800,9 +799,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -811,11 +808,11 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
     <header id="homeSection">
       <nav>
         <a th:href="@{/bibliotecar_pagina_principala}">Carti</a>
-        <a class="button2" th:href="admin_evenimente.html" style="text-align: center; ">Imprumuturi</a>
-        <a class="button1"  th:href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Evenimente</a>
-        <a class="button2"  th:href="admin_bibliotecari.html" style="text-align: center; ">Sali biblioteca</a>
-        <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Mesaje</a>
-        <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Setari</a>
+        <a class="button2" th:href="bibliotecar_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
+        <a class="button1"  th:href="bibliotecar_evenimente.html"; style="text-align: center;font-weight:bold   ">Evenimente</a>
+        <a class="button2"  th:href="bibliotecar_sali.html" style="text-align: center; ">Sali biblioteca</a>
+        <a class="button2" th:href="bibliotecar_mesaje.html" style="text-align: center;">Mesaje</a>
+        <a class="button2" th:href="bibliotecar_setari_profil" style="text-align: center;">Setari</a>
 
 
 
@@ -851,7 +848,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
         </tr>
 
-        <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
         <tr th:each="eveniment : ${evenimente}">
           <td th:text="${eveniment.id}">ID</td>
           <td th:text="${eveniment.nume}">Nume</td>
@@ -866,10 +862,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
           <td>
 
-            <!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/edit/{id}(id=${carti.id})}" class="btn btn-primary">Editare</a>-->
             <a th:if="${evenimente != null}" th:href="@{/bibliotecar_evenimente/edit/{id}(id=${eveniment.id})}" class="btn btn-primary"  style="background-color: #F3AC64;">Editare</a>
-            <!--      <a th:if="${carti != null}"  th:href="@{/admin_carti/{id}(id=${carti.id})}" class="btn btn-danger">Stergere</a>-->
-            <!--      <a th:each="carte : ${carti}" th:href="@{/admin_carti/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>-->
             <a  th:if="${evenimente != null}"  th:href="@{/bibliotecar_evenimente/{id}(id=${eveniment.id})}" class="btn btn-danger">Stergere</a>
 
           </td>

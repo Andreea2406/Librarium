@@ -23,25 +23,34 @@ import java.util.Set;
 public class AdminBibliotecariController {
     private BibliotecariService bibliotecariService;
     private BibliotecariRepository bibliotecariRepository;
-private UsersService usersService;
-private RolRepository rolRepository;
+    private UsersService usersService;
+    private RolRepository rolRepository;
+
     @Autowired
     public AdminBibliotecariController(BibliotecariService bibliotecariService, UsersService usersService, RolRepository rolRepository) {
         this.bibliotecariService = bibliotecariService;
-        this.usersService=usersService;
-        this.rolRepository=rolRepository;
+        this.usersService = usersService;
+        this.rolRepository = rolRepository;
     }
+
     @GetMapping("/admin_bibliotecari.html")
     public String afiseazaBibliotecarii(Model model) {
         List<Utilizatori> bibliotecari = bibliotecariService.getAllBibliotecari();
         model.addAttribute("bibliotecari", bibliotecari);
         return "admin_bibliotecari";
     }
+
+    @GetMapping("/admin_mesaje.html")
+    public String afiseazaMesaje() {
+        return "admin_mesaje";
+    }
+
     @GetMapping("/admin_editeaza_bibliotecar/{id}")
     public String afiseazaFormularEditare(@PathParam("id") Long id, Model model) {
 
         return "admin_editeaza_bibliotecar";
     }
+
     @GetMapping("admin_bibliotecari/edit/{id}")
     public String read(@PathVariable("id") Integer id, Model model) {
         Utilizatori utilizatori = usersService.getStudentById(id);
@@ -72,6 +81,7 @@ private RolRepository rolRepository;
 
         return "admin_editeaza_bibliotecar";
     }
+
     @PostMapping("/admin_bibliotecari/{id}")
     public String actualizeazaUtilizator(@PathVariable Integer id,
                                          @ModelAttribute("utilizatori") Utilizatori utilizator,
@@ -83,7 +93,7 @@ private RolRepository rolRepository;
         if (existingUtilizator != null) {
             existingUtilizator.setNume(utilizator.getNume());
             existingUtilizator.setPrenume(utilizator.getPrenume());
-            existingUtilizator.setCNP(utilizator.getCNP());
+            existingUtilizator.setVarsta(utilizator.getVarsta());
             existingUtilizator.setTelefon(utilizator.getTelefon());
             existingUtilizator.setEmail(utilizator.getEmail());
             existingUtilizator.setStrada(utilizator.getStrada());
@@ -109,15 +119,30 @@ private RolRepository rolRepository;
             Utilizatori updatedUtilizator = usersService.updateUtilizator(existingUtilizator);
 
             if (updatedUtilizator != null) {
-                return "redirect:/admin_bibliotecari";
+                return "redirect:/admin_bibliotecari.html";
             }
         }
 
         return "error_page";
     }
+
+    @GetMapping("/admin_bibliotecari/cautare")
+    public String cautaUtilizatori(@RequestParam("nume") String nume, Model model) {
+
+        List<Utilizatori> bibliotecari = usersService.searchUsersByName(nume);
+        model.addAttribute("bibliotecari", bibliotecari);
+        model.addAttribute("cautareActiva", true);
+
+        return "admin_bibliotecari.html";
+    }
     @GetMapping("/admin_bibliotecari/{id}")
-    public String deleteUser(@PathVariable Integer id){
-        usersService.deleteUserById(id);
-        return "redirect:/admin_bibliotecari";
+    public String deleteUser(@PathVariable Integer id) {
+        Utilizatori utilizatori = usersService.deleteUserById(id);
+        if (utilizatori != null) {
+            return "redirect:/admin_bibliotecari.html";
+        } else {
+            return "error_page";
+
+        }
     }
 }

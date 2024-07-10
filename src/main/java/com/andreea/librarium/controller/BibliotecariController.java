@@ -9,12 +9,11 @@ import com.andreea.librarium.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -65,24 +64,56 @@ public class BibliotecariController {
         this.userSession=userSession;
         this.usersService=usersService;
     }
+
+    @GetMapping("/bibliotecar_mesaje.html")
+    public String returnBibliotecarMesaje(Model model) {
+        Integer idUtilizatorLogat = userSession.getUserId();
+
+        model.addAttribute("userId",idUtilizatorLogat);
+
+        return "bibliotecar_mesaje";
+    }
+
     @GetMapping("/bibliotecar_pagina_principala")
-    public String afiseazaCarti(Model model){
+    public String afiseazaCarti(Model model,@RequestParam(value = "searchTerm", required = false) String searchTerm){
         List<Carti> carti = cartiService.getAllBooks();
+        Integer idUtilizatorLogat = userSession.getUserId();
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            carti = cartiService.searchBooksByTerm(searchTerm);
+            if (carti.isEmpty()) {
+                model.addAttribute("errorMessage", "Nu există cărți care să corespundă interogării tale.");
+            }
+        } else {
+            carti = cartiService.getAllBooks();
+        }
+        model.addAttribute("userId",idUtilizatorLogat);
         model.addAttribute("carti", carti);
+        model.addAttribute("searchTerm", searchTerm);
+
         return "bibliotecar_pagina_principala";
 
+    }
+    @GetMapping("/bibliotecar_pagina_principala/search")
+    public String adminSearchBooks(@RequestParam("searchTerm") String searchTerm, Model model) {
+        List<Carti> carti = cartiService.searchBooksByTerm(searchTerm);
+        if (carti.isEmpty()) {
+            model.addAttribute("errorMessage", "Nu există cărți care să corespundă interogării tale.");
+        }
+        model.addAttribute("carti", carti);
+        model.addAttribute("searchTerm", searchTerm);
+        return "bibliotecar_pagina_principala";
     }
     @GetMapping("/bibliotecar_adauga_carte")
     public String returnBibliotecarAdaugaCarte(Model model) {
         model.addAttribute("carte", new Carti());
-        return "bibliotecar_adauga_carte"; // Returnați pagina cu formularul de adăugare a cărții
+        return "bibliotecar_adauga_carte";
     }
     @PostMapping("/adaugaCarte")
     public String addCarte(@ModelAttribute Carti carte) {
         Carti newCarte = cartiService.saveCarte(carte);
 
         if (newCarte != null) {
-            return "bibliotecar_pagina_principala";
+            return "redirect:/bibliotecar_pagina_principala";
         } else {
             return "error_page";
         }
@@ -90,7 +121,6 @@ public class BibliotecariController {
     @GetMapping("bibliotecar_pagina_principala/edit/{id}")
     public String read(@PathVariable("id") Integer id, Model model)
     {
-//        Carti carti=cartiService.getBookById(id);
         Carti carti = cartiService.getBookById(id);
 
         model.addAttribute("carti", carti);
@@ -100,18 +130,14 @@ public class BibliotecariController {
     public String afiseazaFormularEditare(@PathParam("id") Long id, Model model) {
         return "bibliotecar_editeaza_carte";
     }
-//    @PostMapping("/bibliotecar_pagina_principala/{id}")
 @PostMapping("/bibliotecar_editeaza_carte/{id}")
 
     public String actualizareCarte(@PathVariable Integer id, @ModelAttribute("carti") Carti carti, Model model) {
-    System.out.println("aici");
 
     Carti existingCarte=cartiService.getBookById(id);
-//        Utilizatori existingUtilizator = utilizatoriRepository.getById(Long.valueOf(id));
 
 
         if (existingCarte != null) {
-            System.out.println("aici");
             existingCarte.setTitlu(carti.getTitlu());
             existingCarte.setAutor(carti.getAutor());
             existingCarte.setCategorie(carti.getCategorie());
@@ -130,10 +156,8 @@ public class BibliotecariController {
             Carti updatedCarte=cartiService.updateCarte(existingCarte);
 
             if (updatedCarte != null) {
-//                return "admin_cititori";
                 return "redirect:/bibliotecar_pagina_principala";
 
-//                return "bibliotecar_pagina_principala";
 
             }
         }
@@ -145,7 +169,6 @@ public class BibliotecariController {
         cartiService.deleteCarteById(id);
         return "redirect:/bibliotecar_pagina_principala";
     }
-    ////Evenimente
 
     @GetMapping("/bibliotecar_evenimente.html")
     public String afiseazaEvenimente(Model model) {
@@ -157,14 +180,13 @@ public class BibliotecariController {
     @GetMapping("/bibliotecar_adauga_evenimente")
     public String returnAdaugaEvenimente(Model model) {
         model.addAttribute("eveniment", new Evenimente());
-        return "bibliotecar_adauga_evenimente"; // Returnați pagina cu formularul de adăugare a cărții
+        return "bibliotecar_adauga_evenimente";
     }
     @PostMapping("/adaugaEveniment")
     public String addEveniment(@ModelAttribute Evenimente evenimente){
         Evenimente newEveniment=evenimenteService.saveEveniment(evenimente);
         if (newEveniment != null) {
             return "redirect:/bibliotecar_evenimente.html";
-//            return "bibliotecar_evenimente";
         } else {
             return "error_page";
         }
@@ -192,9 +214,8 @@ public class BibliotecariController {
 
             Evenimente updatedEveniment=evenimenteService.updateEveniment(existingEveniment);
             if(updatedEveniment!=null){
-                return "redirect:/bibliotecar_evenimente";
+                return "redirect:/bibliotecar_evenimente.html";
 
-//                return "bibliotecar_evenimente";
             }
         }
         return "error_page";
@@ -204,17 +225,48 @@ public class BibliotecariController {
         evenimenteService.deleteEvenimentById(id);
         return "redirect:/bibliotecar_evenimente.html";
     }
-    //Imprumuturii
+
+
+
+
+
+
+
 
     @GetMapping("/bibliotecar_imprumuturi.html")
     public String afiseazaImprumuturi(Model model) {
         List<Imprumuturi> imprumuturi=imprumuturiService.getAllImprumuturi();
         model.addAttribute("imprumuturi",imprumuturi);
 
+
         return "bibliotecar_imprumuturi";
     }
+    @PostMapping("/finalizeLoan/{id}")
+    public String finalizeLoan(@PathVariable Integer id) {
+        Imprumuturi imprumut = imprumuturiService.getImprumutById(id);
+        if (imprumut != null) {
+            imprumut.setIsFinalizat(true);
+            imprumuturiService.saveImprumut(imprumut);
+        }
+        return "redirect:/bibliotecar_imprumuturi.html";
+    }
 
-    //Sali
+    @PostMapping("/extendLoan/{id}")
+    public String extendLoan(@PathVariable Integer id) {
+        Imprumuturi imprumut = imprumuturiService.getImprumutById(id);
+        if (imprumut != null) {
+            Instant newReturnDate = imprumut.getDataOraReturn().plus(14, ChronoUnit.DAYS);
+            imprumut.setDataOraReturn(newReturnDate);
+            imprumuturiService.saveImprumut(imprumut);
+        }
+        return "redirect:/bibliotecar_imprumuturi.html";
+    }
+
+
+
+
+
+
     @GetMapping("/bibliotecar_sali.html")
     public String afiseaa(Model model){
         List<SaliBiblioteca> saliBiblioteca=saliService.getAll();
@@ -224,7 +276,7 @@ public class BibliotecariController {
     @GetMapping("/bibliotecar_adauga_sala")
     public String returnBibliotecarAdaugaSala(Model model) {
         model.addAttribute("sala", new SaliBiblioteca());
-        return "bibliotecar_adauga_sala"; // Returnați pagina cu formularul de adăugare a cărții
+        return "bibliotecar_adauga_sala";
     }
     @PostMapping("/adaugaSala")
     public String addSala(@ModelAttribute SaliBiblioteca saliBiblioteca) {
@@ -233,7 +285,6 @@ public class BibliotecariController {
         if (newSala != null) {
             return "redirect:/bibliotecar_sali.html";
 
-//            return "bibliotecar_sali_biblioteca";
         } else {
             return "error_page";
         }
@@ -248,7 +299,6 @@ public class BibliotecariController {
     }
     @GetMapping("/bibliotecar_editeaza_sala/{id}")
     public String afiseazaFormularEditareSala(@PathParam("id") Long id, Model model) {
-        System.out.println("aici");
         return "bibliotecar_editeaza_sala";
     }
     @PostMapping("/bibliotecar_sali/{id}")
@@ -306,7 +356,6 @@ public class BibliotecariController {
             return "redirect:/login";
         }
 
-        // Asigurați-vă că actualizați doar utilizatorul curent logat
         Utilizatori existingUtilizator = usersService.getStudentById(idUtilizatorLogat);
         if (existingUtilizator == null) {
             return "pagina_eroare";
@@ -314,7 +363,7 @@ public class BibliotecariController {
         if (existingUtilizator != null) {
             existingUtilizator.setNume(utilizatorForm.getNume());
             existingUtilizator.setPrenume(utilizatorForm.getPrenume());
-            existingUtilizator.setCNP(utilizatorForm.getCNP());
+            existingUtilizator.setVarsta(utilizatorForm.getVarsta());
             existingUtilizator.setTelefon(utilizatorForm.getTelefon());
             existingUtilizator.setEmail(utilizatorForm.getEmail());
             existingUtilizator.setStrada(utilizatorForm.getStrada());
@@ -329,9 +378,8 @@ public class BibliotecariController {
             Utilizatori updatedUtilizator = usersService.updateUtilizator(existingUtilizator);
 
         }
-        // Actualizați detalii utilizator și salvați în baza de date
-//        usersService.updateUtilizator(utilizatorForm);
-        return "redirect:/bibliotecar_setari_profil"; // Redirecționare la pagina de profil după actualizare
+
+        return "redirect:/bibliotecar_setari_profil";
     }
 
 }

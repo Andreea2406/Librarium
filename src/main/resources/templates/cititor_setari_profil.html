@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Evenimente</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="mystyles.css">
   <link rel="stylesheet" href="myjs.js">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -219,14 +219,33 @@ h5 {
     height:60px;
 
 }
+.book-container {
+    flex: 1 1 calc(25% - 20px); /* 25% width minus the gap */
+    box-sizing: border-box;
+          max-width: calc(25% - 20px); /* Ensures the book containers don't exceed the available width */
+
+}
+.book-container img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
 .container3 {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+
+<!--    justify-content: center;-->
+<!--    align-items: center;-->
     min-height: 100vh;
     width:999px;
 
 }
+
 
 ul.box,
 ul.box2,
@@ -260,6 +279,8 @@ ul.box li:before,
 ul.box li:after,
 ul.box2 li:after,
 ul.box2 li:before,
+ul.box3 li:before,
+ul.box3 li:after,
 ul.box4 li:after {
     content: '';
     z-index: -1;
@@ -370,17 +391,14 @@ ul.box4 li:after {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -391,11 +409,13 @@ ul.box4 li:after {
         <a href="cititor_pagina_principala.html">Acasa</a>
         <a href="cititor_evenimente.html">Evenimente</a>
         <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_imprumuturi.html">Rezervariile mele</a>
+
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
+
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -410,13 +430,11 @@ ul.box4 li:after {
   <section id="evSection">
     <div class="div2" style="border-color: #cc8800; border-width:2px; border-style:solid; border-radius: 50px; height: 720px; width:800px">
       <h3>Date personale</h3>
-<!--      <div th:if="${utilizatori}!=null and !utilizatori.isEmpty()}">-->
-<!--      <div class="div2" th:each="utilizator : ${utilizatori}">-->
 
       <h4>Nume: <span th:text="${utilizator.nume}"></span></h4>
       <h4>Prenume: <span th:text="${utilizator.prenume}"></span></h4>
       <h4>Email: <span th:text="${utilizator.email}"></span></h4>
-      <h4>CNP: <span th:text="${utilizator.CNP}"></span></h4>
+      <h4>Varsta: <span th:text="${utilizator.varsta}"></span></h4>
       <h4>Telefon: <span th:text="${utilizator.telefon}"></span></h4>
       <h4>Strada: <span th:text="${utilizator.strada}"></span></h4>
       <h4>Oras: <span th:text="${utilizator.oras}"></span></h4>
@@ -441,11 +459,7 @@ ul.box4 li:after {
 
     </div>
 
-    <!--          <button type="submit">Editează</button>-->
 
-    <!-- Adaugă restul câmpurilor aici -->
-<!--    </div>-->
-<!--    </div>-->
   </section>
   <br><br><br>
 
@@ -454,119 +468,17 @@ ul.box4 li:after {
   <section id="aboutSection1">
     <h2>Carti favorite</h2>
     <div class="container3">
-      <ul class="box3" th:if="${cartiFavorite} != null">
-        <li th:each="carteFav : ${cartiFavorite}">
-          <div class="book-container">
-            <img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <h4 th:text="${carteFav.carte.titlu}">Titlul Cărții</h4>
-            <form th:action="@{/elimina_din_favorite/{carteId}(carteId=${carteFav.carte.id})}" method="post">
-              <button type="submit" class="btn btn-danger">Elimină din favorite</button>
-            </form>
-          </div>
-        </li>
-      </ul>
+      <div class="book-container" th:if="${cartiFavorite} != null" th:each="carteFav : ${cartiFavorite}">
+        <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+        <h4 th:text="${carteFav.carte.titlu}">Titlul Cărții</h4>
+        <form th:action="@{/elimina_din_favorite/{carteId}(carteId=${carteFav.carte.id})}" method="post">
+          <button type="submit" class="btn btn-danger">Elimină din favorite</button>
+        </form>
+      </div>
     </div>
   </section>
 </div>
-<section id="genreSection">
-  <div class="div2">
-    <article>
 
-      <div class="container3">
-        <ul class="box3">
-          <li>  <img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-
-          </li>
-
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html"> <h4>Titlu Carte</h4></a><a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-        </ul>
-
-        <ul class="box2">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-        </ul>
-
-
-        <ul class="box4">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-        </ul>
-
-        <ul class="box">
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-          <li><img class="image1" src="images/bookcover.jpg" alt="Image 1">
-            <a href="carte.html">
-              <h4>Titlu Carte<img src="images/heart.png" alt="Heart Icon"></h4>
-
-            </a>
-          </li>
-        </ul>
-      </div>
-
-
-    </article>
-  </div>
-</section>
 
 </div>
 <br><br><br>

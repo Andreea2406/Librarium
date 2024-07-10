@@ -46,26 +46,19 @@ public class RezervareCarteController {
         Integer userId = userSession.getUserId();
         Utilizatori utilizatori = usersService.getUserById(userId);
         if (userId != null && userId != 0) {
-            // Verifică disponibilitatea cărții sau alte condiții specifice pentru rezervare
             Carti carti = cartiService.getBookById(idCarte);
-            // Creează un obiect Rezervare
             RezervariCarti rezervare = new RezervariCarti();
             rezervare.setIdCarte(carti);
             rezervare.setIdUtilizator(utilizatori);
             Instant now = Instant.now();
 
             rezervare.setDataRezervare(now);
-            rezervare.setDataExpirarii( now.plus(3, ChronoUnit.DAYS)); // Exemplu: Starea de așteptare
+            rezervare.setDataExpirarii( now.plus(3, ChronoUnit.DAYS));
             rezervareCarteService.saveRezervareCarte(rezervare);
-            // Salvează înregistrarea Rezervari
 
-            // Poți adăuga un mesaj de succes sau alte acțiuni necesare
-
-            // Redirecționează sau întoarce un răspuns în consecință
-            return "redirect:/cititor_carte.html";
+            return "redirect:/cititor_rezervari_imprumuturi.html";
         } else {
-            // Tratează cazul în care userId nu este setat corect
-            // Poate ar trebui să redirecționezi către o pagină de eroare sau să întorci alt răspuns
+
             return "error_page";
         }
     }

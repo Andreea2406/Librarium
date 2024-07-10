@@ -20,6 +20,14 @@ public class RezervareCarteService {
     public List<RezervariCarti> getRezervariByUserId(Integer idUtilizator) {
         return rezervareCarteRepository.findByIdUtilizator_Id(idUtilizator);
     }
+    public boolean anuleazaRezervare(Integer idRezervare) {
+        try {
+            rezervareCarteRepository.deleteById(idRezervare);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public  void saveRezervareCarte(RezervariCarti rezervariCarti){
         rezervareCarteRepository.save(rezervariCarti);
     }

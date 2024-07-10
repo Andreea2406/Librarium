@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Admin</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -792,8 +792,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 </head>
 <body>
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -801,9 +800,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -811,25 +808,15 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
     <header id="homeSection">
       <nav>
-        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="admin_pagina_principala.html">Acasa</a>
         <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
         <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
         <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
         <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
-        <!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-        <!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-        <!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
-
-
-
         <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
-
-        <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
-        <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
+        <a class="button2" href="admin_mesaje.html" style="text-align: center; ">Mesaje</a>
 
 
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -839,9 +826,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
       <div class="column small-12 large-12">
 
-
-        <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
-        <a href="#" class="button"   style="background-color: #b1533f; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
 
       </div>
       <br><br><br>
@@ -858,7 +842,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
         </tr>
 
-        <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
         <tr th:each="sala : ${sali}">
           <td th:text="${sala.id}">ID</td>
           <td th:text="${sala.nume}">Titilu</td>
@@ -869,12 +852,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
           </td>
 
-          <!--      &lt;!&ndash;      <a th:if="${carti != null}"  th:href="@{/admin_carti/edit/{id}(id=${carti.id})}" class="btn btn-primary">Editare</a>&ndash;&gt;-->
-          <!--      <a th:if="${carti != null}" th:href="@{/admin_carti/edit/{id}(id=${carte.id})}" class="btn btn-primary">Editare</a>-->
-          <!--      &lt;!&ndash;      <a th:if="${carti != null}"  th:href="@{/admin_carti/{id}(id=${carti.id})}" class="btn btn-danger">Stergere</a>&ndash;&gt;-->
-          <!--      <a th:each="carte : ${carti}" th:href="@{/admin_carti/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>-->
-
-          <!--    </td>-->
 
 
 

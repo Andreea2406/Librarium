@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <title>Title</title>
+  <title>Librarium</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
 
@@ -798,8 +798,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
 
 <div class="button-container">
-    <!--  //<button class="button" >Intra in cont</button>-->
-    <a class="button" href="index.html">Log out</a>
+    <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -807,9 +806,7 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 <div class="wrapper">
 
     <div class="store">
-        <!--    <h1>Librarium</h1>-->
         <div id="headerImage">
-            <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
             <img src="images/logo2.jpg" />
 
         </div>
@@ -822,9 +819,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
                 <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
                 <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
-                <!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-                <!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-                <!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
 
 
 
@@ -834,8 +828,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
 
 
-                <!--        <a href="#gallerySection">Gallery</a>-->
-                <!--        <a href="#contactSection">Contact Book Store</a>-->
                 <hr style="color: red; margin: 20px;">
             </nav>
         </header>
@@ -846,18 +838,9 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
             <form th:action="@{/cititor_editare_profil}" th:object="${utilizatorForm}" method="post">
 
 
-                <!--<form th:action="@{/edit/{id}(id=${utilizator.id}}" th:object="${utilizator}" method="post">-->
-                <!--<form th:action="@{'/edit/' + ${utilizator.id}}"-->
-                <!--      th:object="${utilizator}" method="post">-->
-
-                <!--<form th:action="@{'/edit/' }" th:object="${utilizator}" method="post">-->
-                <!--  <form id="editForm" th:object="${utilizator}" method="post">-->
-<!--                <input type="hidden" name="id" th:value="${utilizatori.id}" />-->
-
-                <!--  <input type="hidden" name="id" value="${utilizator.id}" />-->
                 <input type="text" th:field="*{nume}" placeholder="Nume">
                 <input type="text" th:field="*{prenume}" placeholder="Prenume">
-                <input type="text" th:field="*{CNP}" placeholder="CNP">
+                <input type="text" th:field="*{varsta}" placeholder="varsta">
                 <input type="text" th:field="*{telefon}" placeholder="Telefon">
                 <input type="text" th:field="*{email}" placeholder="Email">
                 <input type="text" th:field="*{strada}" placeholder="Strada">
@@ -870,24 +853,9 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
                 <input type="text" th:field="*{ocupatie}" placeholder="Ocupatie">
                 <input type="text" th:field="*{parola}" placeholder="Parola">
 
-                <!--  <label for="role">Rol:</label>-->
-                <!--  <input type="text" id="role" name="rolName"-->
-                <!--         th:if="${not #lists.isEmpty(utilizatori.roluriUtilizatoris)}"-->
-                <!--         th:value="${utilizatori.roluriUtilizatoris[0].idRol.numeRol}" />-->
-                <!--  <label for="role">Rol:</label>-->
-                <!--  <input type="text" th:field="*{utilizatori.roluriUtilizatoris }" placeholder="utilizatori.roluriUtilizatoris">-->
-                /////
-                <!--  <div th:if="${not #lists.isEmpty(utilizatori.roluriUtilizatoris)}">-->
-                <!--    <p>Current Role: <span th:text="${utilizatori.roluriUtilizatoris[0].idRol.numeRol}"></span></p>-->
-                <!--    <label for="role">Change Role:</label>-->
-                <!--    <select id="role" name="rolName" th:field="*{selectedRole}" >-->
-                <!--      <option th:value="'${currentRole}'" th:text="${currentRole}"></option>-->
-                <!--      <option th:value="'${otherRole}'" th:text="${otherRole}" ></option>-->
 
-                <!--      &lt;!&ndash; Add other role options as needed &ndash;&gt;-->
-                <!--    </select>-->
-                <!--  </div>-->
-                //
+
+
 
 
 
@@ -899,11 +867,6 @@ background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
 
     <br><br><br><br><br><br>
 </div>
-<!--th:action="@{'/edit/' + ${utilizator.id}}"-->
-<!--<form th:action="@{/edit/{id}(id=${utilizator.id})}"-->
-<!--      th:object="${utilizator}" method="post">-->
-
-<!--<form th:action="@{/edit}" th:object="${utilizator}" method="post">-->
 
 
 

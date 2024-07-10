@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Evenimente</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="mystyles.css">
   <link rel="stylesheet" href="myjs.js">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -367,17 +367,14 @@ ul.box4 li:after {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -385,14 +382,13 @@ ul.box4 li:after {
 
     <header id="homeSection">
       <nav>
-        <a href="cititor_pagina_principala.html">Acasa</a>
-        <a href="cititor_evenimente.html">Evenimente</a>
-        <a href="cititor_catalog.html">Catalog</a>
-        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
-        <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <a th:href="@{/bibliotecar_pagina_principala}">Carti</a>
+        <a class="button2" th:href="bibliotecar_imprumuturi.html" style="text-align: center; ">Imprumuturi</a>
+        <a class="button1"  th:href="bibliotecar_evenimente.html"; style="text-align: center;font-weight:bold   ">Evenimente</a>
+        <a class="button2"  th:href="bibliotecar_sali.html" style="text-align: center; ">Sali biblioteca</a>
+        <a class="button2" th:href="bibliotecar_mesaje.html" style="text-align: center;">Mesaje</a>
+        <a class="button2" th:href="bibliotecar_setari_profil" style="text-align: center;">Setari</a>
+
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -407,13 +403,11 @@ ul.box4 li:after {
   <section id="evSection">
     <div class="div2" style="border-color: #cc8800; border-width:2px; border-style:solid; border-radius: 50px; height: 720px; width:800px">
       <h3>Date personale</h3>
-      <!--      <div th:if="${utilizatori}!=null and !utilizatori.isEmpty()}">-->
-      <!--      <div class="div2" th:each="utilizator : ${utilizatori}">-->
 
       <h4>Nume: <span th:text="${utilizator.nume}"></span></h4>
       <h4>Prenume: <span th:text="${utilizator.prenume}"></span></h4>
       <h4>Email: <span th:text="${utilizator.email}"></span></h4>
-      <h4>CNP: <span th:text="${utilizator.CNP}"></span></h4>
+      <h4>Varsta: <span th:text="${utilizator.varsta}"></span></h4>
       <h4>Telefon: <span th:text="${utilizator.telefon}"></span></h4>
       <h4>Strada: <span th:text="${utilizator.strada}"></span></h4>
       <h4>Oras: <span th:text="${utilizator.oras}"></span></h4>
@@ -435,9 +429,7 @@ ul.box4 li:after {
 
 
     </div>
-    <!-- Adaugă restul câmpurilor aici -->
-    <!--    </div>-->
-    <!--    </div>-->
+
   </section>
   <br><br><br>
 

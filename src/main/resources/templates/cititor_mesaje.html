@@ -3,11 +3,475 @@
 
 <head>
   <title>Librarium</title>
-  <link rel="stylesheet" href="mystyles.css">
-  <link rel="stylesheet" href="myjs.js">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="js/chat.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stomp-websocket/lib/stomp.min.js"></script>
   <style>
+.chat-container {
+  display: flex;
+   justify-content: center;
+    align-items: center;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+.chat-box {
+    width: 80%; /* Adjust this width as needed */
+    height: 90vh; /* Adjust this height as needed */
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Sidebar Styles */
+.sidebar {
+  width: 30%;
+  background-color: #2c3e50;
+  color: white;
+  overflow-y: auto;
+}
+
+
+.sidebar {
+  width: 30%;
+  background-color: #2c3e50;
+  color: white;
+  overflow-y: auto;
+}
+
+.chat-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #ecf0f1;
+}
+
+.chat-header {
+  padding: 10px;
+  background-color: #34495e;
+  color: white;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chat-footer {
+  padding: 10px;
+  background-color: #bdc3c7;
+}
+
+.chat-footer input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+@mixin font-bold {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+}
+@mixin font {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+}
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder {
+        @content;
+    }
+    &::-moz-placeholder {
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+:root {
+    --white: #fff;
+    --black: #000;
+    --bg: #f8f8f8;
+    --grey: #999;
+    --dark: #1a1a1a;
+    --light: #e6e6e6;
+    --wrapper: 1000px;
+    --blue: #00b0ff;
+}
+
+body {
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    @include font;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/image.jpg');
+    background-size: cover;
+    background-repeat: none;
+}
+.wrapper {
+    position: relative;
+    left: 50%;
+    width: var(--wrapper);
+    height: 800px;
+    transform: translate(-50%, 0);
+}
+.container {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 75%;
+    background-color: var(--white);
+    transform: translate(-50%, -50%);
+    .left {
+        float: left;
+        width: 37.6%;
+        height: 100%;
+        border: 1px solid var(--light);
+        background-color: var(--white);
+        .top {
+            position: relative;
+            width: 100%;
+            height: 96px;
+            padding: 29px;
+            &:after {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                display: block;
+                width: 80%;
+                height: 1px;
+                content: '';
+                background-color: var(--light);
+                transform: translate(-50%, 0);
+            }
+        }
+        input {
+            float: left;
+            width: 188px;
+            height: 42px;
+            padding: 0 15px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+            border-radius: 21px;
+            @include font();
+            &:focus {
+                outline: none;
+            }
+        }
+        a.search {
+            display: block;
+            float: left;
+            width: 42px;
+            height: 42px;
+            margin-left: 10px;
+            border: 1px solid var(--light);
+            background-color: var(--blue);
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/name-type.png');
+            background-repeat: no-repeat;
+            background-position: top 12px left 14px;
+            border-radius: 50%;
+        }
+        .people {
+            margin-left: -1px;
+            border-right: 1px solid var(--light);
+            border-left: 1px solid var(--light);
+            width: calc(100% + 2px);
+            .person {
+                position: relative;
+                width: 100%;
+                padding: 12px 10% 16px;
+                cursor: pointer;
+                background-color: var(--white);
+                &:after {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    display: block;
+                    width: 80%;
+                    height: 1px;
+                    content: '';
+                    background-color: var(--light);
+                    transform: translate(-50%, 0);
+                }
+                img {
+                    float: left;
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 12px;
+                    border-radius: 50%;
+																				object-fit: cover;
+                }
+                .name {
+                    font-size: 14px;
+                    line-height: 22px;
+                    color: var(--dark);
+                    @include font-bold;
+                }
+                .time {
+                    font-size: 14px;
+                    position: absolute;
+                    top: 16px;
+                    right: 10%;
+                    padding: 0 0 5px 5px;
+                    color: var(--grey);
+                    background-color: var(--white);
+                }
+                .preview {
+                    font-size: 14px;
+                    display: inline-block;
+                    overflow: hidden !important;
+                    width: 70%;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    color: var(--grey);
+                }
+                &.active,&:hover {
+                    margin-top: -1px;
+                    margin-left: -1px;
+                    padding-top: 13px;
+                    border: 0;
+                    background-color: var(--blue);
+                    width: calc(100% + 2px);
+                    padding-left: calc(10% + 1px);
+                    span {
+                        color: var(--white);
+                        background: transparent;
+                    }
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .right {
+        position: relative;
+        float: left;
+        width: 62.4%;
+        height: 100%;
+        .top {
+            width: 100%;
+            height: 47px;
+            padding: 15px 29px;
+            background-color: #eceff1;
+            span {
+                font-size: 15px;
+                color: var(--grey);
+                .name {
+                    color: var(--dark);
+                    @include font-bold;
+                }
+            }
+        }
+        .chat {
+            position: relative;
+            display: none;
+            overflow: hidden;
+            padding: 0 35px 92px;
+            border-width: 1px 1px 1px 0;
+            border-style: solid;
+            border-color: var(--light);
+            height: calc(100% - 48px);
+            justify-content: flex-end;
+            flex-direction: column;
+            &.active-chat {
+                display: block;
+                display: flex;
+                .bubble {
+                    transition-timing-function: cubic-bezier(.4,-.04, 1, 1);
+                    @for $i from 1 through 10 {
+                        &:nth-of-type(#{$i}) {
+                            animation-duration: .15s * $i;
+                        }
+                    }
+                }
+            }
+        }
+        .write {
+            position: absolute;
+            bottom: 29px;
+            left: 30px;
+            height: 42px;
+            padding-left: 8px;
+            border: 1px solid var(--light);
+            background-color: #eceff1;
+            width: calc(100% - 58px);
+            border-radius: 5px;
+            input {
+                font-size: 16px;
+                float: left;
+                width: 347px;
+                height: 40px;
+                padding: 0 10px;
+                color: var(--dark);
+                border: 0;
+                outline: none;
+                background-color: #eceff1;
+                @include font;
+            }
+            .write-link {
+                &.attach {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/attachment.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+                &.smiley {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/smiley.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+                &.send send {
+                    &:before {
+                        display: inline-block;
+                        float: left;
+                        width: 20px;
+                        height: 42px;
+                        margin-left: 11px;
+                        content: '';
+                        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/send.png');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
+                }
+            }
+        }
+        .bubble {
+            font-size: 16px;
+            position: relative;
+            display: inline-block;
+            clear: both;
+            margin-bottom: 8px;
+            padding: 13px 14px;
+            vertical-align: top;
+            border-radius: 5px;
+            &:before {
+                position: absolute;
+                top: 19px;
+                display: block;
+                width: 8px;
+                height: 6px;
+                content: '\00a0';
+                transform: rotate(29deg) skew(-35deg);
+            }
+            &.you {
+                float: left;
+                color: var(--white);
+                background-color: var(--blue);
+                align-self: flex-start;
+                animation-name: slideFromLeft;
+                &:before {
+                    left: -3px;
+                    background-color: var(--blue);
+                }
+            }
+            &.me {
+                float: right;
+                color: var(--dark);
+                background-color: #eceff1;
+                align-self: flex-end;
+                animation-name: slideFromRight;
+                &:before {
+                    right: -3px;
+                    background-color: #eceff1;
+                }
+            }
+        }
+        .conversation-start {
+            position: relative;
+            width: 100%;
+            margin-bottom: 27px;
+            text-align: center;
+            span {
+                font-size: 14px;
+                display: inline-block;
+                color: var(--grey);
+                &:before,&:after {
+                    position: absolute;
+                    top: 10px;
+                    display: inline-block;
+                    width: 30%;
+                    height: 1px;
+                    content: '';
+                    background-color: var(--light);
+                }
+                &:before {
+                    left: 0;
+                }
+                &:after {
+                    right: 0;
+                }
+            }
+        }
+    }
+}
+@keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}
+
+
     body {
 
   background: rgba(250, 160, 100, .2);
@@ -22,6 +486,9 @@ body {
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+
+
 
 .wrapper {
   width: 90%;
@@ -643,6 +1110,53 @@ ul.tabs-container{
 .jspVerticalBar{
 	width: 7px;
 }
+.scrollable {
+    padding: 0% 10%;
+    position: relative;
+    border: 1px solid gray;
+    overflow: hidden;
+    height: 400px;
+}
+
+.scrollable.showScroll::after {
+    position: absolute;
+    content: '';
+    top: 5%;
+    right: 7px;
+    height: 90%;
+    width: 3px;
+    background: rgba(224, 224, 255, .3);
+}
+
+.scrollable .content-wrapper {
+    width: 100%;
+    height: 100%;
+    padding-right: 50%;
+    overflow-y: scroll;
+}
+.scroller {
+    z-index: 5;
+    cursor: pointer;
+    position: absolute;
+    width: 10px;
+    border-radius: 5px;
+    background: rgb(111, 111, 190);
+    top: 0px;
+    right: 3px;
+    -webkit-transition: top .08s;
+    -moz-transition: top .08s;
+    -ms-transition: top .08s;
+    -o-transition: top .08s;
+    transition: top .08s;
+}
+.content {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
   </style>
 </head>
@@ -650,16 +1164,13 @@ ul.tabs-container{
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -672,216 +1183,70 @@ ul.tabs-container{
         <a href="cititor_catalog.html">Catalog</a>
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
 
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
   </div>
 
   <section id="aboutSection">
-    <h2>Evenimente</h2>
-    <div id="wrapper1">
-      <div class="window-wrapper">
-        <div class="window-title">
-          <div class="dots">
-            <i class="fa fa-circle"></i>
-            <i class="fa fa-circle"></i>
-            <i class="fa fa-circle"></i>
-          </div>
-          <div class="title">
-            <span>Hip Chat</span>
-          </div>
-          <div class="expand">
-            <i class="fa fa-expand"></i>
-          </div>
-        </div>
-        <div class="window-area">
-          <div class="conversation-list">
-            <ul class="">
-              <li class="item"><a href="#"><i class="fa fa-list-alt"></i><span>Dashboard</span></a></li>
-              <li class="item active"><a href="#"><i class="fa fa-user"></i><span>Team chat</span><i class="fa fa-times"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o online"></i></i><span>Cucu Ionel</span><i class="fa fa-times"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o idle"></i></i><span>Jan Dvořák</span><i class="fa fa-times"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o offline"></i></i><span>Clark Kent</span><i class="fa fa-times"></i></a></li>
-              <li><a href="#"><i class="fa fa-circle-o offline"></i></i><span>Ioana Marcu</span><i class="fa fa-times"></i></a></li>
-            </ul>
-            <div class="my-account">
-              <div class="image">
-                <img src="https://secure.gravatar.com/avatar/de76e03aa6b5b0bf675c1e8a990da52f?s=64">
-                <i class="fa fa-circle online"></i>
+
+    <div class="chat-container">
+      <div class="chat-box">
+        <div class="wrapper">
+          <div class="container">
+            <div class="left">
+              <div class="top">
+                <input type="text" placeholder="Search" />
+                <a href="javascript:;" class="search"></a>
               </div>
-              <div class="name">
-                <span>Cucu Ionel</span>
-                <i class="fa fa-angle-down"></i>
-                <span class="availability">Available</span>
+              <ul class="people"  id="conversatiiContainer"> </ul>
+
+            </div>
+            <div class="right">
+              <div class="top">
+                <span>To: <span class="name">Numele conversației</span></span>
+              </div>
+              <div id="main" class="scrollable">
+                <div class="content-wrapper">
+                  <div class="content">
+                    <div class="chat active-chat" id="chatWindow">
+
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="no-messages">
+              </div>
+              <div class="write">
+                <a href="javascript:;" class="write-link attach"></a>
+                <input type="text" id="messageInput" placeholder="Scrie un mesaj aici..." />
+                <button onclick="sendMessage()">Trimite</button>
+                <a href="javascript:;" class="write-link smiley"></a>
               </div>
 
             </div>
           </div>
-          <div class="chat-area">
-            <div class="title"><b>Conversation title</b><i class="fa fa-search"></i></div>
-            <div class="chat-list">
-              <ul>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>Hey, do you like the new interface? It's done with Font Awesome.</p>
-                    <span class="msg-time">5:00 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p><span class="blue-label">Cucu Ionel</span> I see what you did there.</p>
-                    <span class="msg-time">5:01 pm</span>
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>Feel free to look at the code if you want.</p>
-                    <span class="msg-time">5:02 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p>Yeah, will do.</p>
-                    <span class="msg-time">5:04 pm</span>
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>This is an example text reply.</p>
-                    <span class="msg-time">5:04 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p>I know, put some more.</p>
-                    <span class="msg-time">5:06 pm</span>
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>Here is another line.</p>
-                    <span class="msg-time">5:06 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p>Yeah, will do.</p>
-                    <span class="msg-time">5:04 pm</span>
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>Feel free to look at the code if you want.</p>
-                    <span class="msg-time">5:02 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p>Yeah, will do.</p>
-                    <span class="msg-time">5:04 pm</span>
-                  </div>
-                </li>
-                <li class="me">
-                  <div class="name">
-                    <span class="">Cucu Ionel</span>
-                  </div>
-                  <div class="message">
-                    <p>Feel free to look at the code if you want.</p>
-                    <span class="msg-time">5:02 pm</span>
-                  </div>
-                </li>
-                <li class="">
-                  <div class="name">
-                    <span class="">Christian Smith</span>
-                  </div>
-                  <div class="message">
-                    <p>Yeah, will do.</p>
-                    <span class="msg-time">5:04 pm</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="input-area">
-              <div class="input-wrapper">
-                <input type="text" value="">
-                <i class="fa fa-smile-o"></i>
-                <i class="fa fa-paperclip"></i>
-              </div>
-              <input type="button" value="Submit" class="send-btn">
-            </div>
-          </div>
-          <div class="right-tabs">
-            <ul class="tabs">
-              <li class="active">
-                <a href="#"><i class="fa fa-users"></i></a>
-              </li>
-              <li><a href="#"><i class="fa fa-paperclip"></i></a></li>
-              <li><a href="#"><i class="fa fa-link"></i></a></li>
-            </ul>
-            <ul class="tabs-container">
-              <li class="active">
-                <ul class="member-list">
-                  <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Cucu Ionel</span></li>
-                  <li><span class="status online"><i class="fa fa-circle-o"></i></span><span>Christian Smith</span></li>
-                  <li><span class="status idle"><i class="fa fa-circle-o"></i></span><span>John Bradley</span><span class="time">10:45 pm</span></li>
-                  <li><span class="status offline"><i class="fa fa-circle-o"></i></span><span>Daniel Freitz</span></li>
-                </ul>
-              </li>
-              <li></li>
-              <li></li>
-            </ul>
-            <i class="fa fa-cog"></i>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
 
 
+          <br>
 
-    <br>
-
-
+        </div></div></div>
 
   </section>
 
   <section id="genreSection">
-    <!--    <h2>Genres</h2>-->
     <article>
 
 
@@ -891,7 +1256,6 @@ ul.tabs-container{
   </section>
 
   <section id="gallerySection">
-    <!--    <h2>Gallery</h2>-->
     <article>
 
 
@@ -907,8 +1271,402 @@ ul.tabs-container{
 
 </div>
 
+<script>
+  (function () {
+
+var scrollContainer = document.querySelector('.scrollable'),
+    scrollContentWrapper = document.querySelector('.scrollable .content-wrapper'),
+    scrollContent = document.querySelector('.scrollable .content'),
+    contentPosition = 0,
+    scrollerBeingDragged = false,
+    scroller,
+    topPosition,
+    scrollerHeight;
+
+function calculateScrollerHeight() {
+    // *Calculation of how tall scroller should be
+    var visibleRatio = scrollContainer.offsetHeight / scrollContentWrapper.scrollHeight;
+    return visibleRatio * scrollContainer.offsetHeight;
+}
+
+function moveScroller(evt) {
+    // Move Scroll bar to top offset
+    var scrollPercentage = evt.target.scrollTop / scrollContentWrapper.scrollHeight;
+    topPosition = scrollPercentage * (scrollContainer.offsetHeight - 5); // 5px arbitrary offset so scroll bar doesn't move too far beyond content wrapper bounding box
+    scroller.style.top = topPosition + 'px';
+}
+
+function startDrag(evt) {
+    normalizedPosition = evt.pageY;
+    contentPosition = scrollContentWrapper.scrollTop;
+    scrollerBeingDragged = true;
+}
+
+function stopDrag(evt) {
+    scrollerBeingDragged = false;
+}
+
+function scrollBarScroll(evt) {
+    if (scrollerBeingDragged === true) {
+        var mouseDifferential = evt.pageY - normalizedPosition;
+        var scrollEquivalent = mouseDifferential * (scrollContentWrapper.scrollHeight / scrollContainer.offsetHeight);
+        scrollContentWrapper.scrollTop = contentPosition + scrollEquivalent;
+    }
+}
+
+function createScroller() {
+    // *Creates scroller element and appends to '.scrollable' div
+    // create scroller element
+    scroller = document.createElement("div");
+    scroller.className = 'scroller';
+
+    // determine how big scroller should be based on content
+    scrollerHeight = calculateScrollerHeight();
+
+    if (scrollerHeight / scrollContainer.offsetHeight < 1){
+        // *If there is a need to have scroll bar based on content size
+        scroller.style.height = scrollerHeight + 'px';
+
+        // append scroller to scrollContainer div
+        scrollContainer.appendChild(scroller);
+
+        // show scroll path divot
+        scrollContainer.className += ' showScroll';
+
+        // attach related draggable listeners
+        scroller.addEventListener('mousedown', startDrag);
+        window.addEventListener('mouseup', stopDrag);
+        window.addEventListener('mousemove', scrollBarScroll)
+    }
+
+}
+
+createScroller();
+
+
+// *** Listeners ***
+scrollContentWrapper.addEventListener('scroll', moveScroller);
+}());
+</script>
+<script>
+// Funcție pentru preluarea conversațiilor și afișarea lor în UI
+
+function fetchConversationsAndDisplay() {
+  fetch('/api/current-user/conversations')
+    .then(response => response.json())
+    .then(conversations => {
+      const conversatiiContainer = document.getElementById('conversatiiContainer');
+      conversatiiContainer.innerHTML = ''; // Curăță container-ul de conversații
+
+      conversations.forEach(conversatie => {
+      // Creează un element de listă pentru fiecare conversație
+
+        const conversatieElement = document.createElement('li');
+        conversatieElement.className = 'person';
+        conversatieElement.setAttribute('data-chat', conversatie.id);
+        conversatieElement.innerHTML = `
+          <span class="name">${conversatie.titlu}</span>
+          <span class="preview">Ultimul mesaj...</span>
+        `;
+              // Adaugă elementul de conversație în container
+                // Adaugă un listener pentru a încărca mesajele conversației când este selectată
+
+        conversatiiContainer.appendChild(conversatieElement);
+        conversatieElement.addEventListener('click', function() {
+                     conversatieId = this.getAttribute('data-chat');
+                    loadMessages(conversatie.id);
+                    updateChatTitle(conversatie.titlu); // Actualizează titlul chat-ului
+                });
+<!--        conversatieElement.addEventListener('click', () => loadMessages(conversatie.id));-->
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching conversations:', error);
+    });
+}
+// Funcție pentru preluarea numelui utilizatorului pe baza ID-ului său
+function fetchUserName(userId, callback) {
+  fetch(`/api/user/${userId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // switch back to expecting JSON
+    })
+    .then(data => {
+      callback(data.userName); // reference the userName field of the JSON object
+    })
+    .catch(error => {
+      console.error('Error fetching user name:', error);
+    });
+}
+
+
+
+// Funcție pentru încărcarea mesajelor unei conversații
+function loadMessages(conversatieId) {
+  fetch(`/api/conversations/${conversatieId}/messages`)
+    .then(response => response.json())
+    .then(messages => {
+      messages.forEach(message => {
+        console.log("Message Data: ", message); // Debugging line to inspect message structure
+
+        // Ensure idUtilizator is defined and is a number
+        if (typeof message.idUtilizator === 'number') {
+                // Preia numele utilizatorului pe baza ID-ului și afișează mesajul
+
+          fetchUserName(message.idUtilizator, userName => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('bubble', message.sender === "currentUser" ? 'me' : 'you');
+            messageElement.innerText = userName + ": " + message.textMesaj;
+            document.getElementById('chatWindow').appendChild(messageElement);
+          });
+        } else {
+          console.error('User ID is undefined or not a number', message.idUtilizator);
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching messages:', error);
+    });
+}
+
+
+
+
+
+
+function updateChatTitle(titluConversatie) {
+    const chatTitleElement = document.querySelector('.right .top .name');
+    chatTitleElement.textContent = titluConversatie;
+}
+
+
+</script>
+
+<script>
+
+   /*<![CDATA[*/
+
+  //TRIMITEREA MESJELOR
+let userId = localStorage.getItem('userId');// Preia ID-ul utilizatorului din local storage
+
+  function sendMessage() {
+      // Obține conținutul mesajului din input și elimină spațiile albe de la început și sfârșit
+
+  var messageContent = document.getElementById('messageInput').value.trim();
+  console.log("Conversatie ID:", conversatieId); // Debug pentru a verifica ID-ul conversației
+  console.log("Conținut mesaj:", messageContent); // Debug pentru a verifica conținutul mesajului
+  if(messageContent && conversatieId) { // Verifici dacă ai ID-ul conversației și conținutul mesajului
+      var mesajDto = {
+       // Construiește obiectul mesajDto cu datele necesare
+      id: null,
+      conversatieId: conversatieId, // Folosește 'conversatieId' consecvent
+      idUtilizator: userId,
+      textMesaj: messageContent,
+      dataOraMesaj: new Date()
+    };
+    // Trimite mesajul la server folosind STOMP client
+    stompClient.send("/app/chat.sendMessage/"+conversatieId, {}, JSON.stringify(mesajDto));
+
+     // Golește câmpul de input după trimiterea mesajului
+    document.getElementById('messageInput').value = '';
+  } else {
+      console.error('Conversația nu este selectată sau mesajul este gol.');
+  }
+}
+
+
+function showMessage(mesajDto) {
+    // Găsește zona de chat unde se vor afișa mesajele
+
+  var messageArea = document.getElementById('chatWindow');
+
+      // Creează un nou element div pentru mesaj
+
+  var messageElement = document.createElement('div');
+      // Adaugă clasele necesare pentru stilizarea mesajului
+
+  messageElement.classList.add('bubble', mesajDto.idUtilizator === userId ? 'me' : 'you');
+      // Setează textul mesajului
+
+  messageElement.innerText = mesajDto.textMesaj;
+      // Adaugă mesajul în zona de chat
+
+  messageArea.appendChild(messageElement);
+      // Scroll automat la ultimul mesaj adăugat
+
+  messageArea.scrollTop = messageArea.scrollHeight;
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Adaugă listener pentru fiecare conversație din sidebar
+    const conversatii = document.querySelectorAll('.person');
+    conversatii.forEach(conversatie => {
+        conversatie.addEventListener('click', () => {
+            const conversatieId = conversatie.getAttribute('data-chat');
+            loadConversationMessages(conversatieId); // Încarcă mesajele pentru conversația selectată
+            updateActiveConversation(conversatie);// Actualizează interfața pentru a reflecta conversația activă
+        });
+    });
+});
+// Funcția pentru actualizarea conversației active
+function updateActiveConversation(selectedConversatie) {
+    // Deactivează conversația curentă activă
+    const activeConversatie = document.querySelector('.left .active');
+    if (activeConversatie) {
+        activeConversatie.classList.remove('active');
+    }
+
+    // Activează conversația selectată
+    selectedConversatie.classList.add('active');
+
+    // Actualizează titlul din panoul de chat
+    const chatTitle = document.querySelector('.right .top .name');
+    chatTitle.textContent = selectedConversatie.querySelector('.name').textContent;
+
+    // Ascunde toate ferestrele de chat
+    const chats = document.querySelectorAll('.right .chat');
+    chats.forEach(chat => {
+        chat.classList.remove('active-chat');
+    });
+
+    // Afișează fereastra de chat corespunzătoare
+    const activeChat = document.querySelector(`.right .chat[data-chat="${selectedConversatie.getAttribute('data-chat')}"]`);
+    activeChat.classList.add('active-chat');
+}
+
+
+
+</script>
+
+
+<script>
+// Abonează-te la canalul specific conversației curente
+function subscribeToConversation() {
+    // Abonează-te la canalul specific conversației
+    stompClient.subscribe('/topic/public/' + conversatieId, function(mesaj) {
+            // Afișează mesajul primit
+
+        showMessage(JSON.parse(mesaj.body));
+    });
+}
+
+  var stompClient = null;
+var conversatieId = null;
+
+function connect() {
+    // Creează o nouă conexiune SockJS
+
+var socket = new SockJS('/chat');
+stompClient = Stomp.over(socket);
+
+// Conectează-te la serverul de WebSocket
+
+stompClient.connect({}, function(frame) {
+console.log('Conectat: ' + frame);
+// Presupunând că 'conversatieId' este deja definit în scope-ul global
+        // Dacă 'conversatieId' este definit, abonează-te la conversația curentă
+
+if(conversatieId) {
+            subscribeToConversation();
+        }
+<!--});-->
+});
+}
+// Abonează-te la un topic general pentru a primi mesaje de tip broadcast
+function subscribeToGeneralTopic() {
+stompClient.subscribe('/topic/mesaje', function(mesaj) {
+showMessage(mesajObiect.content);
+});
+}
+
+// Apelul inițial connect când se încarcă pagina
+connect();
+
+// Abonarea la topicul general
+subscribeToGeneralTopic();
+
+
+
+</script>
+
+
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    connect();
+
+  fetchConversationsAndDisplay();
+});
+</script>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  let idConversatie; // Declararea unei variabile globale pentru a stoca ID-ul conversației curente
+// Funcție care setează conversația curentă și se abonează la ea
+function selectConversation(id) {
+  // Handler pentru când un utilizator selectează o conversație
+conversatieId = id; // Setam ID-ul conversației curente
+    subscribeToConversation();// Apelăm funcția de abonare la conversație
+}
+
+
+
+  // Adaugă un listener pentru butonul de trimitere
+  document.querySelector('.write input[type="text"]').addEventListener('keypress', function(e) {
+      if(e.key === 'Enter') {
+          sendMessage();// Trimite mesajul când utilizatorul apasă tasta Enter
+      }
+  });
+  /*]]>*/
+</script>
+
+
+
+
+
+<script>document.querySelector('.chat[data-chat=person2]').classList.add('active-chat')
+document.querySelector('.person[data-chat=person2]').classList.add('active')
+
+let friends = {
+    list: document.querySelector('ul.people'),
+    all: document.querySelectorAll('.left .person'),
+    name: ''
+  },
+  chat = {
+    container: document.querySelector('.container .right'),
+    current: null,
+    person: null,
+    name: document.querySelector('.container .right .top .name')
+  }
+
+friends.all.forEach(f => {
+  f.addEventListener('mousedown', () => {
+    f.classList.contains('active') || setAciveChat(f)
+  })
+});
+
+function setAciveChat(f) {
+  friends.list.querySelector('.active').classList.remove('active')
+  f.classList.add('active')
+  chat.current = chat.container.querySelector('.active-chat')
+  chat.person = f.getAttribute('data-chat')
+  chat.current.classList.remove('active-chat')
+  chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat')
+  friends.name = f.querySelector('.name').innerText
+  chat.name.innerHTML = friends.name
+}
+</script>
+
+
+
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="assets/js/myjs.js"></script>
 <script>jQuery(document).ready(function ($) {
 
   $('#checkbox').change(function(){
@@ -956,6 +1714,7 @@ ul.tabs-container{
 
 });
 </script>
+
 <script>
 $(function(){
 	$('.chat-area > .chat-list').jScrollPane({
@@ -963,6 +1722,39 @@ $(function(){
 	});
 });
 </script>
+<script>document.querySelector('.chat[data-chat=person2]').classList.add('active-chat')
+document.querySelector('.person[data-chat=person2]').classList.add('active')
+
+let friends = {
+    list: document.querySelector('ul.people'),
+    all: document.querySelectorAll('.left .person'),
+    name: ''
+  },
+  chat = {
+    container: document.querySelector('.container .right'),
+    current: null,
+    person: null,
+    name: document.querySelector('.container .right .top .name')
+  }
+
+friends.all.forEach(f => {
+  f.addEventListener('mousedown', () => {
+    f.classList.contains('active') || setAciveChat(f)
+  })
+});
+
+function setAciveChat(f) {
+  friends.list.querySelector('.active').classList.remove('active')
+  f.classList.add('active')
+  chat.current = chat.container.querySelector('.active-chat')
+  chat.person = f.getAttribute('data-chat')
+  chat.current.classList.remove('active-chat')
+  chat.container.querySelector('[data-chat="' + chat.person + '"]').classList.add('active-chat')
+  friends.name = f.querySelector('.name').innerText
+  chat.name.innerHTML = friends.name
+}</script>
+
+
 </body>
 
 </html>

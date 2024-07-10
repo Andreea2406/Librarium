@@ -179,19 +179,25 @@ h5 {
 }
 
 .book-container {
+padding: 10px;
   flex: 1;
+   text-align: center;
   margin-right: 10px; /* Add some margin between books */
 }
 
 .image1 {
-  width: 100%;
-  max-height: 80%;
-  object-fit: cover;
+  width: 100%; /* Lățime 100% pentru a ocupa tot containerul */
+  max-height: 80%; /* Înălțime maximă 80% */
+  object-fit: cover; /* Asigură păstrarea proporțiilor imaginii */
   margin-bottom: 10px;
+<!--  width: 100%;-->
+<!--  max-height: 80%;-->
+<!--  object-fit: cover;-->
+<!--  margin-bottom: 10px;-->
 }
 ul.box,
 ul.box2,
-ul.box3,
+
 ul.box4 {
     position: relative;
     z-index: 1;
@@ -200,10 +206,23 @@ ul.box4 {
     margin: 0;
     padding: 0;
 }
+ul.box3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the items horizontally */
+  padding: 0;
+  list-style: none;
+}
+ul.box3 li {
+  flex: 0 1 calc(33.333% - 20px); /* Three columns with space between */
+  margin: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+  background: #fff;
 
+}
 ul.box li,
 ul.box2 li,
-ul.box3 li,
+
 ul.box4 li {
     position: relative;
     float: left;
@@ -342,29 +361,106 @@ ul.box4 li:after {
     clear:both;
 }
 
+.filterform {
+    background-color: #f4f4f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.filterform h3 {
+    color: #8B0000;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filterform label {
+    color: #FF8C00;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.filterform select,
+.filterform input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filterform button {
+    background-color: #FF8C00;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.filterform button:hover {
+    background-color: #FFA500;
+}
+
+.filterform .reset-filters {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.filterform .reset-filters a {
+    color: #8B0000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.filterform .reset-filters a:hover {
+    text-decoration: underline;
+}
 
 
 /*--------------------------------------------------------------
 2.0 - SEARCH FORM
 --------------------------------------------------------------*/
+  #searchSection {
+    display: flex;
+    justify-content: center; /* Centrează pe orizontală */
+    align-items: center; /* Centrează pe verticală */
+    height: 100px; /* Înălțimea secțiunii */
+  }
 .searchform {
-  background:#f4f4f4;
-  background:rgba(244,244,244,.79);
-  border: 1px solid #d3d3d3;
-	left: 50%;
-  padding: 2px 5px;
-  position: absolute;
-	margin: -22px 0 0 -170px;
-	top: 50%;
+ display: flex;
+    background: #f4f4f4;
+    background: rgba(244, 244, 244, 0.79);
+    border: 1px solid #d3d3d3;
+    padding: 2px 5px;
+    box-shadow: 0 4px 9px rgba(0, 0, 0, 0.37);
+    border-radius: 10px;
+<!--  background:#f4f4f4;-->
+<!--  background:rgba(244,244,244,.79);-->
+<!--  border: 1px solid #d3d3d3;-->
+<!--	padding: 2px 5px;-->
+<!--  position: absolute;-->
+<!--  top: 29%;-->
+<!--  left: 50%;-->
+<!--  transform: translate(-50%, -50%);-->
+<!--  box-shadow: 0 4px 9px rgba(0,0,0,.37);-->
+<!--  border-radius: 10px;-->
 
 
-  width:339px;
-  box-shadow:0 4px 9px rgba(0,0,0,.37);
-  -moz-box-shadow:0 4px 9px rgba(0,0,0,.37);
-  -webkit-box-shadow:0 4px 9px rgba(0,0,0,.37);
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px
+<!--  width:339px;-->
+<!--  box-shadow:0 4px 9px rgba(0,0,0,.37);-->
+<!--  -moz-box-shadow:0 4px 9px rgba(0,0,0,.37);-->
+<!--  -webkit-box-shadow:0 4px 9px rgba(0,0,0,.37);-->
+<!--  border-radius: 10px;-->
+<!--  -moz-border-radius: 10px;-->
+<!--  -webkit-border-radius: 10px-->
 }
 
 .searchform input, .searchform button {
@@ -427,6 +523,23 @@ ul.box4 li:after {
 	}
 
 
+.searchform {
+  background:#f4f4f4;
+  background:rgba(244,244,244,.79);
+  border: 1px solid #d3d3d3;
+
+  padding: 2px 5px;
+  position: absolute;left: 50%;
+	margin: -22px 0 0 -170px;
+	top: 50%;
+  width:339px;
+  box-shadow:0 4px 9px rgba(0,0,0,.37);
+  -moz-box-shadow:0 4px 9px rgba(0,0,0,.37);
+  -webkit-box-shadow:0 4px 9px rgba(0,0,0,.37);
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px
+}
 
 
 	/////
@@ -480,13 +593,32 @@ body {
   float: right;
   padding-bottom: 2500px; /* just scrolling space */
 }
+.results {
+<!--  width: 100%;-->
+<!--  display: flex;-->
+<!--  flex-wrap: wrap;-->
+<!--  justify-content: center; /* Center the items horizontally */-->
+display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centrează elementele pe orizontală */
+  padding: 0 20px; /* Adaugă spațiu pe laterale */
+}
 .result {
-  float: left;
-  width: 24%;
-  height: 100px;
-  margin-right: 1.33%;
-  margin-bottom: 1.33%;
-  background: #eee;
+ width: calc(33.333% - 20px); /* Lățime fixă pentru trei coloane cu spațiu între ele */
+  margin: 10px; /* Adaugă spațiu între cărți */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;
+  background: #fff;
+<!-- width: 100%;-->
+<!--  display: flex;-->
+<!--  flex-wrap: wrap;-->
+<!--  justify-content: center;-->
+
+<!--  float: left;-->
+<!--  width: 24%;-->
+<!--  height: 100px;-->
+<!--  margin-right: 1.33%;-->
+<!--  margin-bottom: 1.33%;-->
+<!--  background: #eee;-->
 }
 .result:nth-child(4n) {
   margin-right: 0;
@@ -557,14 +689,14 @@ body {
     margin: 0 0 10px 0;
   }
 }
-.result {
-  float: left;
-  width: 24%;
-  height: 100px;
-  margin-right: 1.33%;
-  margin-bottom: 1.33%;
-  background: #eee;
-}
+<!--.result {-->
+<!--  float: left;-->
+<!--  width: 24%;-->
+<!--  height: 100px;-->
+<!--  margin-right: 1.33%;-->
+<!--  margin-bottom: 1.33%;-->
+<!--  background: #eee;-->
+<!--}-->
 .result:nth-child(4n) {
   margin-right: 0;
 }
@@ -603,6 +735,36 @@ body {
 .button-remove-favorite:hover {
   background-color: #f0e68c; /* Khaki deschis pentru efect de hover */
 }
+.button-back {
+    display: block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #FF8C00; /* Culoarea de fundal a butonului */
+    color: #fff; /* Culoarea textului */
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-back:hover {
+    background-color: #FFA500; /* Culoarea de fundal a butonului la hover */
+}
+#back-button {
+    display: none;
+}
+
+.reserved-space {
+    display: none;
+}
+
+.results .reserved-space {
+    display: block;
+}
+
+
 
   </style>
 </head>
@@ -610,180 +772,731 @@ body {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 
 </div>
-
 <div class="wrapper">
-
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
-
     </div>
-
-
     <header id="homeSection">
       <nav>
         <a href="cititor_pagina_principala.html">Acasa</a>
         <a href="cititor_evenimente.html">Evenimente</a>
         <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_imprumuturi.html">Rezervariile mele</a>
+
         <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
         <a href="cititor_mesaje.html">Comunitate</a>
-        <a href="cititor_setari_profil.html">Setari profil</a>
+
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
-
-
   </div>
-  <br><br>
 
-  <div class="wrapper2">
-
-    <section id="searchSection" style="height:100px">
-      <form class="searchform cf">
-        <input type="text" placeholder="Cauta o carte">
-        <button type="submit">Search</button>
-      </form>
-
-    </section>
-    <br><br><br>
-
-
-
-
-    <br><br><br>
-  </div>
   <div id="wrapper1">
-    <!--    <section id="gallerySection">-->
-    <!--        <div class="div1" > <article>-->
-    <!--            <h1>filtreee</h1>-->
-    <!--            <h4>daff</h4>-->
-    <!--            <h4>daff</h4>-->
-    <!--            <h4>daff</h4>-->
-    <!--            <h4>daff</h4>-->
-    <!--            <h4>daff</h4>-->
-
-    <!--        </article>-->
-    <!--        </div>-->
-    <!--    </section>-->
-
-    <form role="search" class="search-form" id="search-form" action="#" method="post">
-
-      <section class="search-terms">
-        <label for="search-term" class="search-term-label screen-reader-text">Search Terms</label>
-        <div>
-      <span class="search-term-wrap">
-        <input type="search" id="search-term" class="search-term">
-      </span>
-          <span class="search-term-button-wrap">
-        <input type="submit" value="Search" class="search-button">
-      </span>
-        </div>
+    <div class="wrapper2">
+      <section id="searchSection" style="height:100px">
+        <form class="searchform cf" action="/search" method="GET">
+          <input type="text" name="query" placeholder="Cauta o carte">
+          <button type="submit">Search</button>
+        </form>
       </section>
 
-      <section class="search-filters" id="search-filters">
+      <br><br><br>
+      <section id="filterSection" style="display: flex; margin-top: 20px;">
+        <form class="filterform" action="/filter" method="GET" style="width: 25%;">
+          <h3>Filtre</h3>
+          <input type="hidden" name="page" value="0"/>
 
-        <h3 class="search-filters-title" id="search-filters-title">Search Filters</h3>
+          <label for="categorie" style="color:orange">Categorie:</label>
+          <br>
+          <select id="categorie" name="categorie">
+            <option value="" th:selected="${categorie == null}">Toate</option>
+            <option value="Moderni" th:selected="${categorie == 'Moderni'}">Moderni</option>
+            <option value="Literatura Romana" th:selected="${categorie == 'Literatura Romana'}">Literatura Romana</option>
+            <option value="Lumea naturii, animale" th:selected="${categorie == 'Lumea naturii, animale'}">Lumea naturii, animale</option>
+            <option value="Fantasty" th:selected="${categorie == 'Fantasty'}">Fantasty</option>
+            <option value="Stiinta" th:selected="${categorie == 'Stiinta'}">Stiinta</option>
+            <option value="Istorie" th:selected="${categorie == 'Istorie'}">Istorie</option>
+            <option value="Fictiune" th:selected="${categorie == 'Fictiune'}">Fictiune</option>
+            <option value="Clasici" th:selected="${categorie == 'Clasici'}">Clasici</option>
+            <option value="Non-fictiune" th:selected="${categorie == 'Non-fictiune'}">Non-fictiune</option>
+            <option value="Psihologie" th:selected="${categorie == 'Psihologie'}">Psihologie</option>
+            <option value="Thriller" th:selected="${categorie == 'Thriller'}">Thriller</option>
+            <option value="Filosofie" th:selected="${categorie == 'Filosofie'}">Filosofie</option>
+            <option value="Medicina" th:selected="${categorie == 'Medicina'}">Medicina</option>
+            <option value="Chimie" th:selected="${categorie == 'Chimie'}">Chimie</option>
+            <option value="Arta" th:selected="${categorie == 'Arta'}">Arta</option>
+            <option value="Arhitectura" th:selected="${categorie == 'Arhitectura'}">Arhitectura</option>
+            <option value="Benzi desenate" th:selected="${categorie == 'Benzi desenate'}">Benzi desenate</option>
+            <option value="Buisness" th:selected="${categorie == 'Buisness'}">Buisness</option>
+            <option value="Economie" th:selected="${categorie == 'Economie'}">Economie</option>
+            <option value="Drept" th:selected="${categorie == 'Drept'}">Drept</option>
+            <option value="Matematici" th:selected="${categorie == 'Matematici'}">Matematici</option>
 
-        <div class="size-filters filter-group">
+          </select>
+          <br>
+          <label for="autor"style="color:orange">Autor:</label>
+          <br>
+          <select id="autor" name="autor">
+            <option value="" th:selected="${autor == null}">Toți</option>
+            <option value="Paulo Coelho" th:selected="${autor == 'Paulo Coelho'}">Paulo Coelho</option>
+            <option value="Delia Owens" th:selected="${autor == 'Delia Owens'}">Delia Owens</option>
+            <option value="RADU PARASCHIVESCU" th:selected="${autor == 'RADU PARASCHIVESCU'}">RADU PARASCHIVESCU</option>
+            <option value="Ion Creanga" th:selected="${autor == 'Ion Creanga'}">Ion Creanga</option>
+            <option value="SHAUN USHER" th:selected="${autor == 'SHAUN USHER'}">SHAUN USHER</option>
+            <option value="Andrei Ruse" th:selected="${autor == 'Andrei Ruse'}">Andrei Ruse</option>
+            <option value="Alexandru N. Stermin" th:selected="${autor == 'Alexandru N. Stermin'}">Alexandru N. Stermin</option>
+            <option value="Yuval Noah Harari" th:selected="${autor == 'Yuval Noah Harari'}">Yuval Noah Harari</option>
+            <option value="George Orwell" th:selected="${autor == 'George Orwell'}">George Orwell</option>
+            <option value="Dan Brown" th:selected="${autor == 'Dan Brown'}">Dan Brown</option>
+            <option value="Antoine de Saint-Exupery" th:selected="${autor == 'Antoine de Saint-Exupery'}">Antoine de Saint-Exupery</option>
+            <option value="Fyodor Dostoevsky" th:selected="${autor == 'Fyodor Dostoevsky'}">Fyodor Dostoevsky</option>
+            <option value="Jane Austen" th:selected="${autor == 'Jane Austen'}">Jane Austen</option>
+            <option value="Homer" th:selected="${autor == 'Homer'}">Homer</option>
+            <option value="Harper Lee" th:selected="${autor == 'Harper Lee'}">Harper Lee</option>
+            <option value="Lev Tolstoi" th:selected="${autor == 'Lev Tolstoi'}">Lev Tolstoi</option>
+            <option value="Miguel de Cervantes" th:selected="${autor == 'Miguel de Cervantes'}">Miguel de Cervantes</option>
+            <option value="James Joyce" th:selected="${autor == 'James Joyce'}">James Joyce</option>
+            <option value="William Golding" th:selected="${autor == 'William Golding'}">William Golding</option>
+            <option value="Charles Dickens" th:selected="${autor == 'Charles Dickens'}">Charles Dickens</option>
+            <option value="Herman Melville" th:selected="${autor == 'Herman Melville'}">Herman Melville</option>
+            <option value="Charlotte Bronte" th:selected="${autor == 'Charlotte Bronte'}">Charlotte Bronte</option>
+            <option value="J.D. Salinger" th:selected="${autor == 'J.D. Salinger'}">J.D. Salinger</option>
+            <option value="Oscar Wilde" th:selected="${autor == 'Oscar Wilde'}">Oscar Wilde</option>
+            <option value="Vladimir Nabokov" th:selected="${autor == 'Vladimir Nabokov'}">Vladimir Nabokov</option>
+            <option value="Ray Bradbury" th:selected="${autor == 'Ray Bradbury'}">Ray Bradbury</option>
+            <option value="Aldous Huxley" th:selected="${autor == 'Aldous Huxley'}">Aldous Huxley</option>
+            <option value="Franz Kafka" th:selected="${autor == 'Franz Kafka'}">Franz Kafka</option>
+            <option value="Albert Camus" th:selected="${autor == 'Albert Camus'}">Albert Camus</option>
+            <option value="Rudyard Kipling" th:selected="${autor == 'Rudyard Kipling'}">Rudyard Kipling</option>
+            <option value="Mark Twain" th:selected="${autor == 'Mark Twain'}">Mark Twain</option>
+            <option value="Margaret Mitchell" th:selected="${autor == 'Margaret Mitchell'}">Margaret Mitchell</option>
+            <option value="Haruki Murakami" th:selected="${autor == 'Haruki Murakami'}">Haruki Murakami</option>
+            <option value="Gabriel Garcia Marquez" th:selected="${autor == 'Gabriel Garcia Marquez'}">Gabriel Garcia Marquez</option>
+            <option value="George R.R. Martin" th:selected="${autor == 'George R.R. Martin'}">George R.R. Martin</option>
+            <option value="Jose Saramago" th:selected="${autor == 'Jose Saramago'}">Jose Saramago</option>
+            <option value="Marcel Proust" th:selected="${autor == 'Marcel Proust'}">Marcel Proust</option>
+            <option value="H.G. Wells" th:selected="${autor == 'H.G. Wells'}">H.G. Wells</option>
+            <option value="Bram Stoker" th:selected="${autor == 'Bram Stoker'}">Bram Stoker</option>
+            <option value="Mario Vargas Llosa" th:selected="${autor == 'Mario Vargas Llosa'}">Mario Vargas Llosa</option>
+            <option value="Cormac McCarthy" th:selected="${autor == 'Cormac McCarthy'}">Cormac McCarthy</option>
+            <option value="Hermann Hesse" th:selected="${autor == 'Hermann Hesse'}">Hermann Hesse</option>
+            <option value="Pearl S. Buck" th:selected="${autor == 'Pearl S. Buck'}">Pearl S. Buck</option>
+            <option value="Marquis de Sade" th:selected="${autor == 'Marquis de Sade'}">Marquis de Sade</option>
+            <option value="Anonim" th:selected="${autor == 'Anonim'}">Anonim</option>
+            <option value="Mary Shelley" th:selected="${autor == 'Mary Shelley'}">Mary Shelley</option>
+            <option value="Cornelia Funke" th:selected="${autor == 'Cornelia Funke'}">Cornelia Funke</option>
+            <option value="Margaret Atwood" th:selected="${autor == 'Margaret Atwood'}">Margaret Atwood</option>
+            <option value="Ernest Hemingway" th:selected="${autor == 'Ernest Hemingway'}">Ernest Hemingway</option>
+            <option value="William Faulkner" th:selected="${autor == 'William Faulkner'}">William Faulkner</option>
+            <option value="Harriet Beecher Stowe" th:selected="${autor == 'Harriet Beecher Stowe'}">Harriet Beecher Stowe</option>
+            <option value="Toni Morrison" th:selected="${autor == 'Toni Morrison'}">Toni Morrison</option>
+            <option value="Jack London" th:selected="${autor == 'Jack London'}">Jack London</option>
+            <option value="Jostein Gaarder" th:selected="${autor == 'Jostein Gaarder'}">Jostein Gaarder</option>
+            <option value="Mihail Bulgakov" th:selected="${autor == 'Mihail Bulgakov'}">Mihail Bulgakov</option>
+            <option value="Thomas Mann" th:selected="${autor == 'Thomas Mann'}">Thomas Mann</option>
+            <option value="Alain-Fournier" th:selected="${autor == 'Alain-Fournier'}">Alain-Fournier</option>
+            <option value="Nicolae Steinhardt" th:selected="${autor == 'Nicolae Steinhardt'}">Nicolae Steinhardt</option>
+            <option value="Julian Barnes" th:selected="${autor == 'Julian Barnes'}">Julian Barnes</option>
+            <option value="Arthur Conan Doyle" th:selected="${autor == 'Arthur Conan Doyle'}">Arthur Conan Doyle</option>
+            <option value="Erich Maria Remarque" th:selected="${autor == 'Erich Maria Remarque'}">Erich Maria Remarque</option>
+            <option value="Helen Keller" th:selected="${autor == 'Helen Keller'}">Helen Keller</option>
+            <option value="Liane Moriarty" th:selected="${autor == 'Liane Moriarty'}">Liane Moriarty</option>
+            <option value="Carlos Ruiz Zafon" th:selected="${autor == 'Carlos Ruiz Zafon'}">Carlos Ruiz Zafon</option>
+            <option value="Henry James" th:selected="${autor == 'Henry James'}">Henry James</option>
+            <option value="Fredrik Backman" th:selected="${autor == 'Fredrik Backman'}">Fredrik Backman</option>
+            <option value="Matt Haig" th:selected="${autor == 'Matt Haig'}">Matt Haig</option>
+            <option value="Zaharia Stancu" th:selected="${autor == 'Zaharia Stancu'}">Zaharia Stancu</option>
+            <option value="Nick Hornby" th:selected="${autor == 'Nick Hornby'}">Nick Hornby</option>
+            <option value="John Gray" th:selected="${autor == 'John Gray'}">John Gray</option>
+            <option value="Emily Bronte" th:selected="${autor == 'Emily Bronte'}">Emily Bronte</option>
+            <option value="Rani Manicka" th:selected="${autor == 'Rani Manicka'}">Rani Manicka</option>
+            <option value="Parinoush Saniee" th:selected="${autor == 'Parinoush Saniee'}">Parinoush Saniee</option>
+            <option value="James Rollins" th:selected="${autor == 'James Rollins'}">James Rollins</option>
+            <option value="Paula Hawkins" th:selected="${autor == 'Paula Hawkins'}">Paula Hawkins</option>
+            <option value="David Nicholls" th:selected="${autor == 'David Nicholls'}">David Nicholls</option>
+            <option value="Rabih Alameddine" th:selected="${autor == 'Rabih Alameddine'}">Rabih Alameddine</option>
+            <option value="Rachael Lippincott" th:selected="${autor == 'Rachael Lippincott'}">Rachael Lippincott</option>
+            <option value="Elena Ferrante" th:selected="${autor == 'Elena Ferrante'}">Elena Ferrante</option>
+            <option value="John Fowles" th:selected="${autor == 'John Fowles'}">John Fowles</option>
+            <option value="Jennifer Niven" th:selected="${autor == 'Jennifer Niven'}">Jennifer Niven</option>
+            <option value="Markus Zusak" th:selected="${autor == 'Markus Zusak'}">Markus Zusak</option>
+            <option value="Heather Morris" th:selected="${autor == 'Heather Morris'}">Heather Morris</option>
+            <option value="Stendhal" th:selected="${autor == 'Stendhal'}">Stendhal</option>
+            <option value="J.R.R. Tolkien" th:selected="${autor == 'J.R.R. Tolkien'}">J.R.R. Tolkien</option>
+            <option value="Thomas De Quincey" th:selected="${autor == 'Thomas De Quincey'}">Thomas De Quincey</option>
+            <option value="Yann Martel" th:selected="${autor == 'Yann Martel'}">Yann Martel</option>
+            <option value="Camil Petrescu" th:selected="${autor == 'Camil Petrescu'}">Camil Petrescu</option>
+            <option value="Jack Kerouac" th:selected="${autor == 'Jack Kerouac'}">Jack Kerouac</option>
+            <option value="Yasunari Kawabata" th:selected="${autor == 'Yasunari Kawabata'}">Yasunari Kawabata</option>
+            <option value="Evgheni Zamiatin" th:selected="${autor == 'Evgheni Zamiatin'}">Evgheni Zamiatin</option>
+            <option value="Colleen Hoover" th:selected="${autor == 'Colleen Hoover'}">Colleen Hoover</option>
+            <option value="Elizabeth Gilbert" th:selected="${autor == 'Elizabeth Gilbert'}">Elizabeth Gilbert</option>
+            <option value="Alexandre Dumas" th:selected="${autor == 'Alexandre Dumas'}">Alexandre Dumas</option>
+            <option value="Khaled Hosseini" th:selected="${autor == 'Khaled Hosseini'}">Khaled Hosseini</option>
+            <option value="Cella Serghi" th:selected="${autor == 'Cella Serghi'}">Cella Serghi</option>
+            <option value="James Clavell" th:selected="${autor == 'James Clavell'}">James Clavell</option>
+            <option value="Nikos Kazantzakis" th:selected="${autor == 'Nikos Kazantzakis'}">Nikos Kazantzakis</option>
+            <option value="Mircea Cărtărescu" th:selected="${autor == 'Mircea Cărtărescu'}">Mircea Cărtărescu</option>
+            <option value="Boris Pasternak" th:selected="${autor == 'Boris Pasternak'}">Boris Pasternak</option>
+            <option value="Simone de Beauvoir" th:selected="${autor == 'Simone de Beauvoir'}">Simone de Beauvoir</option>
+            <option value="F. Scott Fitzgerald" th:selected="${autor == 'F. Scott Fitzgerald'}">F. Scott Fitzgerald</option>
+            <option value="Radu Aldulescu" th:selected="${autor == 'Radu Aldulescu'}">Radu Aldulescu</option>
+            <option value="Salman Rushdie" th:selected="${autor == 'Salman Rushdie'}">Salman Rushdie</option>
+            <option value="Bernhard Schlink" th:selected="${autor == 'Bernhard Schlink'}">Bernhard Schlink</option>
+            <option value="Stephen Hawking" th:selected="${autor == 'Stephen Hawking'}">Stephen Hawking</option>
+            <option value="Robert T. Kiyosaki" th:selected="${autor == 'Robert T. Kiyosaki'}">Robert T. Kiyosaki</option>
+            <option value="Mihail Sebastian" th:selected="${autor == 'Mihail Sebastian'}">Mihail Sebastian</option>
+            <option value="Viktor E. Frankl" th:selected="${autor == 'Viktor E. Frankl'}">Viktor E. Frankl</option>
+            <option value="Daniel Goleman" th:selected="${autor == 'Daniel Goleman'}">Daniel Goleman</option>
+            <option value="Charles Duhigg" th:selected="${autor == 'Charles Duhigg'}">Charles Duhigg</option>
+            <option value="Daniel Kahneman" th:selected="${autor == 'Daniel Kahneman'}">Daniel Kahneman</option>
+            <option value="Edward M. Hallowell" th:selected="${autor == 'Edward M. Hallowell'}">Edward M. Hallowell</option>
+            <option value="Eckhart Tolle" th:selected="${autor == 'Eckhart Tolle'}">Eckhart Tolle</option>
+            <option value="Brené Brown" th:selected="${autor == 'Brené Brown'}">Brené Brown</option>
+            <option value="Carol S. Dweck" th:selected="${autor == 'Carol S. Dweck'}">Carol S. Dweck</option>
+            <option value="Steven C. Hayes" th:selected="${autor == 'Steven C. Hayes'}">Steven C. Hayes</option>
+            <option value="Kevin Dutton" th:selected="${autor == 'Kevin Dutton'}">Kevin Dutton</option>
+            <option value="Gabor Maté" th:selected="${autor == 'Gabor Maté'}">Gabor Maté</option>
+            <option value="Ichiro Kishimi" th:selected="${autor == 'Ichiro Kishimi'}">Ichiro Kishimi</option>
+            <option value="Greg McKeown" th:selected="${autor == 'Greg McKeown'}">Greg McKeown</option>
+            <option value="Kelly McGonigal" th:selected="${autor == 'Kelly McGonigal'}">Kelly McGonigal</option>
+            <option value="Matthieu Ricard" th:selected="${autor == 'Matthieu Ricard'}">Matthieu Ricard</option>
+            <option value="Steve Peters" th:selected="${autor == 'Steve Peters'}">Steve Peters</option>
+            <option value="Martin Seligman" th:selected="${autor == 'Martin Seligman'}">Martin Seligman</option>
+            <option value="Jonathan Chick" th:selected="${autor == 'Jonathan Chick'}">Jonathan Chick</option>
+            <option value="Sheryl Paul" th:selected="${autor == 'Sheryl Paul'}">Sheryl Paul</option>
+            <option value="Angela Duckworth" th:selected="${autor == 'Angela Duckworth'}">Angela Duckworth</option>
+            <option value="Emma Donoghue" th:selected="${autor == 'Emma Donoghue'}">Emma Donoghue</option>
+            <option value="Gillian Flynn" th:selected="${autor == 'Gillian Flynn'}">Gillian Flynn</option>
+            <option value="Rosie Walsh" th:selected="${autor == 'Rosie Walsh'}">Rosie Walsh</option>
+            <option value="Stieg Larsson" th:selected="${autor == 'Stieg Larsson'}">Stieg Larsson</option>
+            <option value="Joël Dicker" th:selected="${autor == 'Joël Dicker'}">Joël Dicker</option>
+            <option value="Guillaume Musso" th:selected="${autor == 'Guillaume Musso'}">Guillaume Musso</option>
+            <option value="B.A. Paris" th:selected="${autor == 'B.A. Paris'}">B.A. Paris</option>
+            <option value="C.J. Tudor" th:selected="${autor == 'C.J. Tudor'}">C.J. Tudor</option>
+            <option value="Riley Sager" th:selected="${autor == 'Riley Sager'}">Riley Sager</option>
+            <option value="Andrea Camilleri" th:selected="${autor == 'Andrea Camilleri'}">Andrea Camilleri</option>
+            <option value="Stephen King" th:selected="${autor == 'Stephen King'}">Stephen King</option>
+            <option value="T.M. Logan" th:selected="${autor == 'T.M. Logan'}">T.M. Logan</option>
+            <option value="Jenny Blackhurst" th:selected="${autor == 'Jenny Blackhurst'}">Jenny Blackhurst</option>
+            <option value="Greer Hendricks" th:selected="${autor == 'Greer Hendricks'}">Greer Hendricks</option>
+            <option value="Ruth Ware" th:selected="${autor == 'Ruth Ware'}">Ruth Ware</option>
+            <option value="Thomas Harris" th:selected="${autor == 'Thomas Harris'}">Thomas Harris</option>
+            <option value="Paul Pen" th:selected="${autor == 'Paul Pen'}">Paul Pen</option>
+            <option value="Sara Gruen" th:selected="${autor == 'Sara Gruen'}">Sara Gruen</option>
+            <option value="Joseph Finder" th:selected="${autor == 'Joseph Finder'}">Joseph Finder</option>
+            <option value="Immanuel Kant" th:selected="${autor == 'Immanuel Kant'}">Immanuel Kant</option>
+            <option value="Platon" th:selected="${autor == 'Platon'}">Platon</option>
+            <option value="Friedrich Nietzsche" th:selected="${autor == 'Friedrich Nietzsche'}">Friedrich Nietzsche</option>
+            <option value="Benedict de Spinoza" th:selected="${autor == 'Benedict de Spinoza'}">Benedict de Spinoza</option>
+            <option value="Aristotel" th:selected="${autor == 'Aristotel'}">Aristotel</option>
+            <option value="John Stuart Mill" th:selected="${autor == 'John Stuart Mill'}">John Stuart Mill</option>
+            <option value="Martin Heidegger" th:selected="${autor == 'Martin Heidegger'}">Martin Heidegger</option>
+            <option value="Max Horkheimer" th:selected="${autor == 'Max Horkheimer'}">Max Horkheimer</option>
+            <option value="Ludwig Wittgenstein" th:selected="${autor == 'Ludwig Wittgenstein'}">Ludwig Wittgenstein</option>
+            <option value="Georg Wilhelm Friedrich Hegel" th:selected="${autor == 'Georg Wilhelm Friedrich Hegel'}">Georg Wilhelm Friedrich Hegel</option>
+            <option value="René Descartes" th:selected="${autor == 'René Descartes'}">René Descartes</option>
+            <option value="Jean-Paul Sartre" th:selected="${autor == 'Jean-Paul Sartre'}">Jean-Paul Sartre</option>
+            <option value="Jean Baudrillard" th:selected="${autor == 'Jean Baudrillard'}">Jean Baudrillard</option>
+            <option value="Epictet" th:selected="${autor == 'Epictet'}">Epictet</option>
+            <option value="Thomas Hobbes" th:selected="${autor == 'Thomas Hobbes'}">Thomas Hobbes</option>
+            <option value="Mary Wollstonecraft" th:selected="${autor == 'Mary Wollstonecraft'}">Mary Wollstonecraft</option>
+            <option value="Michel de Montaigne" th:selected="${autor == 'Michel de Montaigne'}">Michel de Montaigne</option>
+            <option value="Atul Gawande" th:selected="${autor == 'Atul Gawande'}">Atul Gawande</option>
+            <option value="Richard J. Davidson" th:selected="${autor == 'Richard J. Davidson'}">Richard J. Davidson</option>
+            <option value="Bill Bryson" th:selected="${autor == 'Bill Bryson'}">Bill Bryson</option>
+            <option value="Siddhartha Mukherjee" th:selected="${autor == 'Siddhartha Mukherjee'}">Siddhartha Mukherjee</option>
+            <option value="David Perlmutter" th:selected="${autor == 'David Perlmutter'}">David Perlmutter</option>
+            <option value="Louann Brizendine" th:selected="${autor == 'Louann Brizendine'}">Louann Brizendine</option>
+            <option value="Robert Whitaker" th:selected="${autor == 'Robert Whitaker'}">Robert Whitaker</option>
+            <option value="Dr. Sanjay Gupta" th:selected="${autor == 'Dr. Sanjay Gupta'}">Dr. Sanjay Gupta</option>
+            <option value="Mikhail Tombak" th:selected="${autor == 'Mikhail Tombak'}">Mikhail Tombak</option>
+            <option value="Philip Ball" th:selected="${autor == 'Philip Ball'}">Philip Ball</option>
+            <option value="Primo Levi" th:selected="${autor == 'Primo Levi'}">Primo Levi</option>
+            <option value="Larry Gonick" th:selected="${autor == 'Larry Gonick'}">Larry Gonick</option>
+            <option value="Theodore Gray" th:selected="${autor == 'Theodore Gray'}">Theodore Gray</option>
+            <option value="Peter Atkins" th:selected="${autor == 'Peter Atkins'}">Peter Atkins</option>
+            <option value="Mihai Manea" th:selected="${autor == 'Mihai Manea'}">Mihai Manea</option>
+            <option value="Paula Yurkanis Bruice" th:selected="${autor == 'Paula Yurkanis Bruice'}">Paula Yurkanis Bruice</option>
+            <option value="Owen R. Fennema" th:selected="${autor == 'Owen R. Fennema'}">Owen R. Fennema</option>
+            <option value="Stanley E. Manahan" th:selected="${autor == 'Stanley E. Manahan'}">Stanley E. Manahan</option>
+            <option value="Ernst H. Gombrich" th:selected="${autor == 'Ernst H. Gombrich'}">Ernst H. Gombrich</option>
+            <option value="Giorgio Vasari" th:selected="${autor == 'Giorgio Vasari'}">Giorgio Vasari</option>
+            <option value="Robert Atkins" th:selected="${autor == 'Robert Atkins'}">Robert Atkins</option>
+            <option value="Cristian Robert Velescu" th:selected="${autor == 'Cristian Robert Velescu'}">Cristian Robert Velescu</option>
+            <option value="Noël Carroll" th:selected="${autor == 'Noël Carroll'}">Noël Carroll</option>
+            <option value="Karl Ruhrberg" th:selected="${autor == 'Karl Ruhrberg'}">Karl Ruhrberg</option>
+            <option value="Kenneth Frampton" th:selected="${autor == 'Kenneth Frampton'}">Kenneth Frampton</option>
+            <option value="Traian Brădean" th:selected="${autor == 'Traian Brădean'}">Traian Brădean</option>
+            <option value="Klaus-Jürgen Sembach" th:selected="${autor == 'Klaus-Jürgen Sembach'}">Klaus-Jürgen Sembach</option>
+            <option value="Ionel Jianu" th:selected="${autor == 'Ionel Jianu'}">Ionel Jianu</option>
+            <option value="Cătălin D. Constantin" th:selected="${autor == 'Cătălin D. Constantin'}">Cătălin D. Constantin</option>
+            <option value="Peter Collins" th:selected="${autor == 'Peter Collins'}">Peter Collins</option>
+            <option value="Alessandro Vezzosi" th:selected="${autor == 'Alessandro Vezzosi'}">Alessandro Vezzosi</option>
+            <option value="H.W. Janson" th:selected="${autor == 'H.W. Janson'}">H.W. Janson</option>
+            <option value="Magdalena Droste" th:selected="${autor == 'Magdalena Droste'}">Magdalena Droste</option>
+            <option value="Rolf Toman" th:selected="${autor == 'Rolf Toman'}">Rolf Toman</option>
+            <option value="Vasile Drăguț" th:selected="${autor == 'Vasile Drăguț'}">Vasile Drăguț</option>
+            <option value="William E. Wallace" th:selected="${autor == 'William E. Wallace'}">William E. Wallace</option>
+            <option value="David Cottington" th:selected="${autor == 'David Cottington'}">David Cottington</option>
+            <option value="Ada Louise Huxtable" th:selected="${autor == 'Ada Louise Huxtable'}">Ada Louise Huxtable</option>
+            <option value="Alan Moore" th:selected="${autor == 'Alan Moore'}">Alan Moore</option>
+            <option value="Art Spiegelman" th:selected="${autor == 'Art Spiegelman'}">Art Spiegelman</option>
+            <option value="Marjane Satrapi" th:selected="${autor == 'Marjane Satrapi'}">Marjane Satrapi</option>
+            <option value="Neil Gaiman" th:selected="${autor == 'Neil Gaiman'}">Neil Gaiman</option>
+            <option value="Craig Thompson" th:selected="${autor == 'Craig Thompson'}">Craig Thompson</option>
+            <option value="Brian K. Vaughan" th:selected="${autor == 'Brian K. Vaughan'}">Brian K. Vaughan</option>
+            <option value="Robert Kirkman" th:selected="${autor == 'Robert Kirkman'}">Robert Kirkman</option>
+            <option value="Timothy Ferriss" th:selected="${autor == 'Timothy Ferriss'}">Timothy Ferriss</option>
+            <option value="Napoleon Hill" th:selected="${autor == 'Napoleon Hill'}">Napoleon Hill</option>
+            <option value="Simon Sinek" th:selected="${autor == 'Simon Sinek'}">Simon Sinek</option>
+            <option value="Nassim Nicholas Taleb" th:selected="${autor == 'Nassim Nicholas Taleb'}">Nassim Nicholas Taleb</option>
+            <option value="Clayton M. Christensen" th:selected="${autor == 'Clayton M. Christensen'}">Clayton M. Christensen</option>
+            <option value="Alvin Toffler" th:selected="${autor == 'Alvin Toffler'}">Alvin Toffler</option>
+            <option value="Paul Krugman" th:selected="${autor == 'Paul Krugman'}">Paul Krugman</option>
+            <option value="Ray Dalio" th:selected="${autor == 'Ray Dalio'}">Ray Dalio</option>
+            <option value="Ion Dogaru" th:selected="${autor == 'Ion Dogaru'}">Ion Dogaru</option>
+            <option value="Valeriu Stoica" th:selected="${autor == 'Valeriu Stoica'}">Valeriu Stoica</option>
+            <option value="Mihai Adrian Hotca" th:selected="${autor == 'Mihai Adrian Hotca'}">Mihai Adrian Hotca</option>
+            <option value="Corneliu Birsan" th:selected="${autor == 'Corneliu Birsan'}">Corneliu Birsan</option>
+            <option value="Gheorghe Piperea" th:selected="${autor == 'Gheorghe Piperea'}">Gheorghe Piperea</option>
+            <option value="Cristina Rotaru" th:selected="${autor == 'Cristina Rotaru'}">Cristina Rotaru</option>
+            <option value="Nicolae Volonciu" th:selected="${autor == 'Nicolae Volonciu'}">Nicolae Volonciu</option>
+            <option value="Valeriu Ciucă" th:selected="${autor == 'Valeriu Ciucă'}">Valeriu Ciucă</option>
+            <option value="Flavius Baias" th:selected="${autor == 'Flavius Baias'}">Flavius Baias</option>
+            <option value="Bogdan Dumitrache" th:selected="${autor == 'Bogdan Dumitrache'}">Bogdan Dumitrache</option>
+            <option value="Lucian Boia" th:selected="${autor == 'Lucian Boia'}">Lucian Boia</option>
+            <option value="Neagu Djuvara" th:selected="${autor == 'Neagu Djuvara'}">Neagu Djuvara</option>
+            <option value="Dennis Deletant" th:selected="${autor == 'Dennis Deletant'}">Dennis Deletant</option>
+            <option value="Andrei Oișteanu" th:selected="${autor == 'Andrei Oișteanu'}">Andrei Oișteanu</option>
+            <option value="Alfred Adler" th:selected="${autor == 'Alfred Adler'}">Alfred Adler</option>
+            <option value="Catherine Durandin" th:selected="${autor == 'Catherine Durandin'}">Catherine Durandin</option>
+            <option value="Keith Hitchins" th:selected="${autor == 'Keith Hitchins'}">Keith Hitchins</option>
+            <option value="Ioan Aurel Pop" th:selected="${autor == 'Ioan Aurel Pop'}">Ioan Aurel Pop</option>
+            <option value="Victor Neumann" th:selected="${autor == 'Victor Neumann'}">Victor Neumann</option>
+            <option value="Alexandru Zub" th:selected="${autor == 'Alexandru Zub'}">Alexandru Zub</option>
+            <option value="Grigore Moisil" th:selected="${autor == 'Grigore Moisil'}">Grigore Moisil</option>
+            <option value="Solomon Marcus" th:selected="${autor == 'Solomon Marcus'}">Solomon Marcus</option>
+            <option value="Nicolae Popescu" th:selected="${autor == 'Nicolae Popescu'}">Nicolae Popescu</option>
+            <option value="Octav Onicescu" th:selected="${autor == 'Octav Onicescu'}">Octav Onicescu</option>
+            <option value="Marius Iosifescu" th:selected="${autor == 'Marius Iosifescu'}">Marius Iosifescu</option>
+            <option value="Florin Diacu" th:selected="${autor == 'Florin Diacu'}">Florin Diacu</option>
+            <option value="Ion D. Ion" th:selected="${autor == 'Ion D. Ion'}">Ion D. Ion</option>
+            <option value="Dorin Andrica" th:selected="${autor == 'Dorin Andrica'}">Dorin Andrica</option>
+            <option value="Constantin Popovici" th:selected="${autor == 'Constantin Popovici'}">Constantin Popovici</option>
+            <option value="Dan Barbilian" th:selected="${autor == 'Dan Barbilian'}">Dan Barbilian</option>
+          </select>
+          <br>
 
-          <div>
-            <input type="checkbox" id="filter-size-small">
-            <label for="filter-size-small">Small</label>
-          </div>
+          <label for="titlu"style="color:orange">Titlu:</label>
+          <br>
 
-          <div>
-            <input type="checkbox" id="filter-size-medium" checked>
-            <label for="filter-size-medium">Medium</label>
-          </div>
+          <select id="titlu" name="titlu">
+            <option value="">Toate</option>
 
-          <div>
-            <input type="checkbox" id="filter-size-large">
-            <label for="filter-size-large">Large</label>
-          </div>
+            <option value="Alchimistul" th:selected="${titlu == 'Alchimistul'}">Alchimistul</option>
+            <option value="Acolo unde canta racii" th:selected="${titlu == 'Acolo unde cântă racii'}">Acolo unde cântă racii</option>
+            <option value="Ce vraji a mai facut pisica mea" th:selected="${titlu == 'Ce vrăji a mai făcut pisica mea'}">Ce vrăji a mai făcut pisica mea</option>
+            <option value="Amintiri din copilarie" th:selected="${titlu == 'Amintiri din copilărie'}">Amintiri din copilărie</option>
+            <option value="Pisici" th:selected="${titlu == 'Pisici'}">Pisici</option>
+            <option value="Cartea Plangerii" th:selected="${titlu == 'Cartea Plângerii'}">Cartea Plângerii</option>
+            <option value="Privirea urangutanului" th:selected="${titlu == 'Privirea urangutanului'}">Privirea urangutanului</option>
+            <option value="Sapiens. Scurta istorie a omenirii" th:selected="${titlu == 'Sapiens. Scurtă istorie a omenirii'}">Sapiens. Scurtă istorie a omenirii</option>
+            <option value="1984" th:selected="${titlu == '1984'}">1984</option>
+            <option value="Codul lui Da Vinci" th:selected="${titlu == 'Codul lui Da Vinci'}">Codul lui Da Vinci</option>
+            <option value="Micul Print" th:selected="${titlu == 'Micul Prinț'}">Micul Prinț</option>
+            <option value="Crime si pedeapsa" th:selected="${titlu == 'Crime și pedeapsă'}">Crime și pedeapsă</option>
+            <option value="Mandrie si prejudecata" th:selected="${titlu == 'Mândrie și prejudecată'}">Mândrie și prejudecată</option>
+            <option value="Odiseea" th:selected="${titlu == 'Odiseea'}">Odiseea</option>
+            <option value="Fratii Karamazov" th:selected="${titlu == 'Frații Karamazov'}">Frații Karamazov</option>
+            <option value="To Kill a Mockingbird" th:selected="${titlu == 'To Kill a Mockingbird'}">To Kill a Mockingbird</option>
+            <option value="Anna Karenina" th:selected="${titlu == 'Anna Karenina'}">Anna Karenina</option>
+            <option value="Don Quijote" th:selected="${titlu == 'Don Quijote'}">Don Quijote</option>
+            <option value="Ulysses" th:selected="${titlu == 'Ulysses'}">Ulysses</option>
+            <option value="Razboi si pace" th:selected="${titlu == 'Război și pace'}">Război și pace</option>
+            <option value="Imparatul mustelor" th:selected="${titlu == 'Împăratul muștelor'}">Împăratul muștelor</option>
+            <option value="Marile Sperante" th:selected="${titlu == 'Marile Speranțe'}">Marile Speranțe</option>
+            <option value="Moby Dick" th:selected="${titlu == 'Moby Dick'}">Moby Dick</option>
+            <option value="Jane Eyre" th:selected="${titlu == 'Jane Eyre'}">Jane Eyre</option>
+            <option value="De veghe in lanul de secara" th:selected="${titlu == 'De veghe în lanul de secară'}">De veghe în lanul de secară</option>
+            <option value="Portretul lui Dorian Gray" th:selected="${titlu == 'Portretul lui Dorian Gray'}">Portretul lui Dorian Gray</option>
+            <option value="Lolita" th:selected="${titlu == 'Lolita'}">Lolita</option>
+            <option value="Fahrenheit 451" th:selected="${titlu == 'Fahrenheit 451'}">Fahrenheit 451</option>
+            <option value="Brave New World" th:selected="${titlu == 'Brave New World'}">Brave New World</option>
+            <option value="Procesul" th:selected="${titlu == 'Procesul'}">Procesul</option>
+            <option value="Ciuma" th:selected="${titlu == 'Ciuma'}">Ciuma</option>
+            <option value="Cartile junglei" th:selected="${titlu == 'Cărțile junglei'}">Cărțile junglei</option>
+            <option value="Aventurile lui Huckleberry Finn" th:selected="${titlu == 'Aventurile lui Huckleberry Finn'}">Aventurile lui Huckleberry Finn</option>
+            <option value="Pe aripile vantului" th:selected="${titlu == 'Pe aripile vântului'}">Pe aripile vântului</option>
+            <option value="Padurea norvegiana" th:selected="${titlu == 'Pădurea norvegiană'}">Pădurea norvegiană</option>
+            <option value="Un veac de singuratate" th:selected="${titlu == 'Un veac de singurătate'}">Un veac de singurătate</option>
+            <option value="Vanturile de iarna" th:selected="${titlu == 'Vânturile de iarnă'}">Vânturile de iarnă</option>
+            <option value="Eseu despre orbire" th:selected="${titlu == 'Eseu despre orbire'}">Eseu despre orbire</option>
+            <option value="In cautarea timpului pierdut" th:selected="${titlu == 'În căutarea timpului pierdut'}">În căutarea timpului pierdut</option>
+            <option value="Aventurile lui Tom Sawyer" th:selected="${titlu == 'Aventurile lui Tom Sawyer'}">Aventurile lui Tom Sawyer</option>
+            <option value="Omul invizibil" th:selected="${titlu == 'Omul invizibil'}">Omul invizibil</option>
+            <option value="Dracula" th:selected="${titlu == 'Dracula'}">Dracula</option>
+            <option value="Orasul si cainii" th:selected="${titlu == 'Orașul și câinii'}">Orașul și câinii</option>
+            <option value="Fiul lui Dumnezeu" th:selected="${titlu == 'Fiul lui Dumnezeu'}">Fiul lui Dumnezeu</option>
+            <option value="Lupul de stepa" th:selected="${titlu == 'Lupul de stepă'}">Lupul de stepă</option>
+            <option value="Pavilionul femeilor" th:selected="${titlu == 'Pavilionul femeilor'}">Pavilionul femeilor</option>
+            <option value="Cele o suta de zile ale lui Sodom" th:selected="${titlu == 'Cele o sută de zile ale lui Sodom'}">Cele o sută de zile ale lui Sodom</option>
+            <option value="Epopeea lui Ghilgames" th:selected="${titlu == 'Epopeea lui Ghilgameș'}">Epopeea lui Ghilgameș</option>
+            <option value="Frankenstein" th:selected="${titlu == 'Frankenstein'}">Frankenstein</option>
+            <option value="Inima de cerneala" th:selected="${titlu == 'Inimă de cerneală'}">Inimă de cerneală</option>
+            <option value="Povestea slujitoarei" th:selected="${titlu == 'Povestea slujitoarei'}">Povestea slujitoarei</option>
+            <option value="Batranul si marea" th:selected="${titlu == 'Bătrânul și marea'}">Bătrânul și marea</option>
+            <option value="Zgomotul si furia" th:selected="${titlu == 'Zgomotul și furia'}">Zgomotul și furia</option>
+            <option value="Coliba unchiului Tom" th:selected="${titlu == 'Coliba unchiului Tom'}">Coliba unchiului Tom</option>
+            <option value="Beloved" th:selected="${titlu == 'Beloved'}">Beloved</option>
+            <option value="Colt alb" th:selected="${titlu == 'Colț alb'}">Colț alb</option>
+            <option value="Lumea lui Sophie" th:selected="${titlu == 'Lumea lui Sophie'}">Lumea lui Sophie</option>
+            <option value="Maestrul si Margareta" th:selected="${titlu == 'Maestrul și Margareta'}">Maestrul și Margareta</option>
+            <option value="Muntele vrajit" th:selected="${titlu == 'Muntele vrăjit'}">Muntele vrăjit</option>
+            <option value="Cararea pierduta" th:selected="${titlu == 'Cărarea pierdută'}">Cărarea pierdută</option>
+            <option value="Jurnalul fericirii" th:selected="${titlu == 'Jurnalul fericirii'}">Jurnalul fericirii</option>
+            <option value="Castelul" th:selected="${titlu == 'Castelul'}">Castelul</option>
+            <option value="In mijlocul lucrurilor" th:selected="${titlu == 'În mijlocul lucrurilor'}">În mijlocul lucrurilor</option>
+            <option value="Aventurile lui Sherlock Holmes" th:selected="${titlu == 'Aventurile lui Sherlock Holmes'}">Aventurile lui Sherlock Holmes</option>
+            <option value="Cronica pasarii-arc" th:selected="${titlu == 'Cronica păsării-arc'}">Cronica păsării-arc</option>
+            <option value="Trei camarazi" th:selected="${titlu == 'Trei camarazi'}">Trei camarazi</option>
+            <option value="Povestea vietii mele" th:selected="${titlu == 'Povestea vieții mele'}">Povestea vieții mele</option>
+            <option value="Marile minciuni nevinovate" th:selected="${titlu == 'Marile minciuni nevinovate'}">Marile minciuni nevinovate</option>
+            <option value="Ferma animalelor" th:selected="${titlu == 'Ferma animalelor'}">Ferma animalelor</option>
+            <option value="Umbra vantului" th:selected="${titlu == 'Umbra vântului'}">Umbra vântului</option>
+            <option value="Portretul unei doamne" th:selected="${titlu == 'Portretul unei doamne'}">Portretul unei doamne</option>
+            <option value="Un barbat pe nume Ove" th:selected="${titlu == 'Un bărbat pe nume Ove'}">Un bărbat pe nume Ove</option>
+            <option value="Biblioteca de la miezul noptii" th:selected="${titlu == 'Biblioteca de la miezul nopții'}">Biblioteca de la miezul nopții</option>
+            <option value="Satra" th:selected="${titlu == 'Șatra'}">Șatra</option>
+            <option value="Oameni de treaba" th:selected="${titlu == 'Oameni de treabă'}">Oameni de treabă</option>
+            <option value="Barbatii sunt de pe Marte, femeile sunt de pe Venu...">Bărbații sunt de pe Marte, femeile sunt de pe Venus</option>
+            <option value="Iubirea in vremea holerei" th:selected="${titlu == 'Iubirea în vremea holerei'}">Iubirea în vremea holerei</option>
+            <option value="La rascruce de vanturi" th:selected="${titlu == 'La răscruce de vânturi'}">La răscruce de vânturi</option>
+            <option value="Zeita orezului" th:selected="${titlu == 'Zeița orezului'}">Zeița orezului</option>
+            <option value="Tatal celuilalt copil" th:selected="${titlu == 'Tatăl celuilalt copil'}">Tatăl celuilalt copil</option>
+            <option value="Lupii din Brandenburg" th:selected="${titlu == 'Lupii din Brandenburg'}">Lupii din Brandenburg</option>
+            <option value="In ape adanci" th:selected="${titlu == 'În ape adânci'}">În ape adânci</option>
+            <option value="Drumul" th:selected="${titlu == 'Drumul'}">Drumul</option>
+            <option value="O zi" th:selected="${titlu == 'O zi'}">O zi</option>
+            <option value="Femeia de hartie" th:selected="${titlu == 'Femeia de hârtie'}">Femeia de hârtie</option>
+            <option value="La cinci pasi de tine" th:selected="${titlu == 'La cinci pași de tine'}">La cinci pași de tine</option>
+            <option value="Prietena mea geniala" th:selected="${titlu == 'Prietena mea genială'}">Prietena mea genială</option>
+            <option value="Magicianul" th:selected="${titlu == 'Magicianul'}">Magicianul</option>
+            <option value="Calatoria elefantului" th:selected="${titlu == 'Călătoria elefantului'}">Călătoria elefantului</option>
+            <option value="Toate acele locuri minunate" th:selected="${titlu == 'Toate acele locuri minunate'}">Toate acele locuri minunate</option>
+            <option value="Hotul de carti" th:selected="${titlu == 'Hoțul de cărți'}">Hoțul de cărți</option>
+            <option value="Tatuatorul de la Auschwitz" th:selected="${titlu == 'Tatuatorul de la Auschwitz'}">Tatuatorul de la Auschwitz</option>
+            <option value="Manastirea din Parma" th:selected="${titlu == 'Mănăstirea din Parma'}">Mănăstirea din Parma</option>
+            <option value="Hobbitul" th:selected="${titlu == 'Hobbitul'}">Hobbitul</option>
+            <option value="O mie noua sute optzeci si patru" th:selected="${titlu == 'O mie nouă sute optzeci și patru'}">O mie nouă sute optzeci și patru</option>
+            <option value="Confesiunile unui opioman englez" th:selected="${titlu == 'Confesiunile unui opioman englez'}">Confesiunile unui opioman englez</option>
+            <option value="Viata lui Pi" th:selected="${titlu == 'Viața lui Pi'}">Viața lui Pi</option>
+            <option value="Patul lui Procust" th:selected="${titlu == 'Patul lui Procust'}">Patul lui Procust</option>
+            <option value="Pe drum" th:selected="${titlu == 'Pe drum'}">Pe drum</option>
+            <option value="Tara zapezilor" th:selected="${titlu == 'Țara zăpezilor'}">Țara zăpezilor</option>
+            <option value="Oameni in tufisuri" th:selected="${titlu == 'Oameni în tufișuri'}">Oameni în tufișuri</option>
+            <option value="Totul se termina cu noi" th:selected="${titlu == 'Totul se termină cu noi'}">Totul se termină cu noi</option>
+            <option value="Orasul fetelor" th:selected="${titlu == 'Orașul fetelor'}">Orașul fetelor</option>
+            <option value="Fatita care a salvat Craciunul" th:selected="${titlu == 'Fetița care a salvat Crăciunul'}">Fetița care a salvat Crăciunul</option>
+            <option value="Poveste despre doua orase" th:selected="${titlu == 'Poveste despre două orașe'}">Poveste despre două orașe</option>
+            <option value="Contele de Monte Cristo" th:selected="${titlu == 'Contele de Monte Cristo'}">Contele de Monte Cristo</option>
+            <option value="Vanatorii de zmeie" th:selected="${titlu == 'Vânătorii de zmeie'}">Vânătorii de zmeie</option>
+            <option value="Panza de paianjen" th:selected="${titlu == 'Pânza de păianjen'}">Pânza de păianjen</option>
+            <option value="Cei trei muschetari" th:selected="${titlu == 'Cei trei muschetari'}">Cei trei muschetari</option>
+            <option value="Urzeala tronurilor" th:selected="${titlu == 'Urzeala tronurilor'}">Urzeala tronurilor</option>
+            <option value="Shogun" th:selected="${titlu == 'Shogun'}">Shogun</option>
+            <option value="Veronica se hotaraste sa moara" th:selected="${titlu == 'Veronica se hotărăște să moară'}">Veronica se hotărăște să moară</option>
+            <option value="Inferno" th:selected="${titlu == 'Inferno'}">Inferno</option>
+            <option value="Zorba Grecul" th:selected="${titlu == 'Zorba Grecul'}">Zorba Grecul</option>
+            <option value="Fratia inelului" th:selected="${titlu == 'Frăția inelului'}">Frăția inelului</option>
+            <option value="Solenoid" th:selected="${titlu == 'Solenoid'}">Solenoid</option>
+            <option value="Adio, arme" th:selected="${titlu == 'Adio, arme'}">Adio, arme</option>
+            <option value="Doctor Jivago" th:selected="${titlu == 'Doctor Jivago'}">Doctor Jivago</option>
+            <option value="Al doilea sex" th:selected="${titlu == 'Al doilea sex'}">Al doilea sex</option>
+            <option value="Cronica unei morti anuntate" th:selected="${titlu == 'Cronica unei morți anunțate'}">Cronica unei morți anunțate</option>
+            <option value="Marele Gatsby" th:selected="${titlu == 'Marele Gatsby'}">Marele Gatsby</option>
+            <option value="Zilele regilor" th:selected="${titlu == 'Zilele regilor'}">Zilele regilor</option>
+            <option value="Minunata lume noua" th:selected="${titlu == 'Minunata lume nouă'}">Minunata lume nouă</option>
+            <option value="Zilele abandonului" th:selected="${titlu == 'Zilele abandonului'}">Zilele abandonului</option>
+            <option value="Copiii din miez de noapte" th:selected="${titlu == 'Copiii din miez de noapte'}">Copiii din miez de noapte</option>
+            <option value="Cititorul" th:selected="${titlu == 'Cititorul'}">Cititorul</option>
+            <option value="Print si cersetor" th:selected="${titlu == 'Prinț și cerșetor'}">Prinț și cerșetor</option>
+            <option value="Scurta istorie a timpului" th:selected="${titlu == 'Scurtă istorie a timpului'}">Scurtă istorie a timpului</option>
+            <option value="Tata bogat, tata sarac" th:selected="${titlu == 'Tată bogat, tată sărac'}">Tată bogat, tată sărac</option>
+            <option value="O mie si una de nopti" th:selected="${titlu == 'O mie și una de nopți'}">O mie și una de nopți</option>
+            <option value="Steaua fara nume" th:selected="${titlu == 'Steaua fără nume'}">Steaua fără nume</option>
+            <option value="Omul in cautarea sensului vietii" th:selected="${titlu == 'Omul în căutarea sensului vieții'}">Omul în căutarea sensului vieții</option>
+            <option value="Inteligenta emotionala" th:selected="${titlu == 'Inteligența emoțională'}">Inteligența emoțională</option>
+            <option value="Puterea obisnuintei" th:selected="${titlu == 'Puterea obișnuinței'}">Puterea obișnuinței</option>
+            <option value="Gandirea rapida, gandirea lenta" th:selected="${titlu == 'Gândirea rapidă, gândirea lentă'}">Gândirea rapidă, gândirea lentă</option>
+            <option value="Minti imprastiate" th:selected="${titlu == 'Minți împrăștiate'}">Minți împrăștiate</option>
+            <option value="Puterea prezentului" th:selected="${titlu == 'Puterea prezentului'}">Puterea prezentului</option>
+            <option value="Darurile imperfectiunii" th:selected="${titlu == 'Darurile imperfecțiunii'}">Darurile imperfecțiunii</option>
+            <option value="Mindset: O noua psihologie a succesului" th:selected="${titlu == 'Mindset: O nouă psihologie a succesului'}">Mindset: O nouă psihologie a succesului</option>
+            <option value="Terapia prin acceptare si angajament" th:selected="${titlu == 'Terapia prin acceptare și angajament'}">Terapia prin acceptare și angajament</option>
+            <option value="Intelepciunea psihopatilor" th:selected="${titlu == 'Înțelepciunea psihopaților'}">Înțelepciunea psihopaților</option>
+            <option value="Cand corpul spune nu" th:selected="${titlu == 'Când corpul spune nu'}">Când corpul spune nu</option>
+            <option value="Curajul de a nu fi pe placul celorlalti" th:selected="${titlu == 'Curajul de a nu fi pe placul celorlalți'}">Curajul de a nu fi pe placul celorlalți</option>
+            <option value="Esentialismul: Disciplina concentrarii pe lucruril...">Esențialismul: Disciplina concentrării pe lucrurile esențiale</option>
+            <option value="Forta vointei" th:selected="${titlu == 'Forța voinței'}">Forța voinței</option>
+            <option value="Despre fericire" th:selected="${titlu == 'Despre fericire'}">Despre fericire</option>
+            <option value="Paradoxul cimpanzeului" th:selected="${titlu == 'Paradoxul cimpanzeului'}">Paradoxul cimpanzeului</option>
+            <option value="Cei care aleg sa fie fericiti" th:selected="${titlu == 'Cei care aleg să fie fericiți'}">Cei care aleg să fie fericiți</option>
+            <option value="Stresul, portretul unui ucigas" th:selected="${titlu == 'Stresul, portretul unui ucigaș'}">Stresul, portretul unui ucigaș</option>
+            <option value="Intelepciunea anxietatii" th:selected="${titlu == 'Înțelepciunea anxietății'}">Înțelepciunea anxietății</option>
+            <option value="Grit: Puterea pasiunii si a perseverentei" th:selected="${titlu == 'Grit: Puterea pasiunii și a perseverenței'}">Grit: Puterea pasiunii și a perseverenței</option>
+            <option value="Fata din tren" th:selected="${titlu == 'Fata din tren'}">Fata din tren</option>
+            <option value="Camera" th:selected="${titlu == 'Camera'}">Camera</option>
+            <option value="Fata disparuta" th:selected="${titlu == 'Fata dispărută'}">Fata dispărută</option>
+            <option value="Barbatul care n-a mai sunat" th:selected="${titlu == 'Bărbatul care n-a mai sunat'}">Bărbatul care n-a mai sunat</option>
+            <option value="Sub apa" th:selected="${titlu == 'Sub apă'}">Sub apă</option>
+            <option value="Fata care a jucat cu focul" th:selected="${titlu == 'Fata care a jucat cu focul'}">Fata care a jucat cu focul</option>
+            <option value="Adevarul despre cazul Harry Quebert" th:selected="${titlu == 'Adevărul despre cazul Harry Quebert'}">Adevărul despre cazul Harry Quebert</option>
+            <option value="Fata de hartie" th:selected="${titlu == 'Fata de hârtie'}">Fata de hârtie</option>
+            <option value="In spatele usilor inchise" th:selected="${titlu == 'În spatele ușilor închise'}">În spatele ușilor închise</option>
+            <option value="Omul de creta" th:selected="${titlu == 'Omul de cretă'}">Omul de cretă</option>
+            <option value="Casa de langa lac" th:selected="${titlu == 'Casa de lângă lac'}">Casa de lângă lac</option>
+            <option value="Cainele de teracota" th:selected="${titlu == 'Câinele de teracotă'}">Câinele de teracotă</option>
+            <option value="Tunelul de la capatul lumii" th:selected="${titlu == 'Tunelul de la capătul lumii'}">Tunelul de la capătul lumii</option>
+            <option value="A treia fiica" th:selected="${titlu == 'A treia fiică'}">A treia fiică</option>
+            <option value="Cineva trebuie sa moara" th:selected="${titlu == 'Cineva trebuie să moară'}">Cineva trebuie să moară</option>
+            <option value="Obiecte ascutite" th:selected="${titlu == 'Obiecte ascuțite'}">Obiecte ascuțite</option>
+            <option value="Gone Girl" th:selected="${titlu == 'Gone Girl'}">Gone Girl</option>
+            <option value="Sotia dintre noi" th:selected="${titlu == 'Soția dintre noi'}">Soția dintre noi</option>
+            <option value="Femeia din cabina 10" th:selected="${titlu == 'Femeia din cabina 10'}">Femeia din cabina 10</option>
+            <option value="Tacerea mieilor" th:selected="${titlu == 'Tăcerea mieilor'}">Tăcerea mieilor</option>
+            <option value="Avertismentul" th:selected="${titlu == 'Avertismentul'}">Avertismentul</option>
+            <option value="La marginea apei" th:selected="${titlu == 'La marginea apei'}">La marginea apei</option>
+            <option value="Fata anonima" th:selected="${titlu == 'Fata anonimă'}">Fata anonimă</option>
+            <option value="Paranoia" th:selected="${titlu == 'Paranoia'}">Paranoia</option>
+            <option value="Critica ratiunii pure" th:selected="${titlu == 'Critica rațiunii pure'}">Critica rațiunii pure</option>
+            <option value="Republica" th:selected="${titlu == 'Republica'}">Republica</option>
+            <option value="Asa grait-a Zarathustra" th:selected="${titlu == 'Așa grăit-a Zarathustra'}">Așa grăit-a Zarathustra</option>
+            <option value="Etica" th:selected="${titlu == 'Etica'}">Etica</option>
+            <option value="Metafizica" th:selected="${titlu == 'Metafizica'}">Metafizica</option>
+            <option value="Despre libertate" th:selected="${titlu == 'Despre libertate'}">Despre libertate</option>
+            <option value="Fiinta si timp" th:selected="${titlu == 'Ființă și timp'}">Ființă și timp</option>
+            <option value="Dialectica iluminismului" th:selected="${titlu == 'Dialectica iluminismului'}">Dialectica iluminismului</option>
+            <option value="Tractatus Logico-Philosophicus" th:selected="${titlu == 'Tractatus Logico-Philosophicus'}">Tractatus Logico-Philosophicus</option>
+            <option value="Critica ratiunii practice" th:selected="${titlu == 'Critica rațiunii practice'}">Critica rațiunii practice</option>
+            <option value="Fenomenologia spiritului" th:selected="${titlu == 'Fenomenologia spiritului'}">Fenomenologia spiritului</option>
+            <option value="Discurs asupra metodei" th:selected="${titlu == 'Discurs asupra metodei'}">Discurs asupra metodei</option>
+            <option value="Existențialismul este un umanism" th:selected="${titlu == 'Existențialismul este un umanism'}">Existențialismul este un umanism</option>
+            <option value="Simulacra și simulare" th:selected="${titlu == 'Simulacra și simulare'}">Simulacra și simulare</option>
+            <option value="Arta de a trai" th:selected="${titlu == 'Arta de a trăi'}">Arta de a trăi</option>
+            <option value="Leviatanul" th:selected="${titlu == 'Leviatanul'}">Leviatanul</option>
+            <option value="Omul revolta" th:selected="${titlu == 'Omul revoltă'}">Omul revoltă</option>
+            <option value="In apararea drepturilor femeii" th:selected="${titlu == 'În apărarea drepturilor femeii'}">În apărarea drepturilor femeii</option>
+            <option value="Eseuri" th:selected="${titlu == 'Eseuri'}">Eseuri</option>
+            <option value="Ecce Homo" th:selected="${titlu == 'Ecce Homo'}">Ecce Homo</option>
+            <option value="Complicatii: Confesiunile unui chirurg" th:selected="${titlu == 'Complicații: Confesiunile unui chirurg'}">Complicații: Confesiunile unui chirurg</option>
+            <option value="Creierul si inteligenta emotionala" th:selected="${titlu == 'Creierul și inteligența emoțională'}">Creierul și inteligența emoțională</option>
+            <option value="Corpul uman" th:selected="${titlu == 'Corpul uman'}">Corpul uman</option>
+            <option value="Gena: O istorie fascinanta" th:selected="${titlu == 'Gena: O istorie fascinantă'}">Gena: O istorie fascinantă</option>
+            <option value="Puterea microbiomului" th:selected="${titlu == 'Puterea microbiomului'}">Puterea microbiomului</option>
+            <option value="Creierul femeii" th:selected="${titlu == 'Creierul femeii'}">Creierul femeii</option>
+            <option value="Anatomia unei epidemii" th:selected="${titlu == 'Anatomia unei epidemii'}">Anatomia unei epidemii</option>
+            <option value="Sanatatea creierului pe intelesul tuturor" th:selected="${titlu == 'Sănătatea creierului pe înțelesul tuturor'}">Sănătatea creierului pe înțelesul tuturor</option>
+            <option value="Cum sa traim 150 de ani" th:selected="${titlu == 'Cum să trăim 150 de ani'}">Cum să trăim 150 de ani</option>
+            <option value="Moleculele. O explorare intima a materiei" th:selected="${titlu == 'Moleculele. O explorare intimă a materiei'}">Moleculele. O explorare intimă a materiei</option>
+            <option value="Tabelul periodic: Povestea unei descoperiri" th:selected="${titlu == 'Tabelul periodic: Povestea unei descoperiri'}">Tabelul periodic: Povestea unei descoperiri</option>
+            <option value="Chimia pentru toti" th:selected="${titlu == 'Chimia pentru toți'}">Chimia pentru toți</option>
+            <option value="Elementele. O explorare vizuala a fiecarui atom di...">Elementele. O explorare vizuală a fiecărui atom din univers</option>
+            <option value="Chimie fizica" th:selected="${titlu == 'Chimie fizică'}">Chimie fizică</option>
+            <option value="O chestiune de viata si gaz" th:selected="${titlu == 'O chestiune de viață și gaz'}">O chestiune de viață și gaz</option>
+            <option value="Reactii: O istorie ilustrata a chimiei" th:selected="${titlu == 'Reacții: O istorie ilustrată a chimiei'}">Reacții: O istorie ilustrată a chimiei</option>
+            <option value="Chimia organica" th:selected="${titlu == 'Chimia organică'}">Chimia organică</option>
+            <option value="Chimia alimentara" th:selected="${titlu == 'Chimia alimentară'}">Chimia alimentară</option>
+            <option value="Introducere in chimia mediului" th:selected="${titlu == 'Introducere în chimia mediului'}">Introducere în chimia mediului</option>
+            <option value="Istoria artei" th:selected="${titlu == 'Istoria artei'}">Istoria artei</option>
+            <option value="Arta renasterii" th:selected="${titlu == 'Arta renașterii'}">Arta renașterii</option>
+            <option value="Arta contemporana" th:selected="${titlu == 'Arta contemporană'}">Arta contemporană</option>
+            <option value="Micul dictionar de arta moderna si contemporana" th:selected="${titlu == 'Micul dicționar de artă modernă și contemporană'}">Micul dicționar de artă modernă și contemporană</option>
+            <option value="Teoria artei" th:selected="${titlu == 'Teoria artei'}">Teoria artei</option>
+            <option value="Arta in secolul XX" th:selected="${titlu == 'Arta în secolul XX'}">Arta în secolul XX</option>
+            <option value="Arhitectura moderna: O critica" th:selected="${titlu == 'Arhitectura modernă: O critică'}">Arhitectura modernă: O critică</option>
+            <option value="Manual de istorie a arhitecturii" th:selected="${titlu == 'Manual de istorie a arhitecturii'}">Manual de istorie a arhitecturii</option>
+            <option value="Art Nouveau" th:selected="${titlu == 'Art Nouveau'}">Art Nouveau</option>
+            <option value="Brancusi: Artistul universal" th:selected="${titlu == 'Brâncuși: Artistul universal'}">Brâncuși: Artistul universal</option>
+            <option value="Arta medievala" th:selected="${titlu == 'Arta medievală'}">Arta medievală</option>
+            <option value="Gothic Revival: Arhitectura gotica in epoca modern...">Gothic Revival: Arhitectura gotică în epoca modernă</option>
+            <option value="Leonardo da Vinci: Viata si opera" th:selected="${titlu == 'Leonardo da Vinci: Viața și opera'}">Leonardo da Vinci: Viața și opera</option>
+            <option value="Pictura flamanda" th:selected="${titlu == 'Pictura flamandă'}">Pictura flamandă</option>
+            <option value="Bauhaus: Scoala modernitatii" th:selected="${titlu == 'Bauhaus: Școala modernității'}">Bauhaus: Școala modernității</option>
+            <option value="Catedralele Europei" th:selected="${titlu == 'Catedralele Europei'}">Catedralele Europei</option>
+            <option value="Istoria artei romanesti" th:selected="${titlu == 'Istoria artei românești'}">Istoria artei românești</option>
+            <option value="Michelangelo: Sculptura, pictura si arhitectura" th:selected="${titlu == 'Michelangelo: Sculptura, pictura și arhitectura'}">Michelangelo: Sculptura, pictura și arhitectura</option>
+            <option value="Cubismul" th:selected="${titlu == 'Cubismul'}">Cubismul</option>
+            <option value="Frank Lloyd Wright: Un vizionar al arhitecturii" th:selected="${titlu == 'Frank Lloyd Wright: Un vizionar al arhitecturii'}">Frank Lloyd Wright: Un vizionar al arhitecturii</option>
+            <option value="Watchmen" th:selected="${titlu == 'Watchmen'}">Watchmen</option>
+            <option value="Maus" th:selected="${titlu == 'Maus'}">Maus</option>
+            <option value="Persepolis" th:selected="${titlu == 'Persepolis'}">Persepolis</option>
+            <option value="Sandman Vol. 1: Preludes & Nocturnes" th:selected="${titlu == 'Sandman Vol. 1: Preludes & Nocturnes'}">Sandman Vol. 1: Preludes & Nocturnes</option>
+            <option value="V for Vendetta" th:selected="${titlu == 'V for Vendetta'}">V for Vendetta</option>
+            <option value="Batman: The Killing Joke" th:selected="${titlu == 'Batman: The Killing Joke'}">Batman: The Killing Joke</option>
+            <option value="Blankets" th:selected="${titlu == 'Blankets'}">Blankets</option>
+            <option value="Y: The Last Man Vol. 1: Unmanned" th:selected="${titlu == 'Y: The Last Man Vol. 1: Unmanned'}">Y: The Last Man Vol. 1: Unmanned</option>
+            <option value="Saga Vol. 1" th:selected="${titlu == 'Saga Vol. 1'}">Saga Vol. 1</option>
+            <option value="The Walking Dead Vol. 1: Days Gone Bye" th:selected="${titlu == 'The Walking Dead Vol. 1: Days Gone Bye'}">The Walking Dead Vol. 1: Days Gone Bye</option>
+            <option value="Saptamana de lucru de 4 ore" th:selected="${titlu == 'Săptămâna de lucru de 4 ore'}">Săptămâna de lucru de 4 ore</option>
+            <option value="De la idee la bani" th:selected="${titlu == 'De la idee la bani'}">De la idee la bani</option>
+            <option value="Inteligenta emotionala in leadership" th:selected="${titlu == 'Inteligența emoțională în leadership'}">Inteligența emoțională în leadership</option>
+            <option value="Start with Why: How Great Leaders Inspire Everyone...">Start with Why: How Great Leaders Inspire Everyone to Take Action</option>
+            <option value="Antifragil: Ce avem de castigat de pe urma dezordi...">Antifragil: Ce avem de câștigat de pe urma dezordinii</option>
+            <option value="Dilema inovatorului" th:selected="${titlu == 'Dilema inovatorului'}">Dilema inovatorului</option>
+            <option value="Al Treilea Val" th:selected="${titlu == 'Al Treilea Val'}">Al Treilea Val</option>
+            <option value="Economia in 7 lectii" th:selected="${titlu == 'Economia în 7 lecții'}">Economia în 7 lecții</option>
+            <option value="Principii: Viata si munca" th:selected="${titlu == 'Principii: Viața și munca'}">Principii: Viața și munca</option>
+            <option value="Drept civil. Teoria generala a obligatiilor" th:selected="${titlu == 'Drept civil. Teoria generală a obligațiilor'}">Drept civil. Teoria generală a obligațiilor</option>
+            <option value="Dreptul contractelor. Regimuri speciale" th:selected="${titlu == 'Dreptul contractelor. Regimuri speciale'}">Dreptul contractelor. Regimuri speciale</option>
+            <option value="Drept procesual penal. Partea generala" th:selected="${titlu == 'Drept procesual penal. Partea generală'}">Drept procesual penal. Partea generală</option>
+            <option value="Conventia Europeana a Drepturilor Omului. Comentar...">Convenția Europeană a Drepturilor Omului. Comentarii</option>
+            <option value="Dreptul insolventei. Proceduri de prevenire si tra...">Dreptul insolvenței. Proceduri de prevenire și tratare</option>
+            <option value="Drept administrativ. Partea generala si speciala" th:selected="${titlu == 'Drept administrativ. Partea generală și specială'}">Drept administrativ. Partea generală și specială</option>
+            <option value="Codul penal comentat. Editia a 3-a" th:selected="${titlu == 'Codul penal comentat. Ediția a 3-a'}">Codul penal comentat. Ediția a 3-a</option>
 
+
+
+
+            <option value="Drept international public. Curs universitar"th:selected="${titlu == 'Drept international public. Curs universitar'}">Drept internațional public. Curs universitar</option>
+            <option value="Noul Cod civil. Comentarii pe articole" th:selected="${titlu == 'Noul Cod civil. Comentarii pe articole'}">Noul Cod civil. Comentarii pe articole</option>
+            <option value="Drept penal si procedura penala. Practica judiciar..."th:selected="${titlu == 'Drept penal si procedura penala. Practica judiciar...'}">Drept penal și procedură penală. Practică judiciară</option>
+            <option value="De ce este Romania altfel?" th:selected="${titlu == 'De ce este Romania altfel?'}">De ce este România altfel?</option>
+            <option value="O scurta istorie a romanilor povestita celor tiner..." th:selected="${titlu == 'O scurta istorie a romanilor povestita celor tiner...'}">O scurtă istorie a românilor povestită celor tineri</option>
+            <option value="Ceausescu and the Securitate: Coercion and Dissent..." th:selected="${titlu == 'Ceausescu and the Securitate: Coercion and Dissent...'}">Ceaușescu and the Securitate: Coercion and Dissent in Romania, 1965-1989</option>
+            <option value="Imaginea evreului in cultura romana" th:selected="${titlu == 'Imaginea evreului in cultura romana'}">Imaginea evreului în cultura română</option>
+            <option value="Cunoasterea omului. Introducere in psihologia indi..." th:selected="${titlu == 'Cunoasterea omului. Introducere in psihologia indi...'}">Cunoașterea omului. Introducere în psihologia individuală</option>
+            <option value="Istoria Romaniei contemporane" th:selected="${titlu == 'Istoria Romaniei contemporane'}">Istoria României contemporane</option>
+            <option value="Romania: 1866-1947" th:selected="${titlu == 'Romania: 1866-1947'}">România: 1866-1947</option>
+            <option value="Istoria Transilvaniei medievale" th:selected="${titlu == 'Istoria Transilvaniei medievale'}">Istoria Transilvaniei medievale</option>
+            <option value="Istoria Banatului. Studii privind particularitatil..." th:selected="${titlu == 'Istoria Banatului. Studii privind particularitatil...'}">Istoria Banatului. Studii privind particularitățile culturale și politice</option>
+            <option value="Istoriografia romaneasca postbelica. Teme, directi..."th:selected="${titlu == 'Istoriografia romaneasca postbelica. Teme, directi...'}">Istoriografia românească postbelică. Teme, direcții, perspective</option>
+            <option value="Introducere in algebre Boole"th:selected="${titlu == 'Introducere in algebre Boole'}">Introducere în algebre Boole</option>
+            <option value="Lingvistica matematica"th:selected="${titlu == 'Lingvistica matematica'}">Lingvistica matematică</option>
+            <option value="Teoria numerelor"th:selected="${titlu == 'Teoria numerelor'}">Teoria numerelor</option>
+            <option value="Probabilitati si statistica matematica"th:selected="${titlu == 'Probabilitati si statistica matematica'}">Probabilități și statistică matematică</option>
+            <option value="Procese stocastice"th:selected="${titlu == 'Procese stocastice'}">Procese stocastice</option>
+            <option value="Geometria haosului"th:selected="${titlu == 'Geometria haosului'}">Geometria haosului</option>
+            <option value="Algebra liniara si geometrie analitica"th:selected="${titlu == 'Algebra liniara si geometrie analitica'}">Algebră liniară și geometrie analitică</option>
+            <option value="Analiza matematica"th:selected="${titlu == 'Analiza matematica'}">Analiză matematică</option>
+            <option value="Ecuatii diferentiale"th:selected="${titlu == 'Ecuatii diferentiale'}">Ecuații diferențiale</option>
+            <option value="Geometrie proiectiva"th:selected="${titlu == 'Geometrie proiectiva'}">Geometrie proiectivă</option>
+          </select>
+          <br>
+
+          <label for="editura"style="color:orange">Editura:</label>
+          <br>
+
+          <select id="editura" name="editura">
+            <option value="">Toate</option>
+            <option value="">Toate</option>
+            <option value="Humanitas" th:selected="${editura == 'Humanitas'}">Humanitas</option>
+            <option value="PandoraM" th:selected="${editura == 'PandoraM'}">PandoraM</option>
+            <option value="Editura Litera" th:selected="${editura == 'Editura Litera'}">Editura Litera</option>
+            <option value="Curtea Veche Publishing" th:selected="${editura == 'Curtea Veche Publishing'}">Curtea Veche Publishing</option>
+            <option value="Hyperliteratura" th:selected="${editura == 'Hyperliteratura'}">Hyperliteratura</option>
+            <option value="Polirom" th:selected="${editura == 'Polirom'}">Polirom</option>
+            <option value="RAO" th:selected="${editura == 'RAO'}">RAO</option>
+            <option value="Corint" th:selected="${editura == 'Corint'}">Corint</option>
+            <option value="Litera" th:selected="${editura == 'Litera'}">Litera</option>
+            <option value="Univers Enciclopedic" th:selected="${editura == 'Univers Enciclopedic'}">Univers Enciclopedic</option>
+            <option value="Vintage" th:selected="${editura == 'Vintage'}">Vintage</option>
+            <option value="Nemira" th:selected="${editura == 'Nemira'}">Nemira</option>
+            <option value="Univers" th:selected="${editura == 'Univers'}">Univers</option>
+            <option value="Trei" th:selected="${editura == 'Trei'}">Trei</option>
+            <option value="Art" th:selected="${editura == 'Art'}">Art</option>
+            <option value="Pandora" th:selected="${editura == 'Pandora'}">Pandora</option>
+            <option value="Curtea Veche" th:selected="${editura == 'Curtea Veche'}">Curtea Veche</option>
+            <option value="Meteor Press" th:selected="${editura == 'Meteor Press'}">Meteor Press</option>
+            <option value="Publica" th:selected="${editura == 'Publica'}">Publica</option>
+            <option value="DC Comics" th:selected="${editura == 'DC Comics'}">DC Comics</option>
+            <option value="Penguin Books" th:selected="${editura == 'Penguin Books'}">Penguin Books</option>
+            <option value="Pantheon" th:selected="${editura == 'Pantheon'}">Pantheon</option>
+            <option value="Vertigo" th:selected="${editura == 'Vertigo'}">Vertigo</option>
+            <option value="Top Shelf Productions" th:selected="${editura == 'Top Shelf Productions'}">Top Shelf Productions</option>
+            <option value="Image Comics" th:selected="${editura == 'Image Comics'}">Image Comics</option>
+          </select>
+          <br>
+
+          <label for="limba"style="color:orange">Limba:</label>
+          <br>
+
+          <select id="limba" name="limba">
+            <option value="">Toate</option>
+            <option value="Romana" th:selected="${limba == 'Romana'}">Română</option>
+            <option value="Engleza" th:selected="${limba == 'Engleza'}">Engleza</option>
+
+          </select>
+          <br>
+
+          <label for="data_publicarii"style="color:orange">Data:</label>
+          <br>
+
+          <select id="data_publicarii" name="data_publicarii">
+            <option value="">Toate</option>
+
+            <option value="2002" th:selected="${data_publicarii == '2002'}">2002</option>
+            <option value="2022" th:selected="${data_publicarii == '2022'}">2022</option>
+            <option value="2023" th:selected="${data_publicarii == '2023'}">2023</option>
+            <option value="1875" th:selected="${data_publicarii == '1875'}">1875</option>
+            <option value="2024" th:selected="${data_publicarii == '2024'}">2024</option>
+            <option value="2017" th:selected="${data_publicarii == '2017'}">2017</option>
+            <option value="2021" th:selected="${data_publicarii == '2021'}">2021</option>
+            <option value="2016" th:selected="${data_publicarii == '2016'}">2016</option>
+            <option value="2020" th:selected="${data_publicarii == '2020'}">2020</option>
+            <option value="2018" th:selected="${data_publicarii == '2018'}">2018</option>
+            <option value="2019" th:selected="${data_publicarii == '2019'}">2019</option>
+            <option value="2015" th:selected="${data_publicarii == '2015'}">2015</option>
+            <option value="2014" th:selected="${data_publicarii == '2014'}">2014</option>
+            <option value="2006" th:selected="${data_publicarii == '2006'}">2006</option>
+            <option value="2012" th:selected="${data_publicarii == '2012'}">2012</option>
+            <option value="1991" th:selected="${data_publicarii == '1991'}">1991</option>
+            <option value="2009" th:selected="${data_publicarii == '2009'}">2009</option>
+            <option value="2005" th:selected="${data_publicarii == '2005'}">2005</option>
+            <option value="2003" th:selected="${data_publicarii == '2003'}">2003</option>
+            <option value="2007" th:selected="${data_publicarii == '2007'}">2007</option>
+            <option value="2010" th:selected="${data_publicarii == '2010'}">2010</option>
+            <option value="2008" th:selected="${data_publicarii == '2008'}">2008</option>
+            <option value="2004" th:selected="${data_publicarii == '2004'}">2004</option>
+            <option value="2013" th:selected="${data_publicarii == '2013'}">2013</option>
+            <option value="1998" th:selected="${data_publicarii == '1998'}">1998</option>
+            <option value="2000" th:selected="${data_publicarii == '2000'}">2000</option>
+            <option value="1999" th:selected="${data_publicarii == '1999'}">1999</option>
+            <option value="2001" th:selected="${data_publicarii == '2001'}">2001</option>
+            <option value="2011" th:selected="${data_publicarii == '2011'}">2011</option>
+          </select>
+          <br><br>
+
+          <button type="submit">Filtrează</button>
+          <a class="button2" href ="cititor_catalog.html" style="text-align: center; ">Resetează Filtre</a>
+
+
+
+        </form>
+        <div th:if="${errorMessage}" class="error-message">
+          <p th:text="${errorMessage}"></p>
         </div>
 
-        <div class="content-filters filter-group">
-
-          <div>
-            <input type="radio" id="filter-content-cats" name="filter-content">
-            <label for="filter-content-cats">Cats</label>
-          </div>
-
-          <div>
-            <input type="radio" id="filter-content-dogs" name="filter-content">
-            <label for="filter-content-dogs">Dogs</label>
-          </div>
-
-          <div>
-            <input type="radio" id="filter-content-Birds" name="filter-content">
-            <label for="filter-content-birds">Birds</label>
-          </div>
-        </div>
-
-        <small class="filter-explanation">Choosing filters automatically refines and refreshes search.</small>
-
-      </section>
-    </form>
-<!--    <section id="genreSection">   <article>-->
-<!--    <div class="div2" th:each="carte : ${carti}">-->
-
-
-<!--      <div class="result">-->
-
-
-<!--        <a th:href="@{'cititor_carte/' + ${carte.id}}">-->
-<!--          <h4 th:text="${carte.titlu}">Titlul Cărții</h4>-->
-<!--        </a>-->
-<!--        <div th:if="${cartiFavorite.contains(carte.id)}">-->
-<!--          &lt;!&ndash; Cartea este favorită, afișează butonul de eliminare &ndash;&gt;-->
-<!--          <form th:action="@{'/elimina_din_favorite/' + ${carte.id}}" method="post">-->
-<!--            <button type="submit">Elimină de la favorite</button>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--        <div th:if="${!cartiFavorite.contains(carte.id)}">-->
-<!--          &lt;!&ndash; Cartea nu este favorită, afișează butonul de adăugare &ndash;&gt;-->
-<!--          <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">-->
-<!--            <button type="submit">Adaugă la favorite</button>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-
-
-<!--    </div>-->
-
-<!--    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>-->
-
-<!--    </article></section>-->
-
-<!--    <div class="div2" th:each="carte : ${carti}">-->
-
-    <section id="genreSection">
-      <article>
-
-
-        <div class="container3">
+        <div class="results" th:if="${#lists.isEmpty(carti) == false}"style="width: 75%;">
           <ul class="box3">
             <li th:each="carte : ${carti}">
               <div class="book-container">
-                <img class="image1" src="images/bookcover.jpg" alt="Image 1">
 
-                <!-- Imagini, titluri și butoane specifice fiecărei cărți -->
-                <h4 th:text="${carte.titlu}">Titlul Cărții</h4>
-                <div th:if="${cartiFavoriteIds.contains(carte.id)}">
-                  <!-- Cartea este la favorite, afișează butonul de eliminare -->
+                <img class="image1" src="images/bookcover.jpg" alt="Image 1">
+                <a th:href="@{'/cititor_carte/' + ${carte.id}}">
+                  <h4 th:text="${carte.titlu}">Titlul Cărții</h4>
+                </a>
+                <div th:if="${cartiFavoriteIds != null && cartiFavoriteIds.contains(carte.id)}">
                   <form th:action="@{'/elimina_din_favorite/' + ${carte.id}}" method="post">
                     <button type="submit" class="button-favorite button-remove-favorite">Elimină din favorite</button>
                   </form>
                 </div>
-                <div th:if="${!cartiFavoriteIds.contains(carte.id)}">
-                  <!-- Cartea nu este la favorite, afișează butonul de adăugare -->
+                <div th:if="${cartiFavoriteIds != null && !cartiFavoriteIds.contains(carte.id)}">
                   <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">
                     <button type="submit" class="button-favorite button-add-favorite">Adaugă la favorite</button>
                   </form>
@@ -793,41 +1506,27 @@ body {
           </ul>
         </div>
 
+        <div th:if="${isCatalogPage == false}" style="margin-top: 20px;">
+          <a href="cititor_catalog.html" class="button-back">Înapoi la catalog</a>
+        </div>
 
-
-
-
-        <!--        <div class="container3">-->
-<!--          <ul class="box3">-->
-<!--            <li>-->
-
-<!--              <div class="book-container">-->
-<!--                <img class="image1" src="images/bookcover.jpg" alt="Image 1">-->
-<!--                <a th:href="@{'cititor_carte/' + ${carte.id}}">-->
-<!--                  <h4 th:text="${carte.titlu}">Titlul Cărții</h4>-->
-<!--                  <form th:action="@{'/adauga_la_favorite/' + ${carte.id}}" method="post">&ndash;&gt;-->
-<!--                                <button type="submit">Adaugă la favorite</button>-->
-<!--                              </form>-->
-<!--                </a>-->
-<!--              </div>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
-      </article>
-    </section>
-
+      </section>
     </div>
-    <section id="contactSection">
-      <!--    <h2>Contact Book Store</h2>-->
-      <article>
 
-      </article>
+
+    <section id="paginationSection">
+      <div class="pagination">
+
+        <a th:if="${currentPage > 0}" th:href="@{/cititor_catalog.html(page=${currentPage - 1})}">Pagina Anterioară</a>
+        <span th:text="'Pagina ' + (${currentPage + 1}) + ' din ' + ${totalPages}"></span>
+        <a th:if="${currentPage < totalPages - 1}" th:href="@{/cititor_catalog.html(page=${currentPage + 1})}">Pagina Următoare</a>
+      </div>
     </section>
   </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="assets/js/myjs.js"></script>
+
 <script>jQuery(document).ready(function ($) {
 
   $('#checkbox').change(function(){
@@ -875,73 +1574,7 @@ body {
 
 });
 </script>
-<script>
 
-var Search = {
-
-  searchForm: $("#search-form"),
-  searchTerms: $("#search-terms"),
-  searchFilters: $("#search-filters"),
-  searchFiltersTitle: $("#search-filters-title"),
-  offset: $("#search-filters-title").offset(),
-  win: $(window),
-
-  init: function() {
-    Search.bindUIEvents();
-  },
-
-  bindUIEvents: function() {
-
-    Search.searchFiltersTitle
-      .on(
-        "click",
-        Search.toggleSearchFilters
-      );
-
-    Search.win
-      .on(
-        "scroll",
-        Search.filterHeaderPosition
-       );
-
-    Search.searchForm
-      .on(
-         "submit",
-        Search.searchSubmit
-       );
-
-  },
-
-  toggleSearchFilters: function() {
-    Search.searchForm
-      .toggleClass("filters-open");
-  },
-
-  filterHeaderPosition: function() {
-
-     var scrollTop = Search.win.scrollTop();
-
-     if (scrollTop > Search.offset.top) {
-       Search.searchFilters.addClass("pinned");
-       Search.searchTerms.css("margin-bottom", Search.searchFilters.outerHeight());
-     } else {
-       Search.searchFilters.removeClass("pinned");
-       Search.searchTerms.css("margin-bottom", "10px");
-     };
-
-  },
-
-  searchSubmit: function() {
-    // process new search
-    return false;
-  }
-
-};
-
-Search.init();
-
-
-</script>
 </body>
 
 </html>

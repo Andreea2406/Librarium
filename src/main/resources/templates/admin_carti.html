@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Admin</title>
+  <title>Librarium</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
   <style>
@@ -810,8 +810,7 @@ table {
 <body>
 
 <div class="button-container">
-  <!--  //<button class="button" >Intra in cont</button>-->
-  <a class="button" href="index.html">Log out</a>
+  <a class="button" href="/">Log out</a>
 </div>
 
 
@@ -819,9 +818,7 @@ table {
 <div class="wrapper">
 
   <div class="store">
-    <!--    <h1>Librarium</h1>-->
     <div id="headerImage">
-      <!--      <img src="https://s22.postimg.cc/wqktmcdsx/3243335.jpg" alt="book logo" alt="book logo" />-->
       <img src="images/logo2.jpg" />
 
     </div>
@@ -829,25 +826,13 @@ table {
 
     <header id="homeSection">
       <nav>
-        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="admin_pagina_principala.html">Acasa</a>
         <a class="button2" href="admin_evenimente.html" style="text-align: center; ">Evenimente</a>
         <a class="button1" href="admin_carti.html"; style="text-align: center;font-weight:bold   ">Carti</a>
         <a class="button2" href="admin_bibliotecari.html" style="text-align: center; ">Bibliotecari</a>
         <a class="button2" th:href="@{/admin_cititori}" style="text-align: center;">Cititori</a>
-        <!--        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>-->
-        <!--        <a href="cititor_mesaje.html">Comunitate</a>-->
-        <!--        <a href="cititor_setari_profil.html">Setari profil</a>-->
-
-
-
         <a class="button2" href="admin_sali_biblioteca.html" style="text-align: center; ">Sali biblioteca</a>
-
-        <a class="button2" href="admin_aprobari_respingeri.html" style="text-align: center; ">Aprobari/Respingeri</a>
-        <a class="button2" href="admin_mesaje" style="text-align: center; ">Mesaje</a>
-
-
-        <!--        <a href="#gallerySection">Gallery</a>-->
-        <!--        <a href="#contactSection">Contact Book Store</a>-->
+        <a class="button2" href="admin_mesaje.html" style="text-align: center; ">Mesaje</a>
         <hr style="color: red; margin: 20px;">
       </nav>
     </header>
@@ -856,10 +841,12 @@ table {
 
 
       <div class="column small-12 large-12">
+        <form id="searchForm" action="/admin_carti/search" method="get">
+          <input type="text" id="searchInput" name="searchTerm" placeholder="Cauta dupa titlu sau autor" style="border-radius: 25px;">
+          <button type="submit" class="button" style="background-color: #b1533f; font-size: 20px; border-radius: 20px; color:white;">Cauta</button>
+          <a th:if="${searchTerm != null}" href="/admin_carti.html" class="button" style="background-color: #b1533f; font-size: 20px; border-radius: 20px; color:white;">Anulează căutare</a>
+        </form>
 
-
-        <input type="text" placeholder="Cauta dupa nume" style="border-radius: 25px";>
-        <a href="#" class="button"  style="background-color: #b1533f; opacity: 100%;font-size: 20px;border-radius: 20px;color:white;padding-left: 10px;padding-right: 10px;padding-bottom: 5px;padding-top: 5px"> Cauta  </a>
 
       </div>
       <br><br><br>
@@ -879,7 +866,6 @@ table {
           <th style="width: 1%">ISBN</th>
           <th style="width: 1%">Latime</th>
           <th style="width:1%">Inaltime</th>
-<!--          <th class="descriere">          Descriere      </th>-->
 
           <th style="width: 90%;">     Descriere   </th>
           <th style="width: 1%">An aparitie</th>
@@ -889,7 +875,6 @@ table {
 
         </tr>
 
-        <!-- Utilizați Thymeleaf pentru a itera peste utilizatori și afișați datele în tabel -->
         <tr th:each="carte : ${carti}">
           <td th:text="${carte.id}">ID</td>
           <td th:text="${carte.titlu}">Titilu</td>
@@ -903,13 +888,6 @@ table {
           <td th:text="${carte.isbn}">ISBN</td>
           <td th:text="${carte.latime}">Latime</td>
           <td th:text="${carte.inaltime}">Inaltime</td>
-<!--          <td class="descriere" th:text="${carte.descriere}">Descriere</td>-->
-          <!-- In the head section -->
-<!--          <th class="descriere">Descriere</th>-->
-
-<!--          &lt;!&ndash; In the body section, for each row &ndash;&gt;-->
-<!--          <td class="descriere-cell" th:text="${carte.descriere}">Descriere</td>-->
-
 
           <td th:text="${carte.descriere}">        Descriere                   </td>
           <td th:text="${carte.dataPublicarii}">An aparitie</td>
@@ -920,7 +898,6 @@ table {
           <td>
             <a th:if="${carti != null}" th:href="@{/admin_carti/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>
 
-            <!--            <a th:each="carte : ${carti}" th:href="@{/admin_carti/{id}(id=${carte.id})}" class="btn btn-danger">Stergere</a>-->
           </td>
 
 
@@ -938,7 +915,6 @@ table {
 </div>
 
 <br><br><br>
-
 </body>
 </html>
 

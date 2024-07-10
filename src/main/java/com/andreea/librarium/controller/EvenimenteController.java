@@ -31,8 +31,7 @@ public class EvenimenteController {
     public String afiseazaEvenimente(Model model) {
     List<Evenimente> evenimente=evenimenteService.getAllEvenimente();
     model.addAttribute("evenimente",evenimente);
-//        List<Carti> carti = cartiService.getAllBooks();
-//        model.addAttribute("carti", carti);
+
         return "admin_evenimente";
     }
 
@@ -40,13 +39,14 @@ public class EvenimenteController {
     @GetMapping("/admin_adauga_eveniment")
     public String returnAdminAdaugaEvenimente(Model model) {
         model.addAttribute("eveniment", new Evenimente());
-        return "admin_adauga_eveniment"; // Returnați pagina cu formularul de adăugare a cărții
+        return "admin_adauga_eveniment";
     }
     @PostMapping("/adaugareEveniment")
     public String addEveniment(@ModelAttribute Evenimente evenimente){
         Evenimente newEveniment=evenimenteService.saveEveniment(evenimente);
         if (newEveniment != null) {
-            return "admin_evenimente";
+            return "redirect:/admin_evenimente.html";
+
         } else {
             return "error_page";
         }
@@ -57,9 +57,11 @@ public class EvenimenteController {
         model.addAttribute("evenimente",evenimente);
         return "admin_editeaza_eveniment";
     }
+
     @GetMapping("/admin_editeaza_evenimente/{id}")
     public String afiseazaFormularEditare(@PathVariable("id") Long id,Model model){
-        return "admin_editeaza_eveniment";
+        return "redirect:/admin_evenimente.html";
+
     }
     @PostMapping("/admin_evenimente/{id}")
     public String actualizeazaEveniment(@PathVariable Integer id,@ModelAttribute("evenimente") Evenimente evenimente, Model model){
@@ -76,7 +78,6 @@ public class EvenimenteController {
             if(updatedEveniment!=null){
                 return "redirect:/admin_evenimente.html";
 
-//                return "admin_evenimente";
             }
         }
         return "error_page";

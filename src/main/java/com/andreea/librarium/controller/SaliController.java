@@ -2,6 +2,7 @@ package com.andreea.librarium.controller;
 
 import com.andreea.librarium.config.UserSession;
 import com.andreea.librarium.model.Carti;
+import com.andreea.librarium.model.RezervariSali;
 import com.andreea.librarium.model.SaliBiblioteca;
 import com.andreea.librarium.repositories.RezervareSaliRepository;
 import com.andreea.librarium.repositories.SaliRepository;
@@ -11,10 +12,8 @@ import com.andreea.librarium.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.websocket.server.PathParam;
 import java.time.Duration;
@@ -58,20 +57,41 @@ public class SaliController {
     public String afiseazaSaliPentruCititori(Model model) {
         List<SaliBiblioteca> sali = saliService.getAll();
         model.addAttribute("sali", sali);
-        return "cititor_rezervari_sali"; // Un template Thymeleaf dedicat cititorilor
+        return "cititor_rezervari_sali";
+    }
+    @GetMapping("/cititor_sali_rezervate.html")
+    public String afiseazaSaliRezervatePentruCititori(Model model) {
+        Integer idUtilizatorLogat = userSession.getUserId();
+
+        List<RezervariSali> sali = rezervareSaliService.getRezervariByUserId(idUtilizatorLogat);
+        model.addAttribute("sali", sali);
+        return "cititor_sali_rezervate";
     }
 
+
+    @PostMapping("/anuleaza-rezervare-sala")
+    public String anuleazaRezervareSala(@RequestParam("idRezervareSala") Integer idRezervareSala, RedirectAttributes redirectAttributes) {
+        boolean rezultat = rezervareSaliService.anuleazaRezervareSala(idRezervareSala);
+
+        if (rezultat) {
+            redirectAttributes.addFlashAttribute("mesajSucces", "Rezervarea sălii a fost anulată cu succes!");
+        } else {
+            redirectAttributes.addFlashAttribute("mesajEroare", "Nu s-a putut anula rezervarea sălii.");
+        }
+
+        return "redirect:/cititor_sali_rezervate.html";
+    }
     @GetMapping("/admin_adauga_sala")
     public String returnAdminAdaugaSala(Model model) {
         model.addAttribute("sala", new SaliBiblioteca());
-        return "admin_adauga_sala"; // Returnați pagina cu formularul de adăugare a cărții
+        return "admin_adauga_sala";
     }
     @PostMapping("/adaugareSala")
     public String addCarte(@ModelAttribute SaliBiblioteca saliBiblioteca) {
         SaliBiblioteca newSala = saliService.saveSala(saliBiblioteca);
 
         if (newSala != null) {
-            return "admin_sali_biblioteca";
+            return "redirect:/admin_sali_biblioteca.html";
         } else {
             return "error_page";
         }
@@ -105,8 +125,7 @@ public class SaliController {
 
 
             if (updateedSala != null) {
-//                return "admin_cititori";
-                return "admin_sali_biblioteca";
+                return "redirect:/admin_sali_biblioteca.html";
 
             }
         }
@@ -116,23 +135,20 @@ public class SaliController {
     @GetMapping("/admin_sali_biblioteca/{id}")
     public String deleteSala(@PathVariable Integer id){
         saliService.deleteSalaById(id);
-        return "redirect:/admin_sali_biblioteca";
+        return "redirect:/admin_sali_biblioteca.html";
     }
     @GetMapping("/rezerva_sala/{salaId}")
     public String rezervaSala(@PathVariable Integer salaId) {
-        Integer idUtilizator = userSession.getUserId(); // Obține ID-ul utilizatorului curent din sesiune
+        Integer idUtilizator = userSession.getUserId();
 
         if (idUtilizator == null) {
-            // Presupunem că metoda getUserId() returnează null dacă utilizatorul nu este logat
             return "redirect:/login";
         }
 
-        // Presupunem că metoda `adaugaRezervare` necesită ID-ul sălii, ID-ul utilizatorului și alte detalii necesare
-        // De exemplu, aici am putea trece datele de început și sfârșit ale rezervării, dar le vom omite pentru simplitate
+
         rezervareSaliService.adaugaRezervare(salaId, idUtilizator, Instant.now(), Instant.now().plus(Duration.ofHours(1)));
 
-        // Redirectează utilizatorul către o pagină de confirmare
-        return "cititor_rezervari_sali.html";
+        return "redirect:/cititor_rezervari_sali.html";
     }
 
 
