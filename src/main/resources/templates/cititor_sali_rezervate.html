@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Librarium</title>
+  <link rel="stylesheet" href="mystyles.css">
+  <link rel="stylesheet" href="myjs.js">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <style>
+
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #535b60;
+  background-color: #F7F0E8;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  background-image: url("http://bestanimations.com/Books/pretty-book-bench-nature-water-outdoors-animated-gif.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-origin: padding-box;
+  box-shadow: 7px 0px 10px rgba(0, 0, 0, .3), -7px 0px 10px rgba(0, 0, 0, .3);
+}
+
+#headerImage img {
+  width: 130px;
+  height: 110px;
+  border: 10px solid rgba(200, 80, 70, .3);
+  border-radius: 48%;
+  display: block;
+  opacity:100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.store {
+  background: rgba(40, 80, 100, .2);
+}
+.sepatator{
+border-radius:5px solid color:brown;
+}
+
+h1 {
+  text-align: center;
+  font-family: Monospace;
+  display: block;
+  color: #fff;
+  font-size: 48px;
+  background: #8a6f3a;
+  width: 340px;
+  margin: auto;
+}
+
+.button-container {
+    top: 0;
+    right: 9999;
+    margin: 10px;
+     display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.button {
+    /* Add your button styles here */
+<!--    padding: 10px 15px;-->
+<!--    margin-right: 10px;-->
+padding: 10px 15px;
+    margin-left: 10px; /* Add some space between buttons if needed */
+    font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: $button-bg;
+  color: $button-text-color;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+
+
+}
+nav {
+  text-align: center;
+  margin: 25px;
+}
+
+nav a {
+  text-align: center;
+  padding: .7% 2%;
+  margin: 1.5% 1%;
+  text-decoration: none;
+  background-color: rgba(200, 80, 70, .7);
+  color: white;
+  display: inline block;
+}
+
+nav a:hover {
+  box-shadow: 0 1px 1px #fff;
+  text-shadow: 0 1px 1px #fff;
+}
+
+section {
+  padding: 1%;
+  background: rgba(200, 120, 40, .45);
+  text-align: center;
+  font-size: 18px;
+
+}
+
+h2 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color: #581845;
+}
+h3 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#4d0000;
+}
+h5 {
+  font-size: 30px;
+  font-family: Helvetica, cursive;
+  color:#ffd9b3;
+}
+#slider {
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto 0 auto;
+  border-radius: 4px;
+}
+.div1 {
+    display: inline-block;
+    width:300px;
+    height:250px;
+     position:left;
+    float:left;
+
+}
+.div2 {
+    display: inline-block;
+    position:center;
+    float:center;
+    width:800px;
+    height:250px;
+
+}
+#wrapper1 {
+
+}
+.frame {
+  width: 40%;
+  margin: 40px auto;
+  text-align: center;
+}
+.btn-5 {
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  background: rgb(255,27,0);
+background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
+}
+.btn-5:hover {
+  color: #f0094a;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+<!--  top:0;-->
+<!--  right:60;-->
+
+  height:2px;
+  width:0;
+  background: #f0094a;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:10%;
+  transition:800ms ease all;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+<div class="button-container">
+  <a class="button" href="/">Log out</a>
+
+</div>
+
+<div class="wrapper">
+
+  <div class="store">
+    <div id="headerImage">
+      <img src="images/logo2.jpg" />
+
+    </div>
+
+
+    <header id="homeSection">
+      <nav>
+        <a href="cititor_pagina_principala.html">Acasa</a>
+        <a href="cititor_evenimente.html">Evenimente</a>
+        <a href="cititor_catalog.html">Catalog</a>
+        <a href="cititor_rezervari_imprumuturi.html">Rezervariile mele</a>
+
+        <a href="cititor_rezervari_sali.html">Rezerva o sala</a>
+        <a href="cititor_mesaje.html">Comunitate</a>
+
+        <a th:href="@{/cititor_setari_profil}">Setari profil</a>
+        <hr style="color: red; margin: 20px;">
+      </nav>
+    </header>
+  </div>
+
+  <section id="aboutSection">
+
+  </section>
+
+  <br><br><br>
+  <section id="evSection">
+    <div class="column small-12 large-12" style=" opacity: 80%;  border-radius: 25px ; ">
+
+
+
+      <br><br><br>
+      <div class="small-12 large-2 cell"
+           style=" background-color: rgba(255,255,255,0.73) ;;background-size: cover;background-attachment: fixed;border-radius: 50px; height:400px;">
+
+        <br>
+        <div id="wrapper1">
+          <h2>Rezervariile Mele</h2>
+          <div class="sali-container" th:if="${sali != null and !sali.isEmpty()}">
+            <table>
+              <thead>
+              <tr>
+                <th>Nume</th>
+                <th>Locuri disponibile</th>
+                <th>Data Inceput</th>
+                <th>Data Final</th>
+                <th>  </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="rezervare : ${sali}">
+                <td th:text="${rezervare.idSala.nume}">Nume Sala</td>
+                <td th:text="${rezervare.idSala.locuriDisponibile}">Locuri Disponibile</td>
+                <td th:text="${#dates.format(rezervare.dataOraInceput, 'dd-MM-yyyy HH:mm')}">Data Inceput</td>
+                <td th:text="${#dates.format(rezervare.dataOraFinal, 'dd-MM-yyyy HH:mm')}">Data Final</td>
+                <td>
+                  <form th:action="@{/anuleaza-rezervare-sala}" method="post">
+                    <input type="hidden" name="idRezervareSala" th:value="${rezervare.id}"/>
+                    <button type="submit" class="custom-btn btn-12">Anulează</button>
+                  </form>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div th:if="${sali == null or sali.isEmpty()}">
+            <p>Nu există sali rezervate.</p>
+          </div>
+          <br><br> <br><br>
+          <br><br>
+
+
+
+
+
+
+          <br>
+
+        </div>
+
+
+
+      </div>
+    </div>
+    <a class="button" href="cititor_rezervari_sali.html">Inapoi la sali</a>
+
+  </section>
+  <br><br><br>
+  <section id="ev2Section">
+
+  </section>
+  <section id="ev3Section">
+
+
+
+    <br><br><br>
+
+
+  </section>
+
+
+
+
+</div>
+<br><br><br>
+
+</div>
+
+</body>
+</html>
